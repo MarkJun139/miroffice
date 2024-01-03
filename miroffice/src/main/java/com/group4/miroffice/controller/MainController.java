@@ -8,6 +8,6 @@ public class MainController {
 
 	@GetMapping("/main")
 	public String mainPage() {
-		return "NewFile";
+		return "main";
 	}
 }
