@@ -2,7 +2,7 @@ package com.group4.miroffice.config;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
-import com.group4.miroffice.login.Users;
+import com.group4.miroffice.dto.Users;
 
 public class SecurityUser extends User {
 	private static final long serialVersionUID = 1L;

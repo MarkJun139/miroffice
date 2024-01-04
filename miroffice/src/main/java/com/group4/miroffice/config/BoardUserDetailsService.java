@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.group4.miroffice.login.UserDao;
-import com.group4.miroffice.login.Users;
+import com.group4.miroffice.dao.UserDao;
+import com.group4.miroffice.dto.Users;
 
 
 @Service

@@ -30,7 +30,7 @@ public class SecurityConfig{
 				.authorizeHttpRequests(auth -> {
 					try {
 						auth.requestMatchers(new AntPathRequestMatcher("/member/**"),
-								new AntPathRequestMatcher("/js/**")).authenticated()
+								new AntPathRequestMatcher("/img/**")).authenticated()
 								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 								.requestMatchers(new AntPathRequestMatcher("/teamleader/**")).hasAnyRole("TEAMLEADER", "ADMIN")
 								.anyRequest().permitAll()
