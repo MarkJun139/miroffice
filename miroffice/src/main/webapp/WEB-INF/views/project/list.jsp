@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +13,7 @@
 </style>
 </head>
 <body>
+	
 	<nav class="navbar navbar-light bg-light">
 		<div class="container">
 			<div class="row">
@@ -48,8 +48,24 @@
 					<li class="list-group-item list-group-item-action">마이페이지</li>
 				</ul>
 			</div>
-			<div class="col-10">
-				
+			<div class="col-10 p-5">
+				<div class="card">
+					<div class="card-header">
+						<h3>프로젝트 목록</h3>
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item list-group-item-action">주소록</li>
+							
+						</ul>
+					</div>
+					<div class="card-footer">
+						<div class="col-12"></div>
+						<div class="float-right col-2">
+							<a href="projectwrite" class="btn btn-primary text-white float-right">프로젝트 등록</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
