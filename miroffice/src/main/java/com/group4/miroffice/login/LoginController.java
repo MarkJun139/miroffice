@@ -20,4 +20,10 @@ public class LoginController {
 		return "/main";
 	}
 
+
+	@GetMapping("/login3")
+	public String logi2n() {
+		return "login2";
+	}
+
 }
