@@ -1,4 +1,4 @@
-package com.group4.miroffice.dto;
+package com.group4.miroffice.login;
 
 import java.util.Date;
 

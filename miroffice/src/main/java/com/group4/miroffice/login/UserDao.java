@@ -1,11 +1,7 @@
-package com.group4.miroffice.dao;
+package com.group4.miroffice.login;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
-import com.group4.miroffice.dto.Users;
-
-
 
 @Mapper
 public interface UserDao {
@@ -13,7 +9,9 @@ public interface UserDao {
 	@Select("select * from employee where emp_no = {empno}")
 	Users login(Users user);
 	
-	@Select("select * from employee where emp_no = #{empno}")
-	Users findById(String id);
+	/*
+	 * @Select("select * from employee where emp_no = #{empno}") Users
+	 * findById(String id);
+	 */
 	
 }
