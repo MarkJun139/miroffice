@@ -21,7 +21,7 @@ public class LoginController {
 	}
 
 
-	@GetMapping("/login3")
+	@GetMapping("/login2")
 	public String logi2n() {
 		return "login2";
 	}

@@ -22,5 +22,6 @@ public class Users {
 	private String empphoto;
 	private Role emprole;
 	private int empdayoff;
+	private String empjob;
 
 }

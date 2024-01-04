@@ -79,18 +79,18 @@
                            </a>
                            <h2 class="mb-2 text-center">로그인</h2>
                            
-                           <form>
+                           <form method="post" action="/login">
                               <div class="row">
                                  <div class="col-lg-12">
                                     <div class="form-group">
                                        <label for="empno" class="form-label">사원번호</label>
-                                       <input type="number" class="form-control" id="empno" aria-describedby="number" placeholder=" ">
+                                       <input type="number" class="form-control" name="userId" id="empno" aria-describedby="number" placeholder=" ">
                                     </div>
                                  </div>
                                  <div class="col-lg-12">
                                     <div class="form-group">
                                        <label for="emppw" class="form-label">비밀번호</label>
-                                       <input type="password" class="form-control" id="emppw" aria-describedby="password" placeholder=" ">
+                                       <input type="password" class="form-control" name="password" id="emppw" aria-describedby="password" placeholder=" ">
                                     </div>
                                  </div>
                                  <div class="col-lg-12 d-flex justify-content-between">
@@ -102,8 +102,10 @@
                                  </div>
                               </div>
                               <div class="d-flex justify-content-center">
-                                 <button type="submit" class="btn btn-primary">로그인</button>
+                                 <button type="submit" formmethod="POST" class="btn btn-primary">로그인</button>
                               </div>
+                              </form>
+                              <form>
                               <p class="mt-3 text-center">사원번호를 잊으셨나요? <a href="recoverid.html" class="text-underline">사원번호 찾기</a></p>
                               <p class="mt-3 text-center">비밀번호를 잊으셨나요? <a href="recoverpw.html" class="text-underline">비밀번호 찾기</a></p>
                            </form>
