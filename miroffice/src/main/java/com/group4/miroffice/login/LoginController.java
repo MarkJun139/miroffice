@@ -12,6 +12,12 @@ public class LoginController {
 		System.out.println("index 요청입니다.");
 		return "test/index";
 	}
+	
+	@GetMapping("/main")
+	public String login() {
+		System.out.println("main 요청입니다.");
+		return "main";
+	}
 
 	@GetMapping("/member")
 	public String forMember() {

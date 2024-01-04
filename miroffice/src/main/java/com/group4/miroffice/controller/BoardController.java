@@ -8,6 +8,5 @@ import com.group4.miroffice.service.BoardService;
 @Controller
 public class BoardController {
 
-	@Autowired
-	BoardService bs;
+
 }

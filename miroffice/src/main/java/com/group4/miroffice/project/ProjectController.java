@@ -40,9 +40,7 @@ public class ProjectController {
 		return "redirect:/projectlist";
 	}
 	
-	@PutMapping("/projectedit")
-	public String project
-	
+
 	
 	
 }
