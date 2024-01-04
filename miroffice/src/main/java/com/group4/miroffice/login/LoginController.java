@@ -41,5 +41,10 @@ public class LoginController {
 	public String loginSuccess() {
 		return "test/loginSuccess";
 	}
+	
+	@GetMapping("/accessDenied")
+	public String accessDenied() {
+		return "test/accessDenied";
+	}
 
 }
