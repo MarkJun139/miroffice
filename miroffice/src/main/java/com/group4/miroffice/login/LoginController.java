@@ -1,23 +1,50 @@
 package com.group4.miroffice.login;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
 public class LoginController {
 
-	@GetMapping("/login")
-	void title() {
+	@GetMapping("/")
+	public String index() {
+		System.out.println("index 요청입니다.");
+		return "test/index";
 	}
 
-	@PostMapping("/login")
-	public String login(@PathVariable("emp_no") int userId, @PathVariable("emp_pw") String password, ModelMap m) {
-		m.addAttribute("emp_no", userId);
-		m.addAttribute("emp_pw", password);
-		return "/main";
+	@GetMapping("/member")
+	public String forMember() {
+		System.out.println("Member 요청입니다.");
+		return "test/member";
+	}
+
+	@GetMapping("/teamleader")
+	public String forManager() {
+		System.out.println("Manager 요청입니다.");
+		return "test/teamleader";
+	}
+
+	@GetMapping("/admin")
+	public String forAdmin() {
+		System.out.println("Admin 요청입니다.");
+		return "test/admin";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		System.out.println("login 요청입니다.");
+		return "test/login";
+	}
+
+	@GetMapping("/loginSuccess")
+	public String loginSuccess() {
+		return "test/loginSuccess";
+	}
+	
+	@GetMapping("/accessDenied")
+	public String accessDenied() {
+		return "test/accessDenied";
 	}
 
 
