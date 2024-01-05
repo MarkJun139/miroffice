@@ -2,10 +2,17 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.group4.miroffice.dao"> 
+<mapper namespace="com.group4.miroffice.approval.ApprovalDao"> 
 	
-	<select id="deptAll" resultType="com.group4.miroffice.dto">
-		select * from dept order by deptno
-	</select>
+	<insert id="approvalSubmit" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		insert into approval
+		(
+		<foreach item="value" index="key" collection="map"
+		)
+		insert into approval (emp_no, dept_no, app_title, app_text, app_date, app_admin1,
+		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, app_approvaefinal)
+		values (#{emp_no}, emp_no, dept_no, app_title, app_text, app_date, app_admin1,
+		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, #{app_approvaefinal})
+	</insert>
 	
 </mapper>  
