@@ -93,7 +93,8 @@ html, body {
 								}
 							},
 							save : {
-								text : '저장'
+								text : '저장',
+
 							}
 						},
 						dayCellContent : function(e) { // OO'일' 제거
