@@ -14,7 +14,7 @@ public class LoginController {
 	}
 	
 	@GetMapping("/main")
-	public String login() {
+	public String loginMain() {
 		System.out.println("main 요청입니다.");
 		return "main";
 	}

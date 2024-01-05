@@ -54,18 +54,14 @@
 				
 				<div class="card">
 					<div class="card-header">
-						<h3>프로젝트 작성</h3>
+						<h3>프로젝트</h3>
 					</div>
 					<div class="card-body">
-						<div class="form-group">
-							<form action="project/write" method="post">
-								<input class="form-control" type="text" name="projecttitle" placeholder="프로젝트 제목"><br>
-								<input class="form-control" type="text" name="projecttext" placeholder="프로젝트 내용"><br>
-								<input class="form-control" type="date" name="projectstart" placeholder="프로젝트 시작일"><br>
-								<input class="form-control" type="date" name="projectend" placeholder="프로젝트 종료일"><br>
-								<input type="submit" class="btn btn-primary text-white float-right" value="등록하기">
-							</form>
-						</div>
+						<h2 class="card-title">${project.projecttitle}</h2>
+					    <p class="card-text">${project.projecttext}</p>
+					    <a href="/projectlist" class="btn btn-primary">프로젝트 목록</a>
+					    <a href="/project/edit/${project.projectno}" class="btn btn-info text-white">프로젝트 수정</a>
+					    <a href="/project/delete/${project.projectno}" class="btn btn-danger">프로젝트 삭제</a>
 					</div>
 				</div>
 			</div>
