@@ -84,7 +84,7 @@
                                  <div class="col-lg-12">
                                     <div class="form-group">
                                        <label for="empno" class="form-label">사원번호</label>
-                                       <input type="number" class="form-control" name="userId" id="empno" aria-describedby="number" placeholder=" ">
+                                       <input type="number" class="form-control" name="username" id="empno" aria-describedby="number" placeholder=" ">
                                     </div>
                                  </div>
                                  <div class="col-lg-12">

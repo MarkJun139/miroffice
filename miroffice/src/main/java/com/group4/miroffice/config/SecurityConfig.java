@@ -29,13 +29,12 @@ public class SecurityConfig{
 
 				.authorizeHttpRequests(auth -> {
 					try {
-						auth.requestMatchers(new AntPathRequestMatcher("/member/**"),
-								new AntPathRequestMatcher("/img/**")).authenticated()
+						auth.requestMatchers(new AntPathRequestMatcher("/member/**")).authenticated()
 								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 								.requestMatchers(new AntPathRequestMatcher("/teamleader/**")).hasAnyRole("TEAMLEADER", "ADMIN")
 								.anyRequest().permitAll()
 
-								.and().formLogin().loginPage("/login").defaultSuccessUrl("/loginSuccess", true)
+								.and().formLogin().loginPage("/login").defaultSuccessUrl("/main", true)
 								.and().exceptionHandling().accessDeniedPage("/accessDenied")
 								.and().logout().invalidateHttpSession(true).logoutSuccessUrl("/login");
 				
