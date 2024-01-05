@@ -23,6 +23,7 @@ import com.group4.miroffice.dto.ProjectDto;
 import com.group4.miroffice.dto.Users;
 
 @Controller
+@RequestMapping("/main")
 public class ProjectController {
 	
 	@Autowired

@@ -43,7 +43,7 @@
 					<li class="list-group-item list-group-item-action">일정</li>
 					<li class="list-group-item list-group-item-action">공지사항</li>
 					<li class="list-group-item list-group-item-action"> 
-						<a href="projectlist">프로젝트 관리</a>
+						<a href="main/projectlist">프로젝트 관리</a>
 					</li>
 					<li class="list-group-item list-group-item-action">게시판</li>
 					<li class="list-group-item list-group-item-action">마이페이지</li>
