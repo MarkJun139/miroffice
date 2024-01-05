@@ -32,6 +32,7 @@ public class SecurityConfig{
 						auth.requestMatchers(new AntPathRequestMatcher("/member/**")).authenticated()
 								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 								.requestMatchers(new AntPathRequestMatcher("/teamleader/**")).hasAnyRole("TEAMLEADER", "ADMIN")
+								.requestMatchers(new AntPathRequestMatcher("/projectwrite")).hasAnyRole("TEAMLEADER", "ADMIN")
 								.anyRequest().permitAll()
 
 								.and().formLogin().loginPage("/login").defaultSuccessUrl("/main", true)

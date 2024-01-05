@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,14 +56,25 @@
 					</div>
 					<div class="card-body">
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item list-group-item-action">주소록</li>
-							
+							<c:forEach items="${projectList}" var="project" >
+								<a href="project/view/${project.projectno}" class="list-group-item list-group-item-action" aria-current="true">
+								    <div class="d-flex w-100 justify-content-between">
+								      <h5 class="mb-1">${project.projecttitle}</h5>
+								      <small><small>시작일 &nbsp;</small>${project.projectstart}</small>
+								      <small><small>종료일 &nbsp;</small>${project.projectend}</small>
+								    </div>
+								    <p class="mb-1">${project.projecttitle}</p>
+								    <div class="progress">
+									  <div class="progress-bar" role="progressbar" style="width: ${project.projectpercent}%" aria-valuenow="${project.projectpercent}" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								</a>
+							</c:forEach>
 						</ul>
 					</div>
 					<div class="card-footer">
 						<div class="col-12"></div>
 						<div class="float-right col-2">
-							<a href="projectwrite" class="btn btn-primary text-white float-right">프로젝트 등록</a>
+							<a href="projectwrite" class="btn btn-primary text-white float-left">프로젝트 등록</a>
 						</div>
 					</div>
 				</div>
