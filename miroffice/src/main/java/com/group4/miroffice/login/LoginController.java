@@ -10,7 +10,7 @@ public class LoginController {
 	@GetMapping("/")
 	public String index() {
 		System.out.println("index 요청입니다.");
-		return "test/index";
+		return "login2";
 	}
 	
 	@GetMapping("/main")
