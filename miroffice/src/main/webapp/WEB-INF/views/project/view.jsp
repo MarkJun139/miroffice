@@ -59,9 +59,12 @@
 					<div class="card-body">
 						<h2 class="card-title">${project.projecttitle}</h2>
 					    <p class="card-text">${project.projecttext}</p>
-					    <a href="/projectlist" class="btn btn-primary">프로젝트 목록</a>
-					    <a href="/project/edit/${project.projectno}" class="btn btn-info text-white">프로젝트 수정</a>
-					    <a href="/project/delete/${project.projectno}" class="btn btn-danger">프로젝트 삭제</a>
+					    <a href="/main/projectlist" class="btn btn-primary">프로젝트 목록</a>
+					    <a href="/main/teamleader/project/edit/${project.projectno}" class="btn btn-info text-white">프로젝트 수정</a>
+					    <form action="/main/teamleader/project/delete/${project.projectno}" method="post" >
+					    	<input type="hidden" name="_method" value="delete"/>
+					    	<input class="btn btn-info text-white btn-danger" type="submit" value="프로젝트 삭제">
+					    </form>
 					</div>
 				</div>
 			</div>

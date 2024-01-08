@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+   <!--
 <!DOCTYPE html>
 <<<<<<< HEAD
 <html>
@@ -8,11 +9,6 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<style>
-	a {
-		text-decoration-line: none;
-	}
-</style>
 </head>
 <body>
 	<nav class="navbar navbar-light bg-light">
@@ -26,7 +22,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container">
+	 <div class="container">
 		<div class="row">
 			<div class="col-2">
 				<div class="card" style="border:none">
@@ -155,16 +151,7 @@
 	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-=======
+ -->
 
 <html lang="ko">
   <head>
@@ -603,6 +590,17 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link "  href="/main/projectlist">
+                            <i class="icon">
+                                <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
+                                </svg>
+                            </i>
+                            <span class="item-name">프로젝트 관리</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link "  href="../dashboard/admin.html">
@@ -1298,7 +1296,7 @@
          </div>
       </div>
    </div>
-   <div class="col-md-12 col-lg-8">
+   <div class="col-md-12 col-lg-7">
       <div class="row">
          <div class="col-md-12">
             <div class="card" data-aos="fade-up" data-aos-delay="800">
@@ -1419,12 +1417,12 @@
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="600">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="mb-2 card-title">Enterprise Clients</h4>
+                     <a href="/main/projectlist"><h4 class="mb-2 card-title">프로젝트 관리</h4></a>
                      <p class="mb-0">
-                        <svg class ="me-2 text-primary icon-24" width="24"  viewBox="0 0 24 24">
+                        <!-- <svg class ="me-2 text-primary icon-24" width="24"  viewBox="0 0 24 24">
                            <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                         </svg>
-                        15 new acquired this month
+                        15 new acquired this month -->
                      </p>            
                   </div>
                </div>
@@ -1433,44 +1431,43 @@
                      <table id="basic-table" class="table mb-0 table-striped" role="grid">
                         <thead>
                            <tr>
-                              <th>COMPANIES</th>
-                              <th>CONTACTS</th>
-                              <th>ORDER</th>
-                              <th>COMPLETION</th>
+                              <th>프로젝트 제목</th>
+                              <th>시작일</th>
+                              <th>종료일</th>
+                              <th>프로젝트 진행률</th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td>
-                                 <div class="d-flex align-items-center">
-                                    <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile">
-                                    <h6>Addidis Sportwear</h6>
-                                 </div>
-                              </td>
-                              <td>
-                                 <div class="iq-media-group iq-media-group-1">
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">SP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">PP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">MM</div>
-                                    </a>
-                                 </div>
-                              </td>
-                              <td>$14,000</td>
-                              <td>
-                                 <div class="mb-2 d-flex align-items-center">
-                                    <h6>60%</h6>
-                                 </div>
-                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
-                                    <div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
+                        	<c:forEach items="${projectList}" var="project" >
+	                           <tr>
+	                              <td>
+	                                 <div class="d-flex align-items-center">
+	                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
+	                                    <h6>${project.projecttitle}</h6>
+	                                 </div>
+	                              </td>
+	                              <td>
+	                                 ${project.projectstart}
+	                              </td>
+	                              <td>
+									 ${project.projectend}
+								  </td>
+	                              <td>
+	                                 <div class="mb-2 d-flex align-items-center">
+	                                    <h6>${project.projectpercent} %</h6>
+	                                 </div>
+	                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
+	                                 	<c:if test="${project.projectpercent < 100}">
+	                                 		<div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="${project.projectpercent}" aria-valuemin="0" aria-valuemax="100"></div>
+	                                 	</c:if>
+	                                 	<c:if test="${project.projectpercent == 100}">
+	                                 		<div class="progress-bar bg-success" data-toggle="progress-bar" role="progressbar" aria-valuenow="${project.projectpercent}" aria-valuemin="0" aria-valuemax="100"></div>
+	                                 	</c:if>
+	                                 </div>
+	                              </td>
+	                           </tr>
+                           </c:forEach>
+                           <!-- <tr>
                               <td>
                                  <div class="d-flex align-items-center">
                                     <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/05.png" alt="profile">
@@ -1580,7 +1577,7 @@
                                     <div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                  </div>
                               </td>
-                           </tr>
+                           </tr> -->
                         </tbody>
                      </table>
                   </div>
@@ -1589,15 +1586,16 @@
          </div>
       </div>
    </div>
-   <div class="col-md-12 col-lg-4">
+   <div class="col-md-12 col-lg-5">
       <div class="row">
          <div class="col-md-12 col-lg-12">
-            <div class="card credit-card-widget" data-aos="fade-up" data-aos-delay="900">
+            <div class="card">
                <div class="pb-4 border-0 card-header">
-                  <div class="p-4 border border-white rounded primary-gradient-card">
+                   <h3>근로시간 확인</h3>
+                  <!-- <div class="p-4 border border-white rounded primary-gradient-card">
                      <div class="d-flex justify-content-between align-items-center">
                         <div>
-                           <h5 class="font-weight-bold">VISA </h5>
+                           <h5 class="font-weight-bold">aaaVISA </h5>
                            <P class="mb-0">PREMIUM ACCOUNT</P>  
                         </div>
                         <div class="master-card-content">
@@ -1625,7 +1623,7 @@
                         <h6>Mike Smith</h6>
                         <h6 class="ms-5">06/11</h6>
                      </div>
-                  </div>
+                  </div> -->
                </div>
                <div class="card-body">
                   <div class="flex-wrap mb-4 d-flex align-itmes-center justify-content-between">
@@ -1666,12 +1664,12 @@
                      <p class="text-info">Life time sales</p>
                   </div>
                   <div class="grid-cols-2 d-grid gap-card">
-                     <button class="p-2 btn btn-primary text-uppercase">SUMMARY</button>
-                     <button class="p-2 btn btn-info text-uppercase">ANALYTICS</button>
+                     <button class="p-2 btn btn-info text-uppercase">출근 등록</button>
+                     <button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
                   </div>
                </div>
             </div>
-            <div class="card" data-aos="fade-up" data-aos-delay="500">
+            <!-- <div class="card" data-aos="fade-up" data-aos-delay="500">
                <div class="text-center card-body d-flex justify-content-around">
                   <div>
                      <h2 class="mb-2">750<small>K</small></h2>
@@ -1683,7 +1681,7 @@
                      <p class="mb-0 text-gray">New Customers</p>
                   </div>
                </div>
-            </div> 
+            </div>  -->
          </div>
          <div class="col-md-12 col-lg-12">
             <div class="card" data-aos="fade-up" data-aos-delay="600">
@@ -1974,4 +1972,3 @@
     
   </body>
 </html>
->>>>>>> refs/heads/master

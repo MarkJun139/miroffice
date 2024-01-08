@@ -22,6 +22,9 @@ public class ProjectService {
 	public int projectWrite(ProjectDto dto) {
 		return dao.projectWrite(dto);
 	}
+	public List<ProjectDto> projectMain(ProjectDto dto) {
+		return dao.projectMain();
+	}
 	
 	public ProjectDto projectView(int projectno) {
 		return dao.projectView(projectno);
@@ -39,5 +42,5 @@ public class ProjectService {
 	public int projectDelete(int projectno) {
 		return dao.projectDelete(projectno);
 	}
-	 
+	
 }
