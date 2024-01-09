@@ -8,12 +8,15 @@ import com.group4.miroffice.dto.Users;
 
 @Service
 public class InfoService {
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	public Users Profile(String empname) {
 		return userDao.profile(empname);
 	}
-	
+
+	public int infoUpdate(Users user) {
+			return 0;
+	}
 }

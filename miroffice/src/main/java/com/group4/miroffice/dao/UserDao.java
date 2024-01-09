@@ -15,7 +15,9 @@ public interface UserDao {
 	@Select("select * from employee where emp_name = #{empname}")
 	Users profile(String empname);
 	
-	@Update("update employee set where emp_name = #{empname}")
+	@Update("update employee set emp_phone = #{empPhone}, emp_address = #{empAddress},"
+			+ " emp_address2 = #{empempAddress2}, emp_email = #{empEmail}, emp_photo = #{empPhoto},"
+			+ " emp_pw = #{empPw} where emp_name = #{empname}")
 	int infoUpdate(Users user);
 	
 //	@Insert("insert into users values (#{id}, #{password}, #{name}, #{role}, 'T')")
