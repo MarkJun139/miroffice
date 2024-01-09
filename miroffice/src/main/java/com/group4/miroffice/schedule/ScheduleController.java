@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.google.gson.Gson;
 
 @Controller
@@ -35,11 +34,11 @@ public class ScheduleController {
 		// System.out.println(json);
 		return "schedule/schedule";
 	}
-	
-	@GetMapping("/test")
+
+	@PostMapping("/test")
 	@ResponseBody
-	public String newSchedule(@RequestParam(value="title", defaultValue = "home!!") String title) {
-		System.out.println("title"+title);
+	public String newSchedule(@RequestParam(value = "title", defaultValue = "default") String title) {
+		System.out.println("title : " + title);
 		return "test";
 	}
 }

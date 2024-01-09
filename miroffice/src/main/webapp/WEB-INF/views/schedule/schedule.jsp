@@ -79,21 +79,21 @@
                  }
                  var events = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다. (FullCalendar 기능 참조)
 
-                 var jsondata = JSON.stringify(events[events.length - 1]);
+                 var jsondata = JSON.stringify(events[events.length - 1]); // 추가된 event 가져오기
                 
                  //saveData(jsondata);
 
                  $(function saveData(jsondata) {
                 	 let sdata = JSON.stringify(events[events.length - 1]);
-                     console.log(typeof(sdata));
+                     console.log(sdata);
                 	 $.ajax({
                 		 cache:"false",
                          url: "/schedule/test", 
-                         method: "get",
+                         method: "post",
                          dataType: "text",
-                         data: "title=rhgha",
-                         //data: sdata,
-                         contentType: 'application/json'
+                         // data: sdata,
+                         data: {"title":"test","start":"2024-01-05","end":"2024-01-06"},
+                         // contentType: 'application/json'
                      })
                          .done(function (result) {
                              alert("done");
