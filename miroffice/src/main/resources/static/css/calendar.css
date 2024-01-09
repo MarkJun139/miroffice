@@ -1,0 +1,54 @@
+.fc-day-sun a {
+	color: red;
+	text-decoration: none;
+}
+
+.fc-day-sat a {
+	color: blue;
+	text-decoration: none;
+}
+
+.fc-day-mon a {
+	color: black;
+	text-decoration: none;
+}
+
+.fc-day-tue a {
+	color: black;
+	text-decoration: none;
+}
+
+.fc-day-wed a {
+	color: black;
+	text-decoration: none;
+}
+
+.fc-day-thu a {
+	color: black;
+	text-decoration: none;
+}
+
+.fc-day-fri a {
+	color: black;
+	text-decoration: none;
+}
+
+.fc-header-toolbar {
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+html,
+body {
+	overflow: hidden;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.fc-toolbar-chunk {
+	display: flex;
+	/* 일렬로 나란히 */
+	align-items: center;
+	/* 수직 가운데 정렬 */
+}
