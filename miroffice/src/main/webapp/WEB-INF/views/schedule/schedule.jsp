@@ -77,32 +77,26 @@
                          allDay: arg.allDay,
                      })
                  }
-                 var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다. (FullCalendar 기능 참조)
+                 var events = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다. (FullCalendar 기능 참조)
 
-                 var events = new Array(); // Json 데이터를 받기 위한 배열 선언
-                 for (var i = allEvent.length; i < allEvent.length + 2; i++) {
-                     var obj = new Object();     // Json 을 담기 위해 Object 선언
-                     // alert(allEvent[i]._def.title); // 이벤트 명칭 알람
-                     obj.title = allEvent[i]._def.title; // 이벤트 명칭  ConsoleLog 로 확인 가능.
-                     obj.start = allEvent[i]._instance.range.start; // 시작
-                     obj.end = allEvent[i]._instance.range.end; // 끝
-
-                     events.push(obj);
-                 }
-                 var jsondata = JSON.stringify(events);
-                 console.log(jsondata);
-                 // saveData(jsondata);
+                 var jsondata = JSON.stringify(events[events.length - 1]);
+                
+                 //saveData(jsondata);
 
                  $(function saveData(jsondata) {
-                     $.ajax({
-                         url: "/schedule",
-                         method: "post",
-                         dataType: "json",
-                         data: JSON.stringify(events),
+                	 let sdata = JSON.stringify(events[events.length - 1]);
+                     console.log(typeof(sdata));
+                	 $.ajax({
+                		 cache:"false",
+                         url: "/schedule/test", 
+                         method: "get",
+                         dataType: "text",
+                         data: "title=rhgha",
+                         //data: sdata,
                          contentType: 'application/json'
                      })
                          .done(function (result) {
-                             // alert(result);
+                             alert("done");
                          })
                          .fail(function (request, status, error) {
                               alert("실패" + error);

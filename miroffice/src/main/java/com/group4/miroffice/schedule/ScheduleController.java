@@ -11,17 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.group4.miroffice.dto.Schedule;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/schedule")
@@ -40,9 +36,10 @@ public class ScheduleController {
 		return "schedule/schedule";
 	}
 	
-//	@PostMapping
-//	public String newSchedule(String title, String start, String end) {
-//		
-//		return "schedule/schedule";
-//	}
+	@GetMapping("/test")
+	@ResponseBody
+	public String newSchedule(@RequestParam(value="title", defaultValue = "home!!") String title) {
+		System.out.println("title"+title);
+		return "test";
+	}
 }
