@@ -15,26 +15,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 캘린더 스타일 시트-->
 <link rel="stylesheet" href="/css/calendar.css">
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	    
-	    var request = $.ajax({
-	      url: "/schedule/event",
-	      method: "GET",
-	    });
-	    
-	    request.done(function(data){
-	      var calendar = new FullCalendar.Calendar(calendarEl, {
-	        initialView: 'dayGridMonth',
-	        events: data
-	      });
-	      calendar.render();		
-	    });
-	})
-</script>
 </head>
 <body>
 	<div id='calendar'></div>
 </body>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			initialView : 'dayGridMonth',
+			events :${schedule}
+		});
+		calendar.render();
+	});
+</script>
 </html>
