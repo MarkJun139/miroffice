@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.group4.miroffice.config.ProjectService;
 import com.group4.miroffice.dto.ProjectDto;
 import com.group4.miroffice.dto.Users;
+import com.oracle.wls.shaded.org.apache.xml.utils.SystemIDResolver;
 
 @Controller
 @RequestMapping("/main")
@@ -29,16 +32,6 @@ public class ProjectController {
 	@Autowired
 	ProjectService service;
 
-//	if (authentication != null) {
-//		int empno = Integer.parseInt(authentication.getName());
-//		List<Users> user = new ArrayList<Users>();
-//		user = service.userInfo(empno);
-//		System.out.println(user);
-//		System.out.println(user.get(0).getEmpNo());
-//		System.out.println(user.get(0).getDeptNo());
-//		System.out.println(user.get(0).getEmpName());
-//		System.out.println(user.get(0).getEmpRole());
-//    }
 	
 	@GetMapping("/projectlist")
 	public String projectList(Model m, Authentication authentication) {
@@ -46,16 +39,14 @@ public class ProjectController {
 		List<ProjectDto> projectList = service.projectList();
 		m.addAttribute("projectList", projectList);
 		
-//		System.out.println("권한 : " + authentication.getAuthorities());
-		
 		return "project/list";
 	}
 	
-	@GetMapping("/projectwrite")
+	@GetMapping("/teamleader/projectwrite")
 	public String projectWriteForm(Authentication authentication) {
 		return "project/write";
 	}
-	@PostMapping("/project/write")
+	@PostMapping("/teamleader/project/write")
 	public String projectWrite(ProjectDto dto, Authentication authentication) {
 		
 		if (authentication != null) {
@@ -72,18 +63,18 @@ public class ProjectController {
 			System.out.println("프로젝트 등록 실패");
 			return "project/list";
 		}
-		return "redirect:/projectlist";
+		return "redirect:/main/projectlist";
 	}
 	
 	@GetMapping("/project/view/{id}")
 	public String projectView(@PathVariable(name = "id") int id, Model m) {
-		System.out.println(id);
+		System.out.println(id + "번 프로젝트");
 		ProjectDto project = service.projectView(id);
 		m.addAttribute("project",project);
 		
 		return "project/view";
 	}
-	@GetMapping("/project/edit/{id}")
+	@GetMapping("/teamleader/project/edit/{id}")
 	public String projectEditForm(@PathVariable(name = "id") int id, Model m) {
 		
 		ProjectDto project = service.projectView(id);
@@ -92,20 +83,29 @@ public class ProjectController {
 		return "project/edit";
 	}
 	
-	@PutMapping("/project/edit")
+	@PutMapping("/teamleader/project/edit")
 	public String projectEdit(ProjectDto dto) {
 		
-		service.projectUpdate(dto);
 		
-		return "redirect:/projectlist";
+		service.projectUpdate(dto);
+		System.out.println(dto.toString());
+		return "redirect:/main/projectlist";
 	}
 	
-	@DeleteMapping("/project/delete/{id}")
+	@PutMapping("/teamleader/project/editprogress")
+	public String projectEditProgress(ProjectDto dto) {
+		service.projectUpdateProgress(dto);	
+		System.out.println(dto.toString());
+		
+		return "redirect:/main/projectlist";
+	}
+	
+	@DeleteMapping("/teamleader/project/delete/{id}")
 	public String projectDelete(@PathVariable(name = "id") int id) {
 		
 		service.projectDelete(id);
 		
-		return "redirect:/projectlist";
+		return "redirect:/main/projectlist";
 	}
 	
 }

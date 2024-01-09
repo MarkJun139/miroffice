@@ -13,11 +13,11 @@ public class LoginController {
 		return "login2";
 	}
 	
-	@GetMapping("/main")
-	public String main() {
-		System.out.println("main 요청입니다.");
-		return "main";
-	}
+//	@GetMapping("/main")
+//	public String main() {
+//		System.out.println("main 요청입니다.");
+//		return "main";
+//	}
 
 	@GetMapping("/member")
 	public String forMember() {
