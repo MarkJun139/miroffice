@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class ProjectDto {
+public class Project {
 
 	private int projectno;
 	private int empno;

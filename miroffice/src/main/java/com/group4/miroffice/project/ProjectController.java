@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.group4.miroffice.config.ProjectService;
-import com.group4.miroffice.dto.ProjectDto;
+import com.group4.miroffice.dto.Project;
 import com.group4.miroffice.dto.Users;
 import com.oracle.wls.shaded.org.apache.xml.utils.SystemIDResolver;
 
@@ -36,7 +35,7 @@ public class ProjectController {
 	@GetMapping("/projectlist")
 	public String projectList(Model m, Authentication authentication) {
 		// 권한 잇는사람은 버튼 보여주기
-		List<ProjectDto> projectList = service.projectList();
+		List<Project> projectList = service.projectList();
 		m.addAttribute("projectList", projectList);
 		
 		return "project/list";
@@ -47,7 +46,7 @@ public class ProjectController {
 		return "project/write";
 	}
 	@PostMapping("/teamleader/project/write")
-	public String projectWrite(ProjectDto dto, Authentication authentication) {
+	public String projectWrite(Project dto, Authentication authentication) {
 		
 		if (authentication != null) {
 			int empno = Integer.parseInt(authentication.getName());
@@ -69,7 +68,7 @@ public class ProjectController {
 	@GetMapping("/project/view/{id}")
 	public String projectView(@PathVariable(name = "id") int id, Model m) {
 		System.out.println(id + "번 프로젝트");
-		ProjectDto project = service.projectView(id);
+		Project project = service.projectView(id);
 		m.addAttribute("project",project);
 		
 		return "project/view";
@@ -77,14 +76,14 @@ public class ProjectController {
 	@GetMapping("/teamleader/project/edit/{id}")
 	public String projectEditForm(@PathVariable(name = "id") int id, Model m) {
 		
-		ProjectDto project = service.projectView(id);
+		Project project = service.projectView(id);
 		m.addAttribute("project", project);
 		
 		return "project/edit";
 	}
 	
 	@PutMapping("/teamleader/project/edit")
-	public String projectEdit(ProjectDto dto) {
+	public String projectEdit(Project dto) {
 		
 		
 		service.projectUpdate(dto);
@@ -93,7 +92,7 @@ public class ProjectController {
 	}
 	
 	@PutMapping("/teamleader/project/editprogress")
-	public String projectEditProgress(ProjectDto dto) {
+	public String projectEditProgress(Project dto) {
 		service.projectUpdateProgress(dto);	
 		System.out.println(dto.toString());
 		
