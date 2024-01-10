@@ -22,7 +22,7 @@ public class InfoController {
 	private InfoService service;
 	
 	@GetMapping("/info")
-	public String infoProfile(@AuthenticationPrincipal User user, Model m) {
+	public String InfoProfile(@AuthenticationPrincipal User user, Model m) {
 		
 		String empname = user.getUsername();
 		
@@ -33,8 +33,9 @@ public class InfoController {
 		return "info";
 	}
 	
+	
 	@GetMapping("/check")
-	public String infoCheck(@AuthenticationPrincipal User user, Model m) {
+	public String Infoupdate(@AuthenticationPrincipal User user, Model m) {
 		
 		String empname = user.getUsername();
 		
@@ -46,7 +47,7 @@ public class InfoController {
 	}
 	
 	@PostMapping("/check")
-	public String infoUpdate(@ModelAttribute UserUpdateDto userUpdateDto, @AuthenticationPrincipal User user, BindingResult  result) {
+	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto, @AuthenticationPrincipal User user, BindingResult  result) {
 		
 		if(result.hasErrors()) {
 			return "check";
@@ -60,7 +61,7 @@ public class InfoController {
 	    userUpdate.setEmpPhoto(userUpdateDto.getEmpPhoto());
 	    userUpdate.setEmpPw(userUpdateDto.getEmpPw());
 	    
-	    service.infoUpdate(userUpdate);
+	    service.InfoUpdate(userUpdate);
 		
 		return "redirect:/";
 	}
