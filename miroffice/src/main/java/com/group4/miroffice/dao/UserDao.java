@@ -12,7 +12,7 @@ public interface UserDao {
 	@Select("select * from employee where emp_no = #{empNo}")
 	Users findById(int empNo);
 	
-	@Select("select * from employee where emp_name = #{empname}")
+	@Select("select * from employee where emp_name = #{empName}")
 	Users profile(String empname);
 	
 	@Update("update employee set emp_phone = #{empPhone}, emp_address = #{empAddress},"
