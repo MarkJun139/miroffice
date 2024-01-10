@@ -19,16 +19,6 @@
     <title>버근가?</title>
 </head>
 <body>
-	<script>
-	$(document).on('click', '#btnSave', function(e){
-		e.preventDefault();
-		$("#form").submit();
-	});
-	$(document).on('click', '#btnList', function(e){
-		e.preventDefault();	
-		location.href="./board/getBoardList";
-	});
-	</script>
 	<form name="form" id="form" action="write" method="post">
     	<tr>
     	<h2>
@@ -41,56 +31,42 @@
     <div id="toolbar-container"></div>
 
     <!-- This container will become the editable. -->
-    
-     
-    <div>
-		<label for="content">내용</label>	
+    <div>	
 		<textarea id="appText" name="appText" placeholder="내용을 입력해 주세요"></textarea>
-		</div>
-    	<script>
-    	ClassicEditor
-            .create( document.querySelector( '#appText' ), {
-            	language: "ko",
-            	fontFamily: {
-            		options: [
-            			'default',
-            			'Arial',
-            			'궁서',
-            			'바탕',
-            			'돋움',
-            			'굴림'
-            		],
-            		supportAllValues: true
-            	},
-        		ckfinder: {
-        	        uploadUrl: '/main/file/upload' // 내가 지정한 업로드 url (post로 요청감)
-        		},
-        		alignment: {
-                    options: [ 'left', 'center', 'right' ]
-                },
-                mediaEmbed:{
-                	previewsInData: true
-                }
-                
-        	} )
-            .then( editor => {
-                const toolbarContainer = document.querySelector( '#toolbar-container' );
-
-                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-
-    	</script>
+	</div>
+    	<script src="/ckeditor/ckeditorapprove.js"></script>
+		<!--
 		<div class="bd-example">
 	        <div class="mb-3">
                 <label class="form-label" for="customFile">Upload</label>
                 <input type="file" class="form-control" id="customFile">
             </div>
         </div>
+        -->
             
     <button type="button" id="btnSave">서브밋</button>
+    <button type="button" id="btnList">취소</button>
     </form>
+    
+    <script>
+	$(document).on('click', '#btnSave', function(e){
+		e.preventDefault();
+		
+		if(document.getElementById('appTitle').value == ''){
+			alert('제목을 입력하세요');
+		}
+		else if(newEditor.getData() == ''){
+			alert('내용을 입력하세요');
+		}
+		else{
+			<!--e.preventDefault();-->
+			$("#form").submit();
+		}
+	});
+	$(document).on('click', '#btnList', function(e){
+		e.preventDefault();	
+		location.href="../approval";
+	});
+	</script>
 </body>
 </html>

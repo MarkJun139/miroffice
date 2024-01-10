@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="../../../ckeditor/translations/ko.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 
 
@@ -37,7 +39,7 @@
                      <tbody>
                      <c:forEach items="${list }" var="f">
                         <tr>
-                           <td><a href="">${f.appTitle}</a></td>
+                           <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a></td>
                            <td>${f.appText}</td>
                            <td>${f.empNo }</td>
                            <td>${f.deptNo }</td>
@@ -58,5 +60,33 @@
                   </table>
                </div>
             </div>
+            <input type="text" name="appTitle" id="appTitle">
+            <div id="toolbar-container"></div>
+        <div>	
+		<textarea id="appText" name="appText" placeholder="내용을 입력해 주세요"></textarea>
+		</div>
+    	<script src="/ckeditor/ckeditorapprove.js"></script>
+    	<script>
+		function getApproval(no) {
+			$.ajax({
+				type : "POST",
+				url : "../admin/approval/one/" + no,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			})
+			.done(function (result){
+				console.log(result)
+				document.getElementById("appTitle").value = result.appTitle
+				newEditor.setData(result.appText)
+			})
+			.fail(function(jqXHR){
+				console.log("jqXHR 오류래요")
+				console.log(jqXHR)
+			})
+			.always(function(){
+				console.log(no);
+			})
+		}
+</script>
 </body>
 </html>

@@ -19,6 +19,10 @@ public class ApprovalService {
 		return dao.approvalList(deptno);
 	}
 	
+	public ApprovalDto approvalListOne(int appno){
+		return dao.approvalListOne(appno);
+	}
+	
 	public int adminApprovalWrite(ApprovalDto dto) {
 		return dao.adminApprovalWrite(dto);
 	}

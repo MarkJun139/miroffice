@@ -11,6 +11,8 @@ public interface ApprovalDao {
 
 //	@Select("select * from approval where dept_no = #{deptno}")
 	List<ApprovalDto> approvalList(int deptno);
+	
+	ApprovalDto  approvalListOne(int appno);
 
 	int approvalSubmit(HashMap<String, Object> map);
 	

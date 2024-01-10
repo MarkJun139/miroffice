@@ -7,11 +7,13 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,10 +62,19 @@ public class ApprovalController {
 	@GetMapping("/admin/approval")
 	public String adminApprovalList(Model m) {
 		List<ApprovalDto> al = service.approvalList(99);
-		System.out.println("s"+al);
+		System.out.println("lis"+al);
 		m.addAttribute("list", al);
 		
 		return "admin/approval/list";
+	}
+	
+	@PostMapping("/admin/approval/one/{no}")
+	public ResponseEntity<ApprovalDto> adminApprovalListOne(@PathVariable(name="no") int no) {
+		ApprovalDto al = service.approvalListOne(no);
+		System.out.println("sone"+al);
+		
+		
+		return ResponseEntity.ok(al);
 	}
 	
 

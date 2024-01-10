@@ -22,4 +22,8 @@
 		select * from approval where dept_no = #{deptno}
 	</select>
 	
+	<select id="approvalListOne" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where app_no = #{appno}
+	</select>
+	
 </mapper>  
