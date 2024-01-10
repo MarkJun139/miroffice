@@ -58,7 +58,7 @@
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<form action="/main/project/edit" method="post">
+							<form action="/main/teamleader/project/edit" method="post">
 								<input type="hidden" name = "_method" value = "put"/>
 								<input type="hidden" name="projectno" value="${project.projectno}"/>
 								<input class="form-control" type="text" name="projecttitle" placeholder="프로젝트 제목" value="${project.projecttitle}"><br>

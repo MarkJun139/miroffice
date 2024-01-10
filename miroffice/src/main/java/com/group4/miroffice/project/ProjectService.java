@@ -1,4 +1,4 @@
-package com.group4.miroffice.config;
+package com.group4.miroffice.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group4.miroffice.dao.ProjectDao;
-import com.group4.miroffice.dto.ProjectDto;
+import com.group4.miroffice.dto.Project;
 import com.group4.miroffice.dto.Users;
 
 @Service
@@ -16,24 +16,24 @@ public class ProjectService {
 	@Autowired
 	ProjectDao dao;
 	
-	public List<ProjectDto> projectList(){
+	public List<Project> projectList(){
 		return dao.projectList();
 	}
-	public int projectWrite(ProjectDto dto) {
+	public int projectWrite(Project dto) {
 		return dao.projectWrite(dto);
 	}
-	public List<ProjectDto> projectMain(ProjectDto dto) {
+	public List<Project> projectMain(Project dto) {
 		return dao.projectMain();
 	}
 	
-	public ProjectDto projectView(int projectno) {
+	public Project projectView(int projectno) {
 		return dao.projectView(projectno);
 	}
 	
-	public int projectUpdateProgress(ProjectDto dto) {
+	public int projectUpdateProgress(Project dto) {
 		return dao.projectUpdateProgress(dto);
 	}
-	public int projectUpdate(ProjectDto dto) {
+	public int projectUpdate(Project dto) {
 		return dao.projectUpdate(dto);
 	}
 	public List<Users> userInfo(int empno) {

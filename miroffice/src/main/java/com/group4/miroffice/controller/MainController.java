@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.group4.miroffice.config.ProjectService;
-import com.group4.miroffice.dto.ProjectDto;
+import com.group4.miroffice.dto.Project;
+import com.group4.miroffice.project.ProjectService;
 
 @Controller
 public class MainController {
@@ -16,12 +16,13 @@ public class MainController {
 	@Autowired
 	ProjectService projectService;
 	
+	// 메인 화면 정보
+	
 	@GetMapping("/main")
 	public String main(Model m) {
 		
-		List<ProjectDto> projectList = projectService.projectList();
-		
-		
+		// 프로젝트 리스트 
+		List<Project> projectList = projectService.projectList();
 		m.addAttribute("projectList", projectList);
 		
 		
