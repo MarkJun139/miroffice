@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group4.miroffice.dao.AdminDao;
 import com.group4.miroffice.dto.Admin;
@@ -28,6 +29,18 @@ public class AdminService {
 	}
 	public List<Main> empList() {
 		return dao.empList();
+	}
+	public int deleteEmp(int empNo) {
+		return dao.deleteEmp(empNo);
+	}
+	public String getEmpPhoto(int empNo) {
+		return dao.getEmpPhoto(empNo);
+	}
+	public Admin empInfo(int empNo) {
+		return dao.empInfo(empNo);
+	}
+	public int empUpdate(Admin admin) {
+		return dao.empUpdate(admin);
 	}
 	
 }

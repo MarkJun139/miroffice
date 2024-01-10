@@ -3,6 +3,32 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <jsp:include page="../layout/navbar.jsp"></jsp:include>
 <div class="conatiner-fluid content-inner mt-n5 py-0">
+
+<!-- 팝업 창 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="teamleader/project/editprogress" method="post">
+      <div class="modal-body">
+      		<input type="hidden" name = "_method" value = "put"/>
+      		<input type="hidden" name="projectno" id="projectno" value="">  
+      		<input type="number" class="form-control" id="projectpercent" name="projectpercent" placeholder="진행률">
+      	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="submit" class="btn btn-primary">진행률 수정</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
    <div class="col-md-12 col-lg-12 mt-5">
       <div class="row">
@@ -109,9 +135,9 @@
 				const project_no = $(this).attr("project");
 				const project_percent = $(this).attr("percent");
 				const project_title = $(this).attr("title");
-				$(".project_no").val(project_no);
-				$(".project_progress").val(project_percent);
-				$(".project_title").text(project_title);
+				$("#projectno").val(project_no);
+				$("#projectpercent").val(project_percent);
+				$(".modal-title").text(project_title);
 			})
 		})
 	  </script>

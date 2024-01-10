@@ -19,14 +19,14 @@
                </div>
                <div class="card-body">
                		<div class="row">
-                 	 <form action="/main/admin/emp/addemp" class="row" method="post">
+                 	 <form action="addemp" class="row" method="post" enctype="multipart/form-data">
                  	 <div class="col-2">
                  	 	<div class="card-body">
 	                 	 	<h5 class="card-title text-center">사진 등록</h5>
 	                 	 	<label for="preview">
-	                 	 		<img class="card-img-top img-fluid" src="https://blog.kakaocdn.net/dn/bftRiB/btqAjaghSBk/5CcN9W5qyCU8HLylVYcXb1/img.png" alt="미리보기" id="preview">
+	                 	 		<img class="card-img-top img-fluid" src="https://blog.kakaocdn.net/dn/bftRiB/btqAjaghSBk/5CcN9W5qyCU8HLylVYcXb1/img.png" alt="미리보기" id="previewImage">
 	                 	 	</label>
-	               			<input type="file" class="form-control" name="empPhoto" onchange="readURL(this);" enctype="multipart/form-data">
+	               			<input type="file" class="form-control" id="empPhotoFile" name="empPhotoFile" onchange="handleFileSelect()">
                			</div>
                		 </div>
                		 <div class="col-10">
@@ -42,7 +42,7 @@
 					    <div class="form-group col-md-4">
 					      <label for="dept">부서</label>
 					      <select id="dept" class="form-control" name="deptNo">
-					        <option selected>부서 선택</option>
+					        <option disabled hidden selected>부서 선택</option>
 					        <c:forEach items="${deptList}" var="dept">
 					        	<option value="${dept.deptNo}">${dept.deptName}</option>
 					        </c:forEach>
@@ -123,16 +123,59 @@
       </div>
       
  <script>
- 	function readURL(input) {
-	  if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	  } else {
-	    document.getElementById('preview').src = "";
-	  }
+ 	function handleFileSelect() {
+	    // input 요소에서 파일 선택
+	    var fileInput = document.getElementById('empPhotoFile');
+	    var file = fileInput.files[0];
+
+	    // 파일이 선택되었을 때만 처리
+	    if (file) {
+	        // 파일의 확장자 확인
+	        var extension = file.name.split('.').pop().toLowerCase();
+
+	        // 지원하는 이미지 확장자 목록
+	        var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+	        // 이미지 확장자 확인
+	        if (allowedExtensions.includes(extension)) {
+	            // 이미지를 미리보기
+	            console.log(file);
+	            readURL(file);
+	        } else {
+	            alert('지원하지 않는 이미지 확장자입니다.');
+	        }
+	    }
 	}
+ 	function readURL(file) {
+ 		var reader = new FileReader();
+
+ 	    reader.onload = function(e) {
+ 	        document.getElementById('previewImage').src = e.target.result;
+ 	    };
+ 	    reader.readAsDataURL(file);
+	}
+ 	
+ 	/* $("#addEmployee").submit(function(e){ 
+ 		e.preventDefault();
+ 		
+ 		var formData = new FormData(this);
+ 		
+ 		$.ajax({
+ 			url: '/main/admin/emp/addemp',
+ 			type: 'POST',
+ 			data: formData,
+ 			cache: false,
+ 			contentType: false,
+ 	        processData: false,
+ 	        success: function(response) {
+ 	            console.log(response);
+ 	        },
+ 	        error: function(error) {
+ 	            console.error(error);
+ 	        }
+ 		})
+ 		
+ 	}); */
+ 	
  </script>
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
