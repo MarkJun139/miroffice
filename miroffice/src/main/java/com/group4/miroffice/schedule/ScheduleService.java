@@ -19,8 +19,7 @@ public class ScheduleService {
 		return dao.mainSchedule();
 	}
 
-	public List<Map<String, Object>> insertSchedule(String json) {
-		return dao.insertSchedule(json);
+	public void insertSchedule(Map<String, Object> newSchedule) {
 	}
 
 	public List<Schedule> updateSchedule(Schedule schedule) {

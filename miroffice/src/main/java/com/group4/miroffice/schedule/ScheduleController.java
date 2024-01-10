@@ -1,7 +1,10 @@
 package com.group4.miroffice.schedule;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,8 +40,18 @@ public class ScheduleController {
 
 	@PostMapping("/test")
 	@ResponseBody
-	public String newSchedule(@RequestParam(value = "title", defaultValue = "default") String title) {
-		System.out.println("title : " + title);
+	public String newSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
+			@RequestParam(value = "start", defaultValue = "default") Date start,
+			@RequestParam(value = "end", defaultValue = "default") Date end) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String newStart = sdf.format(start);
+		String newEnd = sdf.format(end);
+		Map<String, Object> newSchedule = new HashMap<>();
+		newSchedule.put("title", title);
+		newSchedule.put("start", newStart);
+		newSchedule.put("end", newEnd);
+		System.out.println("title: " + title + " start: " + newStart + " end: " + newEnd);
+		service.insertSchedule(newSchedule);
 		return "test";
 	}
 }

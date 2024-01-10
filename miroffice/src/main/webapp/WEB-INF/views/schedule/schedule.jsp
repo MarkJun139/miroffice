@@ -65,7 +65,7 @@
 			 eventAdd: function () { // 이벤트가 추가되면 발생하는 이벤트
                  console.log()
              },
-             select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+             select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성
             	 
             	 
                  var title = prompt('일정을 입력해주세요.');
@@ -77,30 +77,28 @@
                          allDay: arg.allDay,
                      })
                  }
-                 var events = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다. (FullCalendar 기능 참조)
-
-                 var jsondata = JSON.stringify(events[events.length - 1]); // 추가된 event 가져오기
-                
-                 //saveData(jsondata);
-
-                 $(function saveData(jsondata) {
-                	 let sdata = JSON.stringify(events[events.length - 1]);
-                     console.log(sdata);
-                	 $.ajax({
+                 var events = calendar.getEvents(); // 모든 일정을 가져옴
+                 
+                 $(function saveData(sdata) {
+                     let s = events[events.length - 1]; // 새로 추가된 일정을 가져옴
+                	  let title = s['title'];
+                	  let start = s['start'];
+                	  let end = s['end'];
+                	  
+                     $.ajax({ // 일정 추가
                 		 cache:"false",
                          url: "/schedule/test", 
                          method: "post",
                          dataType: "text",
-                         // data: sdata,
-                         data: {"title":"test","start":"2024-01-05","end":"2024-01-06"},
-                         // contentType: 'application/json'
+                         data: {"title": title ,"start": start , "end": end},
                      })
                          .done(function (result) {
-                             alert("done");
+                             alert("성공");
                          })
                          .fail(function (request, status, error) {
                               alert("실패" + error);
                          });
+                	 
                      calendar.unselect()
                  });
              },
