@@ -2,6 +2,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>미르오피스</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="/images/favicon.ico" />
+
+<!-- Library / Plugin Css Build -->
+<link rel="stylesheet" href="/css/core/libs.min.css" />
+
+<!-- Aos Animation Css -->
+<link rel="stylesheet" href="/vendor/aos/dist/aos.css" />
+
+<!-- Hope Ui Design System Css -->
+<link rel="stylesheet" href="/css/hope-ui.min.css?v=2.0.0" />
+
+<!-- Custom Css -->
+<link rel="stylesheet" href="/css/custom.min.css?v=2.0.0" />
+
+<!-- Dark Css -->
+<link rel="stylesheet" href="/css/dark.min.css" />
+
+<!-- Customizer Css -->
+<link rel="stylesheet" href="/css/customizer.min.css" />
+
+<!-- RTL Css -->
+<link rel="stylesheet" href="/css/rtl.min.css" />
 <meta charset='utf-8' />
 <!-- fullcalendar CDN -->
 <script
@@ -32,7 +59,46 @@
 <link rel="stylesheet" href="/css/calendar.css">
 </head>
 <body>
-	<div id='calendar'></div>
+	<script type="text/javascript">
+    function inputValueChange(){
+        var inputValue = document.getElementById('inputValue').value;
+        console.log(inputValue)
+    }
+    </script>
+	<div id="calendarBox">
+		<div id="calendar"></div>
+	</div>
+	<!-- modal 추가 -->
+	<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">일정 입력</h5>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="taskId" class="col-form-label">일정 제목</label> <input
+							type="text" class="form-control" id="calendar_content"
+							name="calendar_content"> <label for="taskId"
+							class="col-form-label">시작 날짜</label> <input type="date"
+							class="form-control" id="calendar_start_date"
+							name="calendar_start_date" value="$('#startStr')"> <label
+							for="taskId" class="col-form-label">종료 날짜</label> <input
+							type="date" class="form-control" id="calendar_end_date"
+							name="calendar_end_date"> <label for="taskId"
+							class="col-form-label">하루 종일</label> <input type="checkbox"
+							id="calendar_allDay" name="calendar_allDay">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="addCalendar">추가</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -44,7 +110,9 @@
 			eventSources : [ {
 				googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', // GoogleCalendarID
 				color : '#F15F5F',
+				className : "kor-holiday"
 			} ],
+			fixedWeekCount: false, // 마지막 날이 포함된 주 까지만 나타남
 			dayCellContent : function(e) { // OO'일' 제거
 				e.dayNumberText = e.dayNumberText.replace("일", "");
 			},
@@ -64,8 +132,23 @@
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-             select: function (arg) { // 일정 추가 
-                 var title = prompt('일정을 입력해주세요.');
+             select: function () { // 일정 추가
+                 $("#calendarModal").modal("show"); // modal 나타내기
+
+                 $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+                     var content = $("#calendar_content").val();
+                     var start_date = $("#calendar_start_date").val();
+                     var end_date = $("#calendar_end_date").val();
+                     var all_day = $("#calendar_allDay").val();
+                     
+                     calendar.addEvent({
+                    	 title : content,
+                    	 start : start_date,
+                    	 end : end_date,
+                    	 allDay : all_day
+                     })
+                     
+            	 /*                 var title = prompt('일정을 입력해주세요.');
                  if (title) {
                      calendar.addEvent({
                          title: title,
@@ -73,7 +156,7 @@
                          end: arg.end,
                          allDay: arg.allDay,
                      })
-                 }
+                 } */
                  var events = calendar.getEvents(); // 모든 일정을 가져옴
                  
                  $(function saveData(sdata) {
@@ -94,10 +177,11 @@
                          })
                          .fail(function (request, status, error) {
                               alert("실패" + error);
-                         });
+                         })
                 	 
                      calendar.unselect()
-                 });
+                 })
+                 })
              },
              eventDrop: function (info){ // 일정 수정
                  console.log(info);
@@ -128,7 +212,7 @@
             		 info.event.remove();
             	 }
              	
-             	 console.log(info.event);
+             	 // console.log(info.event);
              	 
              	 var events = new Array();
              	 var obj = new Object();
