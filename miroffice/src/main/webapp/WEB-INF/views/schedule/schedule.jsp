@@ -57,17 +57,14 @@
 			selectable : true, // 달력 일자 드래그 설정가능
 			nowIndicator : true, // 현재 시간 마크
 			dayMaxEvents : true, // 이벤트가 오버되면 + 몇 개식으로 표현
+			droppable: true, // 일정 드래그 앤 드롭
+			editable: true, // droppable 작동 하기 위해 필요
 			headerToolbar : { // 헤더에 표시할 툴바
 				left : 'today',
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-			 eventAdd: function () { // 이벤트가 추가되면 발생하는 이벤트
-                 console.log()
-             },
-             select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성
-            	 
-            	 
+             select: function (arg) { // 일정 추가 
                  var title = prompt('일정을 입력해주세요.');
                  if (title) {
                      calendar.addEvent({
@@ -85,9 +82,9 @@
                 	  let start = s['start'];
                 	  let end = s['end'];
                 	  
-                     $.ajax({ // 일정 추가
+                     $.ajax({
                 		 cache:"false",
-                         url: "/schedule/test", 
+                         url: "/schedule/insert", 
                          method: "post",
                          dataType: "text",
                          data: {"title": title ,"start": start , "end": end},
@@ -101,6 +98,54 @@
                 	 
                      calendar.unselect()
                  });
+             },
+             eventDrop: function (info){ // 일정 수정
+                 console.log(info);
+                 if(confirm("'"+ info.event.title +"'일정을 변경하시겠습니까?")){
+                 }
+                 var events = new Array();
+                 var obj = new Object();
+
+                 obj.title = info.event._def.title;
+                 obj.start = info.event._instance.range.start;
+                 obj.end = info.event._instance.range.end;
+                 events.push(obj);
+
+                 console.log(events);
+                 $(function deleteData() {
+                     $.ajax({
+                         url: "/schedule/update",
+                         method: "PATCH",
+                         dataType: "text",
+                         data: {"title": obj.title ,"start": obj.start , "end": obj.end},
+                         // contentType: 'application/json',
+                     })
+                 })
+             },
+             eventClick : function (info) { // 일정 삭제
+            	 // console.log(info);
+            	 if(confirm("'" + info.event.title + "' 일정을 삭제하시겠습니까?")){
+            		 info.event.remove();
+            	 }
+             	
+             	 console.log(info.event);
+             	 
+             	 var events = new Array();
+             	 var obj = new Object();
+             	 obj.title = info.event._def.title;
+              	 obj.start = info.event._instance.range.start;
+              	 events.push(obj);
+              	 
+              	 // console.log(obj.title);
+              	 $(function deleteData(){
+              		 $.ajax({
+              			 url: "schedule/delete",
+              			 method: "delete",
+              			 dataType: "text",
+              			 data : {"title" : obj.title, "start" : obj.start}
+              		 })
+              	 })
+             
              },
 			events :${schedule}, // DB에 저장되어 있는 일정 불러오기
 		});

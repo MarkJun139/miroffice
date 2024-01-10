@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group4.miroffice.dao.ScheduleDao;
-import com.group4.miroffice.dto.Schedule;
 
 @Service
 public class ScheduleService {
@@ -19,14 +18,15 @@ public class ScheduleService {
 		return dao.mainSchedule();
 	}
 
-	public void insertSchedule(Map<String, Object> newSchedule) {
+	public int insertSchedule(Map<String, Object> newSchedule) {	
+		return dao.insertSchedule(newSchedule);
 	}
 
-	public List<Schedule> updateSchedule(Schedule schedule) {
+	public int updateSchedule(Map<String, Object> schedule) {
 		return dao.updateSchedule(schedule);
 	}
 
-	public int deleteSchedule(int scheduleNo) {
-		return dao.deleteSchedule(scheduleNo);
+	public int deleteSchedule(Map<String, Object> delSchedule) {
+		return dao.deleteSchedule(delSchedule);
 	}
 }
