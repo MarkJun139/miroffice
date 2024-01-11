@@ -59,15 +59,9 @@
 <link rel="stylesheet" href="/css/calendar.css">
 </head>
 <body>
-	<script type="text/javascript">
-    function inputValueChange(){
-        var inputValue = document.getElementById('inputValue').value;
-        console.log(inputValue)
-    }
-    </script>
-	<div id="calendarBox">
-		<div id="calendar"></div>
-	</div>
+	<!-- 캘린더 영역 -->
+	<div id="calendar"></div>
+	
 	<!-- 일정 추가 modal -->
 	<div class="modal fade" id="scheduleInsert" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,53 +72,60 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label> <input
-							type="text" class="form-control" id="calendar_content"
-							name="calendar_content"> <label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
-							class="form-control" id="calendar_start_date"
-							name="calendar_start_date" value="$('#startStr')"> <label
-							for="taskId" class="col-form-label">종료 날짜</label> <input
-							type="date" class="form-control" id="calendar_end_date"
-							name="calendar_end_date"> <label for="taskId"
-							class="col-form-label">하루 종일</label> <input type="checkbox"
-							id="calendar_allDay" name="calendar_allDay">
+						<label for="taskId" class="col-form-label">일정 제목</label> 
+						<input type="text" class="form-control" id="schedule_title" name="schedule_title">
+						<label for="taskId" class="col-form-label">시작 날짜</label> 
+						<input type="date" class="form-control" id="schedule_start" name="schedule_start">
+						<label for="taskId" class="col-form-label">종료 날짜</label>
+						<input type="date" class="form-control" id="schedule_end" name="schedule_end">
+						<label for="taskId" class="col-form-label">일정 종류</label>
+						<select class="form-control" id="schedule_type" name="schedule_type">
+							<option value="red">출장</option>
+							<option value="green">휴가</option>
+							<option value="blue">기타</option>
+						</select>
+						<label for="taskId" class="col-form-label">종일</label>
+						<input type="checkbox" id="schedule_allDay" name="schedule_allDay">
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="addCalendar">추가</button>
+					<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
 				</div>
 			</div>
 		</div>
 	</div>
-		<!-- 일정 수정, 삭제 modal -->
-	<div class="modal fade" id="updateAndDeleteModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	
+	<!-- 일정 수정, 삭제 modal -->
+	<div class="modal fade" id="updateAndDeleteModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">일정 수정 & 삭제</h5>
+					<h5 class="modal-title" id="exampleModalLabel">일정 수정, 삭제</h5>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label> <input
-							type="text" class="form-control" id="calendar_content"
-							name="calendar_content"> <label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
-							class="form-control" id="calendar_start_date"
-							name="calendar_start_date" value="$('#startStr')"> <label
-							for="taskId" class="col-form-label">종료 날짜</label> <input
-							type="date" class="form-control" id="calendar_end_date"
-							name="calendar_end_date"> <label for="taskId"
-							class="col-form-label">하루 종일</label> <input type="checkbox"
-							id="calendar_allDay" name="calendar_allDay">
+						<label for="taskId" class="col-form-label">일정 제목</label>
+						<input type="text" class="form-control" id="update_schedule_title" name="update_schedule_title">
+						<label for="taskId" class="col-form-label">시작 날짜</label>
+						<input type="date" class="form-control" id="update_schedule_start" name="update_schedule_start">
+						<label for="taskId" class="col-form-label">종료 날짜</label>
+						<input type="date" class="form-control" id="update_schedule_end" name="update_schedule_end">
+						<label for="taskId" class="col-form-label">일정 종류</label>
+						<select class="form-control" id="update_schedule_type" name="update_schedule_type">
+							<option value="red">출장</option>
+							<option value="green">휴가</option>
+							<option value="blue">기타</option>
+						</select>
+						<label for="taskId" class="col-form-label">종일</label>
+						<input type="checkbox" id="update_schedule_allDay" name="update_schedule_allDay">
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer d-flex bd-highlight mb-3">
+					<button type="button" class="btn btn-danger me-auto" id="deleteSchedule">삭제</button>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="updateSchedule">추가</button>
-					<button type="button" class="btn btn-primary" id="deleteSchedule">삭제</button>
+					<button type="button" class="btn btn-primary" id="updateSchedule">수정</button>
 				</div>
 			</div>
 		</div>
@@ -162,140 +163,111 @@
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-             select: function () { // 일정 추가
+             select: function (data) { // 일정 추가
                  $("#scheduleInsert").modal("show"); // modal 나타내기
-
+                 $('#scheduleInsert').on('shown.bs.modal', function (e) {
+                		$(this).find('.form-control')[0].reset();
+                    })
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
-                     var content = $("#calendar_content").val();
-                     var start_date = $("#calendar_start_date").val();
-                     var end_date = $("#calendar_end_date").val();
-                     var all_day = $("#calendar_allDay").val();
+                     var title = $("#schedule_title").val();
+                     var start_date = $("#schedule_start").val();
+                     var end_date = $("#schedule_end").val();
+                     var all_day = $("#schedule_allDay").val();
+                     var color = $("#schedule_type").val();
                      
-                     calendar.addEvent({
-                    	 title : content,
+                     calendar.addEvent({ // fullcalendar에 이벤트 추가
+                    	 title : title,
                     	 start : start_date,
                     	 end : end_date,
-                    	 allDay : all_day
+                    	 allDay : all_day,
+                    	 color : color
                      })
-                     
-                 var events = calendar.getEvents(); // 모든 일정을 가져옴
-                 
-                 $(function saveData(sdata) {
-                     let s = events[events.length - 1]; // 새로 추가된 일정을 가져옴
-                	  let title = s['title'];
-                	  let start = s['start'];
-                	  let end = s['end'];
-                	  
+
+                 $(function saveData(sdata) { // DB에 이벤트 저장
                      $.ajax({
                 		 cache:"false",
                          url: "/schedule/insert", 
                          method: "post",
                          dataType: "text",
-                         data: {"title": title ,"start": start , "end": end},
+                         data: {
+                        	 "title": title,
+                        	 "start": start_date,
+                        	 "end": end_date,
+                        	 "allDay": all_day,
+                        	 "color" : color
+                        	 }
                      })
                          .done(function (result) {
-                             alert("성공");
-                             $("#calendarModal").modal("hide");
+                             alert("일정을 등록하였습니다.");
+                             $("#scheduleInsert").modal("hide");
                          })
                          .fail(function (request, status, error) {
-                              alert("실패" + error);
+                              alert("일정 등록에 실패하였습니다." + error);
+                              $("#scheduleInsert").modal("hide");
                          })
                 	 
                      calendar.unselect()
                	  })
                  })
              },
-/*              eventDrop: function (info){ // 일정 수정
-                 console.log(info);
-                 if(confirm("'"+ info.event.title +"'일정을 변경하시겠습니까?")){
-                 }
-                 var events = new Array();
-                 var obj = new Object();
-
-                 obj.title = info.event._def.title;
-                 obj.start = info.event._instance.range.start;
-                 obj.end = info.event._instance.range.end;
-                 events.push(obj);
-
-                 console.log(events);
-                 $(function deleteData() {
-                     $.ajax({
-                         url: "/schedule/update",
-                         method: "PATCH",
-                         dataType: "text",
-                         data: {"title": obj.title ,"start": obj.start , "end": obj.end},
-                         // contentType: 'application/json',
-                     })
-                 })
-             }, */
              eventClick : function (info) { // 일정 클릭 시
                  $("#updateAndDeleteModal").modal("show"); // modal 나타내기
-
+				
                  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
-                     var content = $("#calendar_content").val();
-                     var start_date = $("#calendar_start_date").val();
-                     var end_date = $("#calendar_end_date").val();
-                     var all_day = $("#calendar_allDay").val();
+                	 // console.log(info);
+                     if(confirm("일정을 변경하시겠습니까?")){
+                     }
                      
-                     calendar.addEvent({
-                    	 title : content,
-                    	 start : start_date,
-                    	 end : end_date,
-                    	 allDay : all_day
-                     })
+                     var title = $("#update_schedule_title").val();
+                     var start_date = $("#update_schedule_start").val();
+                     var end_date = $("#update_schedule_end").val();
+                     var all_day = true;
 
-                 var events = calendar.getEvents(); // 모든 일정을 가져옴
-                 
-                 $(function saveData(sdata) {
-                     let s = events[events.length - 1]; // 새로 추가된 일정을 가져옴
-                	  let title = s['title'];
-                	  let start = s['start'];
-                	  let end = s['end'];
-                	  
-                     $.ajax({
-                		 cache:"false",
-                         url: "/schedule/insert", 
-                         method: "post",
-                         dataType: "text",
-                         data: {"title": title ,"start": start , "end": end},
+                     console.log(info);
+                     $(function updateData() {
+                         $.ajax({
+                        	 cache:"false",
+                             url: "/schedule/update",
+                             method: "PATCH",
+                             dataType: "text",
+                             data: {"title": title ,"start": start_date , "end": end_date, "allDay" : all_day},
+                         })
+                             .done(function (result) {
+                             alert("일정을 수정하였습니다.");
+                             $("#updateAndDeleteModal").modal("hide");
+                             location.reload();
                      })
-                         .done(function (result) {
-                             alert("성공");
-                             $("#calendarModal").modal("hide");
+                    })
+                 });
+                 
+                  $("#deleteSchedule").on("click",function(){  // modal의 삭제 버튼 클릭 시
+                	 // console.log(info);
+                     if(confirm("일정을 삭제하시겠습니까?")){
+                     }
+                     var events = new Array();
+                 	 var obj = new Object();
+                 	 obj.title = info.event._def.title;
+                  	 obj.start = info.event._instance.range.start;
+                  	 events.push(obj);
+
+                  	 $(function deleteData(){
+                  		 $.ajax({
+                  			 cache:"false",
+                  			 url: "schedule/delete",
+                  			 method: "delete",
+                  			 dataType: "text",
+                  			 data : {"title" : obj.title, "start" : obj.start}
                          })
-                         .fail(function (request, status, error) {
-                              alert("실패" + error);
+                     
+                             .done(function (result) {
+                             alert("일정을 삭제하였습니다.");
+                             $("#updateAndDeleteModal").modal("hide");
+                             location.reload();
                          })
-                	 
-                     calendar.unselect()
-                	 })
+                  	})
                  })
              },
-/*             	 // console.log(info);
-            	 if(confirm("'" + info.event.title + "' 일정을 삭제하시겠습니까?")){
-            		 info.event.remove();
-            	 }
-             	
-             	 // console.log(info.event);
-             	 
-             	 var events = new Array();
-             	 var obj = new Object();
-             	 obj.title = info.event._def.title;
-              	 obj.start = info.event._instance.range.start;
-              	 events.push(obj);
-              	 
-              	 // console.log(obj.title);
-              	 $(function deleteData(){
-              		 $.ajax({
-              			 url: "schedule/delete",
-              			 method: "delete",
-              			 dataType: "text",
-              			 data : {"title" : obj.title, "start" : obj.start}
-              		 })
-              	 })
-             
-             }, */
-			events :${schedule}, // DB에 저장되어 있는 일정 불러오기
+			events : ${schedule}, // DB에 저장되어 있는 일정 불러오기
 		});
 		calendar.render();
 	});
