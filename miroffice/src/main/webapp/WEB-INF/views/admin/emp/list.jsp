@@ -2,6 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
+<script>
+	$(function(){
+		$("head > title").text("사원 관리");
+	})
+</script>
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <!-- 팝업 창 -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -13,7 +18,7 @@
       </div>
       
       <div class="modal-body">
-      <span class="empNameBody"></span> 님을 정말 삭제하겠습니까?
+      <h4><span style="font-weight: bold;" class="empNameBody"></span> 님을 정말 삭제하시겠습니까?</h4>
       </div>
       <div class="modal-footer">
       <form action="" method="post" class="empDeleteForm">
@@ -35,7 +40,7 @@
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="600">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
-                  	 <div class="col-12 row text-center">
+                  	 <div class="col-12 row text-center align-items-center">
                   	 	<div class="col-6 text-start">
                      		<h1 class="mb-2 card-title">사원 관리</h1>
                      	</div>
@@ -131,7 +136,7 @@
 				
 				$("#empNo").val(empNo);
 				$(".empNameBody").text(empName);
-				$(".empDeleteForm").attr("action","../emp/delete/" + empNo);
+				$(".empDeleteForm").attr("action","/main/admin/emp/delete/" + empNo);
 			})
 		})
 	  </script>

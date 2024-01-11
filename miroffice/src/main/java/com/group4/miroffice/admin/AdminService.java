@@ -42,5 +42,14 @@ public class AdminService {
 	public int empUpdate(Admin admin) {
 		return dao.empUpdate(admin);
 	}
+	public int deleteDept(int deptNo) {
+		return dao.deleteDept(deptNo);
+	}
+	public int addDept(Dept dept) {
+		return dao.addDept(dept);
+	}
+	public int updateDept(Dept dept) {
+		return dao.updateDept(dept);
+	}
 	
 }
