@@ -5,14 +5,25 @@
 <mapper namespace="com.group4.miroffice.approval.ApprovalDao"> 
 	
 	<insert id="approvalSubmit" parameterType="com.group4.miroffice.approval.ApprovalDto">
-		insert into approval
-		(
-		<foreach item="value" index="key" collection="map"
-		)
 		insert into approval (emp_no, dept_no, app_title, app_text, app_date, app_admin1,
-		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, app_approvaefinal)
-		values (#{emp_no}, emp_no, dept_no, app_title, app_text, app_date, app_admin1,
-		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, #{app_approvaefinal})
+		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, app_approvefinal)
+		values (#{empNo}, #{deptNo}, #{appTitle}, #{appText}, now(), #{appAdmin1},
+		#{appAdmin2}, #{appAdmin3}, #{appApprove1}, #{appApprove2}, #{appApprove3}, #{appApprovefinal})
 	</insert>
+	
+	<insert id="adminApprovalWrite" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		insert into approval (emp_no, dept_no, app_title, app_text, app_date, app_admin1,
+		app_admin2, app_admin3, app_approve1, app_approve2, app_approve3, app_approvefinal)
+		values (9999003, 99, #{appTitle}, #{appText}, now(), #{appAdmin1},
+		#{appAdmin2}, #{appAdmin3}, #{appApprove1}, #{appApprove2}, #{appApprove3}, #{appApprovefinal})
+	</insert>
+	
+	<select id="approvalList" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where dept_no = #{deptno}
+	</select>
+	
+	<select id="approvalListOne" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where app_no = #{appno}
+	</select>
 	
 </mapper>  

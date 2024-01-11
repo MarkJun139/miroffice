@@ -8,21 +8,22 @@ import lombok.Data;
 
 @Data
 public class ApprovalDto {
-
-	private int app_admin1;
-	private int app_admin2;
-	private int app_admin3;
-	private boolean app_approve1;
-	private boolean app_approve2;
-	private boolean app_approve3;
-	private boolean app_approvefinal;
-	private Date app_date;
-	private int app_no;
-	private String app_text;
-	private String app_title;
-	private int dept_no;
-	private int emp_no;
 	
-	private List<Map<String,Object>> dataList;
-	private Map<String,Object> headerMap;
+	private int appNo;
+	private int empNo;
+	private int deptNo;
+	private String appTitle;
+	private String appText;
+	private Date appDate;
+
+	private Integer appAdmin1;
+	private Integer appAdmin2;
+	private Integer appAdmin3;
+	private Boolean appApprove1;
+	private Boolean appApprove2;
+	private Boolean appApprove3;
+	private Boolean appApprovefinal;
+
+
+
 }
