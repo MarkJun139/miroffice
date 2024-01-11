@@ -13,5 +13,6 @@ public class Main {
 	private String empRank;
 	private int empSal;
 	private Role empRole;
+	private String empPhoto;
 	
 }

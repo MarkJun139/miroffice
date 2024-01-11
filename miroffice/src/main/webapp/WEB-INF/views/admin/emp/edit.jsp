@@ -18,22 +18,33 @@
                   </div>
                </div>
                <div class="card-body">
-                 	 <form action="/main/admin/emp/editemp" method="post">
+                  <div class="row">
+                 	 <form action="/main/admin/emp/editemp" class="row" method="post" enctype="multipart/form-data">
+                 	 <div class="col-2">
+                 	 	<div class="card-body">
+	                 	 	<h5 class="card-title text-center">사진 등록</h5>
+	                 	 	<label for="preview">
+	                 	 		<img class="card-img-top" src="/images${emp.empPhoto}" width="150px" height="170px" alt="미리보기" id="previewImage">
+	                 	 	</label>
+	               			<input type="file" class="form-control" id="empPhotoFile" name="empPhotoFile" onchange="handleFileSelect()" value="${emp.empPhoto}">
+               			</div>
+               		 </div>
+                 	 <div class="col-10">
                  	 <div class="row">
+                 	 	<input type="hidden" name="empNo" value="${emp.empNo}">
 					    <div class="form-group col-md-4">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름">
+					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름" value="${emp.empName}">
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="birth">생년월일</label>
-					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일">
+					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일" value="${emp.empBirth}">
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="dept">부서</label>
 					      <select id="dept" class="form-control" name="deptNo">
-					        <option selected>부서 선택</option>
 					        <c:forEach items="${deptList}" var="dept">
-					        	<option value="${dept.deptNo}">${dept.deptName}</option>
+					        	<option <c:if test="${dept.deptNo} == ${emp.deptNo}"> selected </c:if>    value="${dept.deptNo}">${dept.deptName}</option>
 					        </c:forEach>
 					      </select>
 					    </div>
@@ -41,56 +52,60 @@
 					  <div class="row">
 					    <div class="form-group col-md-4">
 					      <label for="phoneNumber">전화번호</label>
-					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외">
+					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외" value="${emp.empPhone}">
 					    </div>
 					    <div class="form-group col-md-8">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com">
+					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com" value="${emp.empEmail }">
 					    </div>
 					  </div>
 					  <div class="row">
 					  	<div class="form-group col-md-6">
 						    <label for="Address">주소</label>
-						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소">
+						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소" value="${emp.empAddress}">
 						</div>
 						<div class="form-group col-md-6">
 						    <label for="Address2">상세주소</label>
-						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소">
+						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}">
 					    </div>
 					  </div>
 					  <div class="row">
 					    <div class="form-group col-md-3">
 					      <label for="sal">연봉(단위 만)</label>
-					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉">
+					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}">
 					    </div>
-					    <div class="form-group col-md-4">
+					    <div class="form-group col-md-3">
 					      <label for="hireDate">입사일</label>
-					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일">
+					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일" value="${emp.empHiredate}">
 					    </div>
-					    <div class="form-group col-md-5">
+					    <div class="form-group col-md-3">
 					      <label for="empJob">직군</label>
-					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군">
+					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군" value="${emp.empJob}">
+					    </div>
+					    <div class="form-group col-md-3">
+					      <label for="empRank">직급</label>
+					      <input type="text" class="form-control" id="empRank" name="empRank" placeholder="직급" value="${emp.empRank}">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					  	권한 부여
 					    <div class="form-check">
-						  <input class="form-check-input" type="radio" name="empRole" id="user" value="ROLE_USER" checked>
+						  <input class="form-check-input" type="radio" name="empRole" id="user" value="ROLE_USER" <c:if test="${emp.empRole == 'ROLE_USER'}"> checked </c:if> />
 						  <label class="form-check-label" for="user">
 						    사원
 						  </label>
 						</div>
 						<div class="form-check">
-						  <input class="form-check-input" type="radio" name="empRole" id="teamleader" value="ROLE_TEAMLEADER">
+						  <input class="form-check-input" type="radio" name="empRole" id="teamleader" value="ROLE_TEAMLEADER" <c:if test="${emp.empRole == 'ROLE_TEAMLEADER'}"> checked </c:if> />
 						  <label class="form-check-label" for="teamleader">
 						    팀장
 						  </label>
 						</div>
 					  </div>
-					  
+					  </div>
 					  <button type="submit" class="col-md-12 btn btn-primary pull-right">사원 등록</button>
 					  </form>
-						
+					</div>
                </div>
             </div>
          </div>
@@ -106,4 +121,61 @@
               </svg>
           </a>
       </div>
+  <script>
+ 	function handleFileSelect() {
+	    // input 요소에서 파일 선택
+	    var fileInput = document.getElementById('empPhotoFile');
+	    var file = fileInput.files[0];
+
+	    // 파일이 선택되었을 때만 처리
+	    if (file) {
+	        // 파일의 확장자 확인
+	        var extension = file.name.split('.').pop().toLowerCase();
+
+	        // 지원하는 이미지 확장자 목록
+	        var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+	        // 이미지 확장자 확인
+	        if (allowedExtensions.includes(extension)) {
+	            // 이미지를 미리보기
+	            console.log(file);
+	            readURL(file);
+	        } else {
+	            alert('지원하지 않는 이미지 확장자입니다.');
+	        }
+	    }
+	}
+ 	function readURL(file) {
+ 		var reader = new FileReader();
+
+ 	    reader.onload = function(e) {
+ 	        document.getElementById('previewImage').src = e.target.result;
+ 	    };
+ 	    reader.readAsDataURL(file);
+	}
+ 	
+ 	/* $("#addEmployee").submit(function(e){ 
+ 		e.preventDefault();
+ 		
+ 		var formData = new FormData(this);
+ 		
+ 		$.ajax({
+ 			url: '/main/admin/emp/addemp',
+ 			type: 'POST',
+ 			data: formData,
+ 			cache: false,
+ 			contentType: false,
+ 	        processData: false,
+ 	        success: function(response) {
+ 	            console.log(response);
+ 	        },
+ 	        error: function(error) {
+ 	            console.error(error);
+ 	        }
+ 		})
+ 		
+ 	}); */
+ 	
+ </script>     
+      
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>

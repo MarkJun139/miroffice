@@ -3,6 +3,31 @@
 <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
 <div class="conatiner-fluid content-inner mt-n5 py-0">
+<!-- 팝업 창 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">사원 삭제</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+      <span class="empNameBody"></span> 님을 정말 삭제하겠습니까?
+      </div>
+      <div class="modal-footer">
+      <form action="" method="post" class="empDeleteForm">
+       		<input type="hidden" name="_method" value="delete" />
+       		<input type="hidden" name="empNo" id="empNo"/>
+       		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+       		<input type="submit" class="btn btn-danger project_popup" value="사원 삭제">
+       	</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
    <div class="col-md-12 col-lg-12 mt-5">
       <div class="row">
@@ -25,6 +50,7 @@
                      <table id="basic-table" class="table mb-0 table-striped" role="grid">
                         <thead>
                            <tr>
+                              <th></th>
                               <th>사원번호</th>
                               <th>사원이름</th>
                               <th>부서명</th>
@@ -39,6 +65,9 @@
                         <tbody>
                         	<c:forEach items="${empList}" var="emp" >
 	                           <tr>
+	                           	  <td class="col-md-1">
+	                                 <img src="/images${emp.empPhoto}" width="125px" height="150px" alt="사원 사진">	 
+	                              </td>
 	                              <td class="col-md-1">
 	                                 ${emp.empNo}
 	                              </td>
@@ -51,7 +80,7 @@
 	                              <td class="col-md-2">
 	                                 ${emp.empJob}
 	                              </td>
-	                              <td class="col-md-2">
+	                              <td class="col-md-1">
 	                                 ${emp.empRank}
 	                              </td>
 	                              <td class="col-md-1">
@@ -66,10 +95,12 @@
 	                                 </c:if>
 	                              </td>
 	                              <td class="col-md-1">
+	                              	
 	                              	<a href="../emp/edit/${emp.empNo}" class="btn btn-primary project_popup">정보 수정</a>
+	                              	
 	                              </td>
 	                              <td class="col-md-1">
-	                              	<a href="../emp/delete/${emp.empNo}" class="btn btn-danger project_popup">사원 삭제</a>
+	                              	<button type="button" class="btn btn-danger delete_popup" data-bs-toggle="modal" data-bs-target="#exampleModal" empNo="${emp.empNo}" empName="${emp.empName}">사원 삭제</button>
 	                              </td>
 	                           </tr>
                            </c:forEach>
@@ -91,5 +122,17 @@
               </svg>
           </a>
       </div>
-      
+      <script>
+
+		$(function(){
+			$(".delete_popup").on("click", function(){
+				const empNo = $(this).attr("empNo");
+				const empName = $(this).attr("empName");
+				
+				$("#empNo").val(empNo);
+				$(".empNameBody").text(empName);
+				$(".empDeleteForm").attr("action","../emp/delete/" + empNo);
+			})
+		})
+	  </script>
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
