@@ -39,7 +39,7 @@ public class AdminController {
 	AdminService adminService;
 	
 	
-	
+	// ---------------- 사원 관리 ---------------- //
 	@GetMapping("/admin/emp/list")
 	public String AdminEmpList(Model m) {
 		
@@ -58,27 +58,6 @@ public class AdminController {
 		
 		return "admin/emp/add";
 	}
-	
-	// 이미지 테스트
-	/*
-	 * @PostMapping("/admin/emp/img") public String
-	 * imageTest(@RequestPart("empPhotoFile") MultipartFile file) throws IOException
-	 * {
-	 * 
-	 * String dir = "src/main/resources/static/images/emp_photo/";
-	 * 
-	 * Path uploadPath = Paths.get(dir); if (!Files.exists(uploadPath)) {
-	 * Files.createDirectories(uploadPath); }
-	 * 
-	 * String filePath = dir + file.getOriginalFilename(); Path destination =
-	 * Paths.get(filePath); Files.write(destination, file.getBytes());
-	 * 
-	 * System.out.println(file); System.out.println(file.getName());
-	 * System.out.println(file.getContentType());
-	 * System.out.println(file.getOriginalFilename());
-	 * 
-	 * return "redirect:/main/admin/emp/list"; }
-	 */
 	
 	@PostMapping("/admin/emp/addemp")
 	public String AdminEmpAdd(@RequestParam("empHiredate") String hiredate,@RequestParam("deptNo") int deptno, @RequestPart("empPhotoFile") MultipartFile file,Admin admin) throws IOException {
@@ -113,7 +92,7 @@ public class AdminController {
 	        if (!Files.exists(uploadPath)) {
 	            Files.createDirectories(uploadPath);
 	        }
-	        // 파일 저장
+	        // 사진 저장
 			String filePath = dir + fileName;
 	        Path destination = Paths.get(filePath);
 	        Files.write(destination, file.getBytes());
@@ -149,9 +128,47 @@ public class AdminController {
 	}
 	
 	@PutMapping("/admin/emp/editemp")
-	public String AdminEmpUpdate(@RequestPart("empPhotoFile") MultipartFile file, Admin admin) {
+	public String AdminEmpUpdate(@RequestPart("empPhotoFile") MultipartFile file,@RequestParam("empNo") int empNo , Admin admin) throws IOException {
 		
+		// 기존 사진
+		String empPhoto = adminService.getEmpPhoto(empNo);
+		// 사진이 업로드 됐을 때
+		if(!file.isEmpty()) {
+			// 기존 사진 삭제
+			Path path = Paths.get("src/main/resources/static/images" + empPhoto);
+			Files.deleteIfExists(path);
+			
+			// 사진 업로드 // 
+			String fileType = file.getOriginalFilename();
+		    String extension = "";
+		    int lastDotIndex = fileType.lastIndexOf('.');
+		    
+		    if (lastDotIndex > 0) {
+		        extension = fileType.substring(lastDotIndex + 1).toLowerCase();
+		    }
+			List<String> imageContainType = Arrays.asList("jpg", "jpeg", "png");
+			
+			if(imageContainType.contains(extension)) {
+				String dir = "src/main/resources/static/images/emp_photo/"; // 사원 이미지 경로
+				String fileName = empNo + "." + extension; // 파일 이름
+				
+				Path uploadPath = Paths.get(dir); // 폴더 없으면 생성
+		        if (!Files.exists(uploadPath)) {
+		            Files.createDirectories(uploadPath);
+		        }
+		        // 사진 저장
+				String filePath = dir + fileName;
+		        Path destination = Paths.get(filePath);
+		        Files.write(destination, file.getBytes());
+		        admin.setEmpPhoto("/emp_photo/" + fileName);
+			}
+			
+		} else { // 사진이 업로드 안됐을 때
+			admin.setEmpPhoto(empPhoto);
+		}
+		adminService.empUpdate(admin);
 		
+		System.out.println("사원 정보 수정 : " + admin);
 		
 		return "redirect:/main/admin/emp/list";
 	}
@@ -167,4 +184,42 @@ public class AdminController {
 		adminService.deleteEmp(id);
 		return "redirect:/main/admin/emp/list";
 	}
+	
+	// ---------------- 사원 관리 ---------------- //
+	
+	// ---------------- 부서 관리 ---------------- //
+	
+	
+	@GetMapping("/admin/dept/list")
+	public String AdminDeptList(Model m) {
+		
+		List<Dept> deptList = adminService.deptList();
+		m.addAttribute("deptList",deptList);
+		
+		return "admin/dept/list";
+	}
+	@PostMapping("/admin/dept/adddept")
+	public String AdminDeptAdd(Dept dept) {
+		
+		adminService.addDept(dept);
+		
+		return "redirect:/main/admin/dept/list";
+	}
+	
+	@PutMapping("/admin/dept/update")
+	public String AdminDeptUpdate(@RequestParam("deptNo") int deptNo ,Dept dept) {
+		
+		adminService.updateDept(dept);
+		
+		return "redirect:/main/admin/dept/list";
+	}
+	
+	@DeleteMapping("/admin/dept/delete")
+	public String AdminDeptDelete(@RequestParam("deptNo") int deptNo ) {
+		 
+		adminService.deleteDept(deptNo);
+		
+		return "redirect:/main/admin/dept/list";
+	}
+	
 }

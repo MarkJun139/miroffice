@@ -13,11 +13,11 @@ import org.apache.ibatis.annotations.Update;
 public interface ScheduleDao {
 
 	@Select("select sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
-			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay from schedule")
+			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color from schedule")
 	List<Map<String, Object>> mainSchedule();
 
-	@Insert("insert into schedule (sche_title, sche_start_date, sche_end_date) "
-			+ "values (#{title}, #{start}, #{end})")
+	@Insert("insert into schedule (sche_title, sche_start_date, sche_end_date, sche_allDay, color) "
+			+ "values (#{title}, #{start}, #{end}, #{allDay}, #{color})")
 	int insertSchedule(Map<String, Object> newSchedule);
 
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end} where sche_title = #{title}")

@@ -26,6 +26,5 @@ public class Users implements UserDetails {
 	private String empPhoto;
 	private Role empRole;
 	private int empDayoff;
-	private String empJob;
-	
+	private String empJob;	
 }

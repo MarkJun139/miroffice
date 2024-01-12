@@ -12,6 +12,9 @@ public class InfoService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public Users Profile(String empname) {
 		return userDao.profile(empname);
@@ -20,4 +23,14 @@ public class InfoService {
 	public int InfoUpdate(Users user) {
 		return userDao.infoUpdate(user);
 	}
+
+	public boolean PasswordCheck(Users user, Users password) {
+
+		if (passwordEncoder.matches(password.getEmpPw(), user.getEmpPw())) {
+			return true;
+		}
+		return false;
+
+	}
+
 }

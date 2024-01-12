@@ -33,9 +33,31 @@ public class InfoController {
 		return "info";
 	}
 	
-	
 	@GetMapping("/check")
-	public String Infoupdate(@AuthenticationPrincipal User user, Model m) {
+	public String Password() {
+		
+		return "check";
+	}
+	
+	@PostMapping("/check")
+	public String PasswordCheck(@AuthenticationPrincipal User user, @ModelAttribute Users password) {
+		
+		String empname = user.getUsername();
+		
+		Users users = service.Profile(empname);
+		
+		boolean access = service.PasswordCheck(users, password);
+		
+		if(access == true) {
+			return "update";
+		}
+		
+		return "check";
+	}
+	
+	
+	@GetMapping("/update")
+	public String UpdatePage(@AuthenticationPrincipal User user, Model m) {
 		
 		String empname = user.getUsername();
 		
@@ -43,15 +65,11 @@ public class InfoController {
 		
 		m.addAttribute("user", users);
 		
-		return "check";
+		return "update";
 	}
 	
-	@PostMapping("/check")
-	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto, @AuthenticationPrincipal User user, BindingResult  result) {
-		
-		if(result.hasErrors()) {
-			return "check";
-		}
+	@PostMapping("/update")
+	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto, @AuthenticationPrincipal User user) {
 		
 		Users userUpdate = new Users();
 		userUpdate.setEmpPhone(userUpdateDto.getEmpPhone());
