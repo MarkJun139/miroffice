@@ -1,11 +1,15 @@
-package com.group4.miroffice.dto;
+package com.group4.miroffice.user;
 
 import java.util.Date;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.group4.miroffice.dto.Role;
 
 import lombok.Data;
 
 @Data
-public class Users {
+public class Users implements UserDetails {
 	
 	private int empNo;
 	private int deptNo;

@@ -2,12 +2,15 @@ package com.group4.miroffice.approval;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,13 +18,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.group4.miroffice.config.SecurityUser;
+import com.group4.miroffice.user.UserService;
+import com.group4.miroffice.user.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,36 +38,136 @@ public class ApprovalController {
 	@Autowired
 	ApprovalService service;
 
+	@Autowired
+	UserService us;
+	
 	@GetMapping("/approval")
-	public String approval() {
+	public String approval(Model m, @AuthenticationPrincipal SecurityUser userLog) {
+		Users dto = userLog.getUsers();
+		
+		List<ApprovalDto> al = service.approval(dto.getEmpNo());
+		
+		for(ApprovalDto res: al){
+			System.out.println(res.getEmpNo());
+			Users user = us.findById(res.getEmpNo());
+			String uName = user.getEmpName();
+			res.setEmpName(uName);
+		}
+		
+		
+		
+		
+		System.out.println("lis"+al);
+		
+		m.addAttribute("list", al);
+		
+		return "approval/mylist";
+	}
+	
+	@GetMapping("/approval/list")
+	public String approvalList(Model m, @AuthenticationPrincipal SecurityUser userLog) {
+		List<ApprovalDto> al = service.approvalList(99);
+		
+		for(ApprovalDto res: al){
+			System.out.println(res.getEmpNo());
+			Users user = us.findById(res.getEmpNo());
+			String uName = user.getEmpName();
+			res.setEmpName(uName);
+		}
+		Users dto = userLog.getUsers();
+		List<Users> ul = us.findMyDeptEmp(dto.getDeptNo());
+		
+		Iterator<Users> it = ul.iterator();
+		while(it.hasNext()) {
+			Users item = it.next();
+			if(item.getEmpNo() == dto.getEmpNo()) {
+				it.remove();
+			}
+		}
+//		for(Users res2: ul) {
+//			if(res2.getEmpNo() == dto.getEmpNo()) {
+//				ul.removeIf(appNo -> item.equals());
+//			}
+//		}
+//		ul.removeIf(item -> item.equals(""))
+		System.out.println("lis"+al);
+		
+		m.addAttribute("list", al);
+		m.addAttribute("ulist", ul);
 		return "approval/list";
 	}
 	
+	@GetMapping("/approval/oneapprove/{no}")
+	public String approvalOneApprove(@PathVariable(name="no") int no, Model m) {
+		ApprovalDto al = service.approvalListOne(no);
+		List<Users> ul = new ArrayList<Users>();
+		ul.add(us.findMyApproveEmp(al.getAppAdmin1()));
+		
+		Iterator<Users> it = ul.iterator();
+		while(it.hasNext()) {
+			Users item = it.next();
+//			if(item.getEmpNo() == dto.getEmpNo()) {
+//				it.remove();
+//			}
+		}
+		return "approval/ld";
+	}
+
+	@PostMapping("/approval/one/{no}")
+	public ResponseEntity<ApprovalDto> ApprovalListOne(@PathVariable(name="no") int no) {
+		ApprovalDto al = service.approvalListOne(no);
+		
+		System.out.println("에이피"+al);
+		
+		return ResponseEntity.ok(al);
+	}
+	
 	@PostMapping("/approval/submit")
-	public String approvalSubmit() {
-		service.approvalSubmit(null);
-		return "approval/submit";
+	public String approvalSubmit(@ModelAttribute ApprovalDto dto, RedirectAttributes rttr, @AuthenticationPrincipal SecurityUser user) throws Exception {
+//		System.out.println("submit입니다"+dto);
+		Users userD = user.getUsers();
+//		System.out.println("submit유저에오"+userD);
+		
+		dto.setEmpNo(userD.getEmpNo());
+		dto.setDeptNo(userD.getDeptNo());
+		System.out.println("submit입니다"+dto);
+		service.approvalSubmit(dto);
+		return "redirect:/main/approval";
 	}
 	
-	@GetMapping("/approval/current")
+//	@GetMapping("/userload")
+//	public Users userLoad(@AuthenticationPrincipal SecurityUser user) {
+//		Users dto = user.getUsers();
+//		return dto;
+//	}
+	
+	@GetMapping("/teamleader/approval/current")
 	public String approvalCurrent() {
-		return "approval/current";
+		return "teamleader/approval/current";
 	}
 	
-	@PostMapping("/approval/yes")
+	@PostMapping("/teamleader/approval/yes")
 	public String approvalYes() {
-		return "approval/current";
+		return "redirect:/main/teamleader/approval/current";
 	}
 	
-	@PostMapping("/approval/no")
+	@PostMapping("/teamleader/approval/no")
 	public String approvalNo() {
-		return "approval/current";
+		return "redirect:/main/teamleader/approval/current";
 	}
 	
 
 	@GetMapping("/admin/approval")
 	public String adminApprovalList(Model m) {
 		List<ApprovalDto> al = service.approvalList(99);
+		
+		for(ApprovalDto res: al){
+			System.out.println(res.getEmpNo());
+			Users user = us.findById(res.getEmpNo());
+			String uName = user.getEmpName();
+			res.setEmpName(uName);
+		}
+		
 		System.out.println("lis"+al);
 		m.addAttribute("list", al);
 		
@@ -71,30 +177,32 @@ public class ApprovalController {
 	@PostMapping("/admin/approval/one/{no}")
 	public ResponseEntity<ApprovalDto> adminApprovalListOne(@PathVariable(name="no") int no) {
 		ApprovalDto al = service.approvalListOne(no);
-		System.out.println("sone"+al);
 		
+		System.out.println("sone"+al);
 		
 		return ResponseEntity.ok(al);
 	}
 	
 
-	@RequestMapping("/admin/approval/write2")
+	@GetMapping("/admin/approval/write")
 	public String adminApprovalWrite2() {
-		return "admin/approval/write2";
+		return "admin/approval/write";
 	}
 	
 	
-	@RequestMapping("/admin/approval/write")
+	@PostMapping("/admin/approval/write")
 	public String adminApprovalWrite(@ModelAttribute ApprovalDto dto, RedirectAttributes rttr) throws Exception {
 		System.out.println(dto);
 		service.adminApprovalWrite(dto);
-		return "admin/approval/write2";
+		return "redirect:/main/admin/approval";
 	}
 	
 	
-	@PutMapping("/admin/approval/edit")
-	public String adminApprovalEdit() {
-		return "admin/approval/edit";
+	@PostMapping("/admin/approval/edit")
+	public String adminApprovalEdit(@ModelAttribute ApprovalDto dto) {
+		System.out.println("준식"+dto);
+		System.out.println(service.adminApprovalEdit(dto));
+		return "redirect:/main/admin/approval";
 	}
 	
 	@DeleteMapping("/admin/approval/delete")

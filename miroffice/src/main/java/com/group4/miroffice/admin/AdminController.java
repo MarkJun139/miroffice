@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.group4.miroffice.dto.Admin;
 import com.group4.miroffice.dto.Dept;
 import com.group4.miroffice.dto.Main;
-import com.group4.miroffice.dto.Users;
+import com.group4.miroffice.user.Users;
 
 @Controller
 @RequestMapping("/main")

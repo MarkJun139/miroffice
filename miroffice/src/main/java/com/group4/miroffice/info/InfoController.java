@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.group4.miroffice.dto.UserUpdateDto;
-import com.group4.miroffice.dto.Users;
+import com.group4.miroffice.user.Users;
 
 @Controller
 @RequestMapping("/main")

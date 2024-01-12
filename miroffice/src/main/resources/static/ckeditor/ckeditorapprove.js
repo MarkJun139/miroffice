@@ -15,9 +15,10 @@ ClassicEditor
 		ckfinder: {
 	        uploadUrl: '/main/file/upload' // 내가 지정한 업로드 url (post로 요청감)
 		},
-		alignment: {
-            options: [ 'left', 'center', 'right' ]
-        },
+		image: {
+			toolbar: [ 'imageStyle:alignBlockLeft', 'imageStyle:alignCenter', 'imageStyle:alignBlockRight', '|', 'linkImage' , 'imageTextAlternative' ]
+		},
+	
         mediaEmbed:{
         	previewsInData: true
         }

@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.group4.miroffice.dto.Project;
-import com.group4.miroffice.dto.Users;
-// import com.oracle.wls.shaded.org.apache.xml.utils.SystemIDResolver;
+import com.group4.miroffice.user.Users;
 
 @Controller
 @RequestMapping("/main")

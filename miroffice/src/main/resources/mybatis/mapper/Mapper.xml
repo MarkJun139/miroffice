@@ -18,6 +18,31 @@
 		#{appAdmin2}, #{appAdmin3}, #{appApprove1}, #{appApprove2}, #{appApprove3}, #{appApprovefinal})
 	</insert>
 	
+	<update id="adminApprovalEdit" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval
+		<set>
+			<if test="appTitle != null">app_title = #{appTitle},</if>
+			<if test="appText != null">app_text = #{appText},</if>
+			<if test="appDate != null">app_date = now(),</if>
+		</set>
+		where app_no = #{appNo}
+	</update>
+	
+	<update id="adminApprovalEdit2" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval
+		<set>
+			<if test="appTitle != null">app_title = #{appTitle},</if>
+			<if test="appText != null">app_text = #{appText},</if>
+			<if test="appDate != null">app_date = now(),</if>
+		</set>
+		
+		where app_no = #{appNo}
+	</update>
+	
+	<select id="approval" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where emp_no = #{empno} and app_admin1 is not null
+	</select>
+	
 	<select id="approvalList" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
 		select * from approval where dept_no = #{deptno}
 	</select>

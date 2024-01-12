@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.group4.miroffice.dto.Project;
-import com.group4.miroffice.dto.Users;
+import com.group4.miroffice.user.Users;
 
 @Mapper
 public interface ProjectDao {

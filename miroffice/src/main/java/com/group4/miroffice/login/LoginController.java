@@ -1,17 +1,28 @@
 package com.group4.miroffice.login;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.group4.miroffice.config.SecurityUser;
+import com.group4.miroffice.user.Users;
 
 
 @Controller
 public class LoginController {
 
 	@GetMapping("/")
+	public String index2() {
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/login")
 	public String index() {
 		System.out.println("index 요청입니다.");
 		return "login2";
 	}
+	
+
 	
 //	@GetMapping("/main")
 //	public String main() {

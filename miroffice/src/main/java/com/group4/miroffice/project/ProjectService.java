@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.group4.miroffice.dao.ProjectDao;
 import com.group4.miroffice.dto.Project;
-import com.group4.miroffice.dto.Users;
+import com.group4.miroffice.user.Users;
 
 @Service
 public class ProjectService {

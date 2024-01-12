@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ApprovalDto {
 	
-	private int appNo;
+	private Integer appNo;
 	private int empNo;
 	private int deptNo;
 	private String appTitle;
@@ -23,6 +23,8 @@ public class ApprovalDto {
 	private Boolean appApprove2;
 	private Boolean appApprove3;
 	private Boolean appApprovefinal;
+	
+	private String empName;
 
 
 

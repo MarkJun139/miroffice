@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.group4.miroffice.dto.Project;
-import com.group4.miroffice.dto.Users;
 import com.group4.miroffice.project.ProjectService;
+import com.group4.miroffice.user.Users;
 
 @Controller
 public class MainController {
@@ -34,15 +34,5 @@ public class MainController {
 		System.out.println("main 요청입니다.");
 		return "main";
 	}
-	@GetMapping("/main/*")
-	public String nav(Model m) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int empno = Integer.parseInt(authentication.getName());
-		
-		List<Users> user = projectService.userInfo(0);
-		
-		m.addAttribute("user", user);
-		
-		return "layout/navbar";
-	}
+
 }

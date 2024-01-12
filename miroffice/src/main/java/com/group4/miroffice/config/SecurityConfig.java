@@ -26,13 +26,13 @@ public class SecurityConfig {
 		http.csrf(AbstractHttpConfigurer::disable)
 
 		.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-
+		
 		.authorizeHttpRequests(auth -> {
 			try {
-				auth.requestMatchers(new AntPathRequestMatcher("/member/**")).authenticated()
-						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-						.requestMatchers(new AntPathRequestMatcher("/teamleader/**")).hasRole("TEAMLEADER")
-						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("TEAMLEADER", "ADMIN")
+				auth.requestMatchers(new AntPathRequestMatcher("/main/**")).authenticated()
+						.requestMatchers(new AntPathRequestMatcher("/main/admin/**")).hasRole("ADMIN")
+						.requestMatchers(new AntPathRequestMatcher("/main/teamleader/**")).hasRole("TEAMLEADER")
+						.requestMatchers(new AntPathRequestMatcher("/main/admin/**")).hasAnyRole("TEAMLEADER", "ADMIN")
 						.anyRequest().permitAll();
 						
 	
@@ -44,7 +44,7 @@ public class SecurityConfig {
 
 		).formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/main", true)
 		).logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.invalidateHttpSession(true).logoutSuccessUrl("/login"))
+		.invalidateHttpSession(true).logoutSuccessUrl("/main"))
  		.exceptionHandling((exception)-> exception.accessDeniedPage("/accessDenied"));
 
 		http.userDetailsService(boardUserDetailsService);
