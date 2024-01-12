@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.group4.miroffice.dto.Dept;
 import com.group4.miroffice.user.UserDao;
 import com.group4.miroffice.user.Users;
 
@@ -31,6 +32,10 @@ public class InfoService {
 		}
 		return false;
 
+	}
+	
+	public Dept Dept(int deptNo){
+		return userDao.dept(deptNo);
 	}
 
 }
