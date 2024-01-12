@@ -23,9 +23,6 @@ public class MainController {
 	
 	@GetMapping("/main")
 	public String main(Model m) {
-		
-		
-		
 		// 프로젝트 리스트 
 		List<Project> projectList = projectService.projectList();
 		m.addAttribute("projectList", projectList);
@@ -34,15 +31,5 @@ public class MainController {
 		System.out.println("main 요청입니다.");
 		return "main";
 	}
-	@GetMapping("/main/*")
-	public String nav(Model m) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int empno = Integer.parseInt(authentication.getName());
-		
-		List<Users> user = projectService.userInfo(0);
-		
-		m.addAttribute("user", user);
-		
-		return "layout/navbar";
-	}
+	
 }

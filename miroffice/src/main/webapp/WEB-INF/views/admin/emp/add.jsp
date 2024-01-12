@@ -155,27 +155,6 @@
  	    reader.readAsDataURL(file);
 	}
  	
- 	/* $("#addEmployee").submit(function(e){ 
- 		e.preventDefault();
- 		
- 		var formData = new FormData(this);
- 		
- 		$.ajax({
- 			url: '/main/admin/emp/addemp',
- 			type: 'POST',
- 			data: formData,
- 			cache: false,
- 			contentType: false,
- 	        processData: false,
- 	        success: function(response) {
- 	            console.log(response);
- 	        },
- 	        error: function(error) {
- 	            console.error(error);
- 	        }
- 		})
- 		
- 	}); */
  	
  </script>
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>

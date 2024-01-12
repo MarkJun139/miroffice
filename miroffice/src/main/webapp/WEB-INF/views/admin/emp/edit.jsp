@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
+
+
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <div class="row">
    <div class="col-md-12 col-lg-12 mt-5">
@@ -20,6 +22,7 @@
                <div class="card-body">
                   <div class="row">
                  	 <form action="/main/admin/emp/editemp" class="row" method="post" enctype="multipart/form-data">
+                 	 <input type="hidden" name = "_method" value = "put"/>
                  	 <div class="col-2">
                  	 	<div class="card-body">
 	                 	 	<h5 class="card-title text-center">사진 등록</h5>
@@ -34,17 +37,17 @@
                  	 	<input type="hidden" name="empNo" value="${emp.empNo}">
 					    <div class="form-group col-md-4">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름" value="${emp.empName}">
+					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름" value="${emp.empName}" readonly>
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="birth">생년월일</label>
-					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일" value="${emp.empBirth}">
+					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일" value="${emp.empBirth}" readonly>
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="dept">부서</label>
 					      <select id="dept" class="form-control" name="deptNo">
 					        <c:forEach items="${deptList}" var="dept">
-					        	<option <c:if test="${dept.deptNo} == ${emp.deptNo}"> selected </c:if>    value="${dept.deptNo}">${dept.deptName}</option>
+					        	<option value="${dept.deptNo}" <c:if test="${dept.deptNo == emp.deptNo}"> selected </c:if>>${dept.deptName}</option>
 					        </c:forEach>
 					      </select>
 					    </div>
@@ -52,35 +55,35 @@
 					  <div class="row">
 					    <div class="form-group col-md-4">
 					      <label for="phoneNumber">전화번호</label>
-					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외" value="${emp.empPhone}">
+					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외" value="${emp.empPhone}" readonly>
 					    </div>
 					    <div class="form-group col-md-8">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com" value="${emp.empEmail }">
+					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com" value="${emp.empEmail }" readonly>
 					    </div>
 					  </div>
 					  <div class="row">
 					  	<div class="form-group col-md-6">
 						    <label for="Address">주소</label>
-						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소" value="${emp.empAddress}">
+						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소" value="${emp.empAddress}" readonly>
 						</div>
 						<div class="form-group col-md-6">
 						    <label for="Address2">상세주소</label>
-						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}">
+						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}" readonly>
 					    </div>
 					  </div>
 					  <div class="row">
 					    <div class="form-group col-md-3">
 					      <label for="sal">연봉(단위 만)</label>
-					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}">
+					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}" >
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="hireDate">입사일</label>
-					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일" value="${emp.empHiredate}">
+					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일" value="${emp.empHiredate}" readonly>
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empJob">직군</label>
-					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군" value="${emp.empJob}">
+					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군" value="${emp.empJob}" readonly>
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empRank">직급</label>
