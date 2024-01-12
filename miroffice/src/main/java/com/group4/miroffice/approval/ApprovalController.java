@@ -130,14 +130,7 @@ public class ApprovalController {
 		return ResponseEntity.ok(ul);
 	}
 
-	@PostMapping("/approval/one/{no}")
-	public ResponseEntity<ApprovalDto> ApprovalListOne(@PathVariable(name="no") int no) {
-		ApprovalDto al = service.approvalListOne(no);
-		
-		System.out.println("에이피"+al);
-		
-		return ResponseEntity.ok(al);
-	}
+
 	
 	@PostMapping("/approval/submit")
 	public String approvalSubmit(@ModelAttribute ApprovalDto dto, RedirectAttributes rttr, @AuthenticationPrincipal SecurityUser user) throws Exception {
@@ -149,7 +142,7 @@ public class ApprovalController {
 		dto.setDeptNo(userD.getDeptNo());
 		System.out.println("submit입니다"+dto);
 		service.approvalSubmit(dto);
-		return "redirect:/main/approval";
+		return "redirect:/main/approval?status=2";
 	}
 	
 //	@GetMapping("/userload")
@@ -189,6 +182,15 @@ public class ApprovalController {
 		m.addAttribute("list", al);
 		
 		return "admin/approval/list";
+	}
+	
+	@PostMapping("/approval/one/{no}")
+	public ResponseEntity<ApprovalDto> ApprovalListOne(@PathVariable(name="no") int no) {
+		ApprovalDto al = service.approvalListOne(no);
+		
+		System.out.println("에이피"+al);
+		
+		return ResponseEntity.ok(al);
 	}
 	
 	@PostMapping("/admin/approval/one/{no}")
