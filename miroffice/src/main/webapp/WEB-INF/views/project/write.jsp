@@ -21,34 +21,37 @@
                   </div>
                </div>
                <div class="card-body">
-               		
                  	 <form action="/main/teamleader/project/write" method="post">
                  	 <div class="row">
 					    <div class="form-group col-md-12">
 					      <label for="name">프로젝트 이름</label>
-					      <input class="form-control" type="text" name="projecttitle" placeholder="프로젝트 제목">
+					      <input class="form-control projecttitle" type="text" name="projecttitle" placeholder="프로젝트 제목">
 					    </div>
 					    <div class="form-group col-md-12">
 					      <label for="birth">프로젝트 내용</label>
-					      <textarea class="form-control"  style="height:600px" name="projecttext" placeholder="프로젝트 내용"></textarea>
+					      <textarea class="form-control projecttext"  style="height:600px" name="projecttext" placeholder="프로젝트 내용"></textarea>
 					    </div>
 					    <div class="form-group col-md-6">
 					      <label for="birth">프로젝트 시작일</label>
-					      <input class="form-control" type="date" name="projectstart" placeholder="프로젝트 시작일">
+					      <input class="form-control projectstart" type="date" name="projectstart" placeholder="프로젝트 시작일">
 					    </div>
 					    <div class="form-group col-md-6">
 					      <label for="birth">프로젝트 종료일</label>
-					      <input class="form-control" type="date" name="projectend" placeholder="프로젝트 종료일">
+					      <input class="form-control projectend" type="date" name="projectend" placeholder="프로젝트 종료일">
 					    </div>
 					  </div>
 					  <button type="submit" class="col-md-12 btn btn-primary pull-right">프로젝트 등록</button>
 					  </form>
 					</div>
-               
-            </div>
+            	</div>
          </div>
       </div>
    </div>
+</div>
+<div class="bd-example">
+    <div class="form-group">
+        <input type="text" class="form-control date_flatpicker" placeholder="Date Picker">
+    </div>
 </div>
 </div>
 <div class="btn-download">
@@ -59,4 +62,25 @@
         </svg>
     </a>
 </div>
+<script>
+
+	$(function(){
+		$("form button").click(function(e) {
+			const title = $(".projecttitle").val();
+			const text = $(".projecttext").val();
+			const start = $(".projectstart").val();
+			const end = $(".projectend").val();
+			if(!title || !text || !start || !end ){
+				alert("내용을 입력하세요");
+				e.preventDefault();
+			} else if(end < start){
+				alert("시작일이 종료일보다 클 수 없습니다");
+				e.preventDefault();
+			}
+		})
+	})
+
+
+</script>
+
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
