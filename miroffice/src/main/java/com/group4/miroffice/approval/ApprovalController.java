@@ -48,6 +48,32 @@ public class ApprovalController {
 		int st = Integer.parseInt(status);
 		System.out.println(st);
 		if(st == 1) {
+			List<ApprovalDto> al = service.approvalList(99);
+			
+			for(ApprovalDto res: al){
+				System.out.println(res.getEmpNo());
+				Users user = us.findById(res.getEmpNo());
+				String uName = user.getEmpName();
+				res.setEmpName(uName);
+			}
+			Users dto = userLog.getUsers();
+			List<Users> ul = us.findMyDeptEmp(dto.getDeptNo());
+			
+			Iterator<Users> it = ul.iterator();
+			while(it.hasNext()) {
+				Users item = it.next();
+				if(item.getEmpNo() == dto.getEmpNo()) {
+					it.remove();
+				}
+			}
+
+			System.out.println("lis"+al);
+			
+			m.addAttribute("list", al);
+			m.addAttribute("ulist", ul);
+			return "approval/list";
+		}
+		if(st == 2) {
 			Users dto = userLog.getUsers();
 			
 			List<ApprovalDto> al = service.approval(dto.getEmpNo());
@@ -68,39 +94,12 @@ public class ApprovalController {
 		return "approval/mylist";
 
 	}
-	
-	@GetMapping("/approval/list")
-	public String approvalList(Model m, @AuthenticationPrincipal SecurityUser userLog) {
-		List<ApprovalDto> al = service.approvalList(99);
-			
-		for(ApprovalDto res: al){
-			System.out.println(res.getEmpNo());
-			Users user = us.findById(res.getEmpNo());
-			String uName = user.getEmpName();
-			res.setEmpName(uName);
-		}
-		Users dto = userLog.getUsers();
-		List<Users> ul = us.findMyDeptEmp(dto.getDeptNo());
-		
-		Iterator<Users> it = ul.iterator();
-		while(it.hasNext()) {
-			Users item = it.next();
-			if(item.getEmpNo() == dto.getEmpNo()) {
-				it.remove();
-			}
-		}
-//		for(Users res2: ul) {
-//			if(res2.getEmpNo() == dto.getEmpNo()) {
-//				ul.removeIf(appNo -> item.equals());
-//			}
-//		}
-//		ul.removeIf(item -> item.equals(""))
-		System.out.println("lis"+al);
-		
-		m.addAttribute("list", al);
-		m.addAttribute("ulist", ul);
-		return "approval/list";
-	}
+//	
+//	@GetMapping("/approval/list")
+//	public String approvalList(Model m, @AuthenticationPrincipal SecurityUser userLog) {
+//
+//		return "approval/list";
+//	}
 	
 	@PostMapping("/approval/oneapprove/{no}")
 	public ResponseEntity<List<Users>> approvalOneApprove(@PathVariable(name="no") int no) {
