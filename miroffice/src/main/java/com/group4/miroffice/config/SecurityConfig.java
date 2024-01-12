@@ -42,9 +42,9 @@ public class SecurityConfig {
 			}
 		}
 
-		).formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/main", true)
+		).formLogin((formLogin) -> formLogin.loginPage("/").defaultSuccessUrl("/main", true)
 		).logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.invalidateHttpSession(true).logoutSuccessUrl("/login"))
+		.invalidateHttpSession(true).logoutSuccessUrl("/"))
  		.exceptionHandling((exception)-> exception.accessDeniedPage("/accessDenied"));
 
 		http.userDetailsService(boardUserDetailsService);
@@ -57,17 +57,5 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-/*	
-	@Autowired
-	public void authenticate(AuthenticationManagerBuilder auth) throws Exception{
-		auth.inMemoryAuthentication().withUser("manager")
-		.password("{noop}manager123")
-		.roles("MANAGER");
-		
-		auth.inMemoryAuthentication().withUser("admin")
-		.password("{noop}admin123")
-		.roles("ADMIN");
-	}
-*/
 }
 
