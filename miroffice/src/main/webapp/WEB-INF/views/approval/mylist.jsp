@@ -48,6 +48,9 @@
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
 	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
+	            <input type="text" id="approve1" readonly>
+	            <input type="text" id="approve2" readonly>
+	            <input type="text" id="approve3" readonly>
 	            <div id="toolbar-container"></div>
 		        <div>	
 				<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
@@ -93,8 +96,26 @@
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				})
-				.done(function (result){
-					console.log("들어왔어!");
+				.done(function (result2){
+					console.log(result2.length);
+					let index = 1;
+					let approve = null;
+					result2.forEach(function(string){
+						if(string.empApprove==true)
+							approve = "승인"
+						if(string.empApprove==false)
+							approve = "거절"
+						if(string.empApprove==null)
+							approve = "미승인";
+						if(index == 1)
+							document.getElementById("approve1").value = string.empRank + " " + string.empName + " "+ approve 
+						if(index == 2)
+							document.getElementById("approve2").value = string.empRank + " " + string.empName + " "+ approve
+						if(index == 3)
+							document.getElementById("approve3").value = string.empRank + " " + string.empName + " "+ approve
+						console.log(string.empName)
+						index++
+					})
 				})
 				.fail(function(jqXHR){
 					console.log("실패했어!");

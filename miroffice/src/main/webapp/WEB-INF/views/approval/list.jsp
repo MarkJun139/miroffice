@@ -55,7 +55,7 @@
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
 		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<button type="button" id="btnList">취소</button>
+	   			<button type="button" id="btnList" class="btn btn-pirmary">결재</button>
 	   			
 
 				

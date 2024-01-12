@@ -9,7 +9,7 @@ import com.group4.miroffice.dto.Role;
 import lombok.Data;
 
 @Data
-public class Users implements UserDetails {
+public class Users {
 	
 	private int empNo;
 	private int deptNo;
@@ -27,4 +27,6 @@ public class Users implements UserDetails {
 	private Role empRole;
 	private int empDayoff;
 	private String empJob;	
+	
+	private Boolean empApprove;
 }

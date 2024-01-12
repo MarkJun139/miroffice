@@ -2,9 +2,10 @@ package com.group4.miroffice.approval;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -41,33 +42,37 @@ public class ApprovalController {
 	@Autowired
 	UserService us;
 	
+	
 	@GetMapping("/approval")
-	public String approval(Model m, @AuthenticationPrincipal SecurityUser userLog) {
-		Users dto = userLog.getUsers();
-		
-		List<ApprovalDto> al = service.approval(dto.getEmpNo());
-		
-		for(ApprovalDto res: al){
-			System.out.println(res.getEmpNo());
-			Users user = us.findById(res.getEmpNo());
-			String uName = user.getEmpName();
-			res.setEmpName(uName);
+	public String approval(Model m, @AuthenticationPrincipal SecurityUser userLog, @RequestParam(value="status", defaultValue="1") String status) {
+		int st = Integer.parseInt(status);
+		System.out.println(st);
+		if(st == 1) {
+			Users dto = userLog.getUsers();
+			
+			List<ApprovalDto> al = service.approval(dto.getEmpNo());
+			
+			for(ApprovalDto res: al){
+				System.out.println(res.getEmpNo());
+				Users user = us.findById(res.getEmpNo());
+				String uName = user.getEmpName();
+				res.setEmpName(uName);
+			}
+				
+			System.out.println("lis"+al);
+			
+			m.addAttribute("list", al);
+			
 		}
 		
-		
-		
-		
-		System.out.println("lis"+al);
-		
-		m.addAttribute("list", al);
-		
 		return "approval/mylist";
+
 	}
 	
 	@GetMapping("/approval/list")
 	public String approvalList(Model m, @AuthenticationPrincipal SecurityUser userLog) {
 		List<ApprovalDto> al = service.approvalList(99);
-		
+			
 		for(ApprovalDto res: al){
 			System.out.println(res.getEmpNo());
 			Users user = us.findById(res.getEmpNo());
@@ -97,20 +102,33 @@ public class ApprovalController {
 		return "approval/list";
 	}
 	
-	@GetMapping("/approval/oneapprove/{no}")
-	public String approvalOneApprove(@PathVariable(name="no") int no, Model m) {
+	@PostMapping("/approval/oneapprove/{no}")
+	public ResponseEntity<List<Users>> approvalOneApprove(@PathVariable(name="no") int no) {
 		ApprovalDto al = service.approvalListOne(no);
-		List<Users> ul = new ArrayList<Users>();
-		ul.add(us.findMyApproveEmp(al.getAppAdmin1()));
+
+		Map<String, Integer> map = new HashMap<>();
+		map.put("u1", al.getAppAdmin1());
+		map.put("u2", al.getAppAdmin2());
+		map.put("u3", al.getAppAdmin3());
 		
-		Iterator<Users> it = ul.iterator();
-		while(it.hasNext()) {
-			Users item = it.next();
-//			if(item.getEmpNo() == dto.getEmpNo()) {
-//				it.remove();
-//			}
+		List<Users> ul = us.findMyApproveEmp(map);
+		
+		int index = 0;
+		for(Users dto: ul) {
+			if (index == 0) {
+				dto.setEmpApprove(al.getAppApprove1());
+			}
+			else if (index == 1) {
+				dto.setEmpApprove(al.getAppApprove2());;
+			}
+			else if (index ==2) {
+				dto.setEmpApprove(al.getAppApprove3());
+			}
+			index++;
 		}
-		return "approval/ld";
+		
+		System.out.println("하이하이" + ul);
+		return ResponseEntity.ok(ul);
 	}
 
 	@PostMapping("/approval/one/{no}")

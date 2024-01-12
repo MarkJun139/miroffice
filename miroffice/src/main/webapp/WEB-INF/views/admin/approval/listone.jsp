@@ -5,7 +5,7 @@
 
 
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <div id ="approvalOne">
   <input type="text" th:value="${dto.appTitle }">
   <input type="text" th:value="${dto.appText }">

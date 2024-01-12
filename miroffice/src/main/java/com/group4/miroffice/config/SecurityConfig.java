@@ -29,10 +29,9 @@ public class SecurityConfig {
 		
 		.authorizeHttpRequests(auth -> {
 			try {
-				auth.requestMatchers(new AntPathRequestMatcher("/member/**")).authenticated()
-						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-						.requestMatchers(new AntPathRequestMatcher("/teamleader/**")).hasRole("TEAMLEADER")
-						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("TEAMLEADER", "ADMIN")
+				auth.requestMatchers(new AntPathRequestMatcher("/main/**")).authenticated()
+						.requestMatchers(new AntPathRequestMatcher("/main/admin/**")).hasRole("ADMIN")
+						.requestMatchers(new AntPathRequestMatcher("/main/teamleader/**")).hasRole("TEAMLEADER")
 						.anyRequest().permitAll();
 						
 	
@@ -71,3 +70,4 @@ public class SecurityConfig {
 */
 }
 
+	

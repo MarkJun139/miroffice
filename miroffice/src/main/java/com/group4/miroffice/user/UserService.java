@@ -1,6 +1,7 @@
 package com.group4.miroffice.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class UserService {
 		return ud.findMyDeptEmp(deptNo);
 	}
 	
-	public Users findMyApproveEmp(int empNo){
-		return ud.findMyApproveEmp(empNo);
+	public List<Users> findMyApproveEmp(Map<String, Integer> map){
+		return ud.findMyApproveEmp(map);
 	}
 	
 		
