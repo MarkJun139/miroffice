@@ -22,8 +22,8 @@ public class ScheduleService {
 		return dao.insertSchedule(newSchedule);
 	}
 
-	public int updateSchedule(Map<String, Object> schedule) {
-		return dao.updateSchedule(schedule);
+	public int updateSchedule(Map<String, Object> updateSchedule) {
+		return dao.updateSchedule(updateSchedule);
 	}
 
 	public int deleteSchedule(Map<String, Object> delSchedule) {

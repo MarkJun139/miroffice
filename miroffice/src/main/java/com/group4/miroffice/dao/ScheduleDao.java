@@ -13,16 +13,19 @@ import org.apache.ibatis.annotations.Update;
 public interface ScheduleDao {
 
 	@Select("select sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
-			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color from schedule")
+			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color,"
+			+ " emp_no, dept_no from schedule")
 	List<Map<String, Object>> mainSchedule();
 
-	@Insert("insert into schedule (sche_title, sche_start_date, sche_end_date, sche_allDay, color) "
-			+ "values (#{title}, #{start}, #{end}, #{allDay}, #{color})")
+	@Insert("insert into schedule (sche_title, sche_start_date, sche_end_date, sche_allDay,"
+			+ " color, emp_no, dept_no) "
+			+ "values (#{title}, #{start}, #{end}, #{allDay}, #{color}, #{empNo},"
+			+ " #{deptNo})")
 	int insertSchedule(Map<String, Object> newSchedule);
 
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end} where sche_title = #{title}")
 	int updateSchedule(Map<String, Object> updateSchedule);
 
-	@Delete("delete from schedule where sche_title = #{title} and sche_start_date = #{start}")
+	@Delete("delete from schedule where sche_title = #{")
 	int deleteSchedule(Map<String, Object> delSchedule);
 }

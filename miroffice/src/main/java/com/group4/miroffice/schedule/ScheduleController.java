@@ -7,21 +7,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.group4.miroffice.config.SecurityUser;
+import com.group4.miroffice.dto.Users;
+
 
 @Controller
-@RequestMapping("/schedule")
+@RequestMapping("/main/schedule")
 public class ScheduleController {
 
 	@Autowired
@@ -33,13 +36,13 @@ public class ScheduleController {
 		Gson gson = new Gson();
 		String json = gson.toJson(schedule);
 		m.addAttribute("schedule", json);
-		// System.out.println(json);
 		return "schedule/schedule";
 	}
 
 	@PostMapping("/insert")
 	@ResponseBody
-	public String newSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
+	public String newSchedule(@AuthenticationPrincipal SecurityUser user,
+			@RequestParam(value = "title", defaultValue = "default") String title,
 			@RequestParam(value = "start", defaultValue = "default") String start,
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
@@ -47,12 +50,16 @@ public class ScheduleController {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //		String newStart = sdf.format(start);
 //		String newEnd = sdf.format(end);
+		
+		Users dto = user.getUsers();
 		Map<String, Object> newSchedule = new HashMap<>();
 		newSchedule.put("title", title);
 		newSchedule.put("start", start);
 		newSchedule.put("end", end);
 		newSchedule.put("allDay", allDay);
 		newSchedule.put("color", color);
+		newSchedule.put("deptNo", dto.getDeptNo());;
+		newSchedule.put("empNo", dto.getEmpNo());
 		System.out.println("insert: " + newSchedule);
 		service.insertSchedule(newSchedule);
 		return "insert";

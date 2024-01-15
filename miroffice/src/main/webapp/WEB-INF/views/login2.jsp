@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
+  <!-- jquery CDN -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스 로그인</title>
@@ -95,8 +96,12 @@
                                  </div>
                                  <div class="col-lg-12 d-flex justify-content-between">
                                     <div class="form-check mb-3">
-                                       <input type="checkbox" class="form-check-input" id="customCheck1">
-                                       <label class="form-check-label" for="customCheck1">아이디 저장</label>
+                                       <input type="checkbox" class="form-check-input" id="customCheck1" name="remember_empno">
+                                       <label class="form-check-label" for="customCheck1">사원번호 저장</label>
+                                    </div>
+                                       <div class="form-check mb-3">
+                                       <input type="checkbox" class="form-check-input" id="customCheck1" name="remember-me">
+                                       <label class="form-check-label" for="customCheck1">로그인 기억하기</label>
                                     </div>
 
                                  </div>
@@ -106,8 +111,8 @@
                               </div>
                               </form>
                               <form>
-                              <p class="mt-3 text-center">사원번호를 잊으셨나요? <a href="recoverid.html" class="text-underline">사원번호 찾기</a></p>
-                              <p class="mt-3 text-center">비밀번호를 잊으셨나요? <a href="recoverpw.html" class="text-underline">비밀번호 찾기</a></p>
+                              <p class="mt-3 text-center">사원번호를 잊으셨나요? <a href="/findid" class="text-underline">사원번호 찾기</a></p>
+                              <p class="mt-3 text-center">비밀번호를 잊으셨나요? <a href="/resetpassword" class="text-underline">비밀번호 찾기</a></p>
                            </form>
                         </div>
                      </div>
