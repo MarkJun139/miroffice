@@ -70,20 +70,25 @@
 <div class="conatiner-fluid content-inner mt-n5 py-0">
          
 <div class="card-body" style="border: 1px; float:left; margin-right:20px;">
-            <p>ㅁㄴㅇㄹ</p>
+            <p>전체문서<br>내문서 ..</p>
             <div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
+               	<div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+               		<div class="row align items-center">
+               		</div>
+               	</div>
                   <thead>
                      <tr>
                         <th>결재양식</th>
-                        <th>작성자/날짜</th>
+                        <th>날짜</th>
                      </tr>
                   </thead>
                   <tbody>
                   <c:forEach items="${list }" var="f">
                      <tr>
-                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a></td>
-                        <td>${f.empName } / <fmt:formatDate value="${f.appDate }" dateStyle="short"/></td>
+                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a>
+                        <br>작성자 ${f.empName }</td>
+                        <td><fmt:formatDate value="${f.appDate }" dateStyle="short"/></td>
                      </tr>
                      </c:forEach>
                   </tbody>

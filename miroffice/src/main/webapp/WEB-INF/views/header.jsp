@@ -30,7 +30,7 @@
                 
                 
                 
-                <h4 class="logo-title">호쁘</h4>
+                <h4 class="logo-title">미르오피스</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                 <i class="icon">
