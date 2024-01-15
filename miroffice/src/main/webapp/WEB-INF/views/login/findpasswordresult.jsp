@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>비밀번호 초기화</title>
+      <title>비밀번호 찾기</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="../images/favicon.ico" />
@@ -77,21 +78,27 @@
                         
                         <h4 class="logo-title ms-3">Hope UI</h4>
                      </a>
-                     <h2 class="mb-2">Reset Password</h2>
-                     <p>Enter your email address and we'll send you an email with instructions to reset your password.</p>
-                     <form>
+                     <h2 class="mb-2">비밀번호 초기화 완료</h2>
+                     <form method="post" action="/findpasswordresult">
                         <div class="row">
                            <div class="col-lg-12">
                               <div class="floating-label form-group">
-                                 <label for="email" class="form-label">Email</label>
-                                 <input type="email" class="form-control" id="email" aria-describedby="email" placeholder=" ">
+                               <c:choose>
+                        	<c:when test="${empty email}">
+                        	<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
+							</c:when>
+							<c:otherwise>
+							<p class="cnf-mail mb-1">${name}님, ${email}로 임시 비밀번호가 전송되었습니다.</p>
+							<p class="cnf-mail mb-1">로그인 후 비밀번호 재설정하시기 바랍니다.</p>
+							</c:otherwise>
+								</c:choose>	
                               </div>
                            </div>
+                        <div class="d-inline-block w-100">
+                           <a href="/login" class="btn btn-primary mt-3">메인 화면으로</a>
                         </div>
-                        <button type="submit" class="btn btn-primary">Reset</button>
-                     </form>
                   </div>
-               </div>               
+               </div>         
                <div class="sign-bg sign-bg-right">
                   <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">
                      <g opacity="0.05">

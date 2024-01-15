@@ -25,7 +25,8 @@ public interface ScheduleDao {
 
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end} where sche_title = #{title}")
 	int updateSchedule(Map<String, Object> updateSchedule);
-
-	@Delete("delete from schedule where sche_title = #{")
+	
+	// delete 수정예정
+	@Delete("delete from schedule where sche_title = #{title}")
 	int deleteSchedule(Map<String, Object> delSchedule);
 }

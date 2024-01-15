@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class LoginController {
 
@@ -46,12 +45,49 @@ public class LoginController {
 	@PostMapping("/findidresult")
 	public String findIdResult(@RequestParam(value = "empName") String name,
 			@RequestParam(value = "empPhone") String phone, Model m) {
-		
+
 		String result = service.findId(name, phone);
-		
+
 		m.addAttribute("findid", result);
 
 		return "login/findidresult";
 	}
-	public void test() {}
+
+	@GetMapping("/findpassword")
+	public String findPassword() {
+		return "login/findpassword";
+	}
+
+	public String getTempPassword() {
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+		String str = "";
+
+		int idx = 0;
+		for (int i = 0; i < 6; i++) {
+			idx = (int) (charSet.length * Math.random());
+			str += charSet[idx];
+		}
+		return str;
+	}
+
+	@PostMapping("/findpasswordresult")
+	public String findIdResult(@RequestParam(value = "empNo") String no, @RequestParam(value = "empName") String name,
+			@RequestParam(value = "empEmail") String email, Model m) throws Exception {
+		String password = service.findPassword(name, no, email);
+		String temppw = getTempPassword();
+
+		if (password != null) {
+			service.resetPassword(temppw, name, no);
+			service.sendMail(temppw, name, email);
+		}
+
+		System.out.println("temppw: " + temppw);
+
+		m.addAttribute("name", name);
+		m.addAttribute("email", email);
+		return "login/findpasswordresult";
+
+	}
 }

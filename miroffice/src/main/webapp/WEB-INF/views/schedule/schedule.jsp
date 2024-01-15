@@ -164,29 +164,35 @@
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
              select: function (data) { // 일정 추가
+            	 $('#scheduleInsert').on('shown.bs.modal', function (e) {
+            		// 기본값 설정
+             		$(this).find('.form-control')[0].value = '';
+             		$(this).find('.form-control')[1].value = data.startStr;
+             		$(this).find('.form-control')[2].value = data.endStr;
+             		$(this).find('.form-control')[3].value = 'red';
+                 })
                  $("#scheduleInsert").modal("show"); // modal 나타내기
-                 $('#scheduleInsert').on('shown.bs.modal', function (e) {
-                		$(this).find('.form-control')[0].reset();
-                    })
+
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
                      var title = $("#schedule_title").val();
                      var start_date = $("#schedule_start").val();
                      var end_date = $("#schedule_end").val();
                      var all_day = $("#schedule_allDay").val();
                      var color = $("#schedule_type").val();
-                     
+                     var def_id = $();
+                     var instance_id = $();
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
                     	 start : start_date,
                     	 end : end_date,
                     	 allDay : all_day,
-                    	 color : color
+                    	 color : color,
                      })
 
                  $(function saveData(sdata) { // DB에 이벤트 저장
                      $.ajax({
                 		 cache:"false",
-                         url: "/schedule/insert", 
+                         url: "/main/schedule/insert", 
                          method: "post",
                          dataType: "text",
                          data: {
@@ -211,6 +217,7 @@
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
+            	 console.log(info.event._instance);
                  $("#updateAndDeleteModal").modal("show"); // modal 나타내기
 				
                  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
@@ -227,10 +234,13 @@
                      $(function updateData() {
                          $.ajax({
                         	 cache:"false",
-                             url: "/schedule/update",
+                             url: "/main/schedule/update",
                              method: "PATCH",
                              dataType: "text",
-                             data: {"title": title ,"start": start_date , "end": end_date, "allDay" : all_day},
+                             data: {"title": title,
+                            	 	"start": start_date,
+                            	 	"end": end_date,
+                            	 	"allDay" : all_day},
                          })
                              .done(function (result) {
                              alert("일정을 수정하였습니다.");
@@ -253,7 +263,7 @@
                   	 $(function deleteData(){
                   		 $.ajax({
                   			 cache:"false",
-                  			 url: "schedule/delete",
+                  			 url: "/main/schedule/delete",
                   			 method: "delete",
                   			 dataType: "text",
                   			 data : {"title" : obj.title, "start" : obj.start}

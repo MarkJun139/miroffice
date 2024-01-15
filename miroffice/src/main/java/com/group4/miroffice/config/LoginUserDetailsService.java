@@ -10,14 +10,17 @@ import com.group4.miroffice.dao.UserDao;
 import com.group4.miroffice.dto.Users;
 
 
+
+
 @Service
-public class BoardUserDetailsService implements UserDetailsService {
+public class LoginUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("유저네임"+username);
 		Users user = userDao.findById(Integer.parseInt(username));
 		if (user == null) {
 			throw new UsernameNotFoundException(username + " 사용자 없음");

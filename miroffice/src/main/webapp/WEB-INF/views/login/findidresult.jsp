@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -74,11 +75,18 @@
                            
                            <h4 class="logo-title ms-3">Hope UI</h4>
                         </a>
-                        <img src="../../assets/images/auth/mail.png" class="img-fluid" width="80" alt="">
+                        <img src="../images/auth/mail.png" class="img-fluid" width="80" alt="">
                         <h2 class="mt-3 mb-0">Success !</h2>
-                        <p class="cnf-mail mb-1">사원번호: ${findid}</p>
+                        <c:choose>
+                        	<c:when test="${empty findid}">
+                        	<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
+							</c:when>
+							<c:otherwise>
+							<p class="cnf-mail mb-1">사원번호: ${findid}</p>
+							</c:otherwise>
+						</c:choose>			
                         <div class="d-inline-block w-100">
-                           <a href="/login" class="btn btn-primary mt-3">Back to Home</a>
+                           <a href="/login" class="btn btn-primary mt-3">메인 화면으로</a>
                         </div>
                   </div>
                </div>

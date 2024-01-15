@@ -100,7 +100,7 @@
                                        <label class="form-check-label" for="customCheck1">사원번호 저장</label>
                                     </div>
                                        <div class="form-check mb-3">
-                                       <input type="checkbox" class="form-check-input" id="customCheck1" name="remember-me">
+                                       <input type="checkbox" class="form-check-input" id="customCheck2" name="remember-me">
                                        <label class="form-check-label" for="customCheck1">로그인 기억하기</label>
                                     </div>
 
@@ -112,7 +112,7 @@
                               </form>
                               <form>
                               <p class="mt-3 text-center">사원번호를 잊으셨나요? <a href="/findid" class="text-underline">사원번호 찾기</a></p>
-                              <p class="mt-3 text-center">비밀번호를 잊으셨나요? <a href="/resetpassword" class="text-underline">비밀번호 찾기</a></p>
+                              <p class="mt-3 text-center">비밀번호를 잊으셨나요? <a href="/findpassword" class="text-underline">비밀번호 찾기</a></p>
                            </form>
                         </div>
                      </div>
