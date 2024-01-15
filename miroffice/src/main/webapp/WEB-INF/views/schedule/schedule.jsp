@@ -179,8 +179,7 @@
                      var end_date = $("#schedule_end").val();
                      var all_day = $("#schedule_allDay").val();
                      var color = $("#schedule_type").val();
-                     var def_id = $();
-                     var instance_id = $();
+
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
                     	 start : start_date,
