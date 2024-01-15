@@ -1,14 +1,11 @@
 package com.group4.miroffice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class UserUpdateDto {
 	
+	private String name;
 	private String empPhone;
     private String empAddress;
     private String empAddress2;

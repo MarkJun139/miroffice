@@ -6,13 +6,16 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.group4.miroffice.dto.Checkout;
+import com.group4.miroffice.dto.Dept;
+
 @Mapper
 public interface UserDao {
 
 	@Select("select * from employee where emp_no = #{empNo}")
 	Users findById(int empNo);
 	
-	@Select("select * from employee where emp_name = #{empName}")
+	@Select("select * from employee where emp_no = #{empname}")
 	Users profile(String empname);
 	
 	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where dept_no = #{deptNo}")
@@ -20,6 +23,12 @@ public interface UserDao {
 	
 	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where emp_no = #{empNo}")
 	Users findMyApproveEmp(int deptNo);
+	
+	@Select("select * from checkout where emp_no = #{empNo}")
+	Checkout checkout(int deptNo);
+	
+	@Select("select * from department where dept_no = #{deptNo}")
+	Dept dept(int deptNo);
 	
 	@Update("update employee set emp_phone = #{empPhone}, emp_address = #{empAddress},"
 			+ " emp_address2 = #{empempAddress2}, emp_email = #{empEmail}, emp_photo = #{empPhoto},"
