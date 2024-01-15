@@ -51,5 +51,13 @@ public class AdminService {
 	public int updateDept(Dept dept) {
 		return dao.updateDept(dept);
 	}
+	public void deleteCheck(List<Integer> checkList) {
+		for(int deptNo : checkList) {
+			dao.deleteDept(deptNo);
+		}
+	}
+	public int isDeptNo(int deptNo) {
+		return dao.isDeptNo(deptNo);
+	}
 	
 }

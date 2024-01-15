@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <jsp:include page="../layout/navbar.jsp"></jsp:include>
-
 <c:set var="name" value="${pageContext.request.userPrincipal.name}" />
 <c:set var="role" value="${pageContext.request.userPrincipal.authorities}" />
+
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 
 <!-- 팝업 창 -->
@@ -19,12 +20,12 @@
       <div class="modal-body">
       		<input type="hidden" name = "_method" value = "put"/>
       		<input type="hidden" name="projectno" id="projectno" value="">  
-      		<input type="number" class="form-control" id="projectpercent" name="projectpercent" placeholder="진행률">
-      	
+      		<input type="number" class="form-control" id="projectpercent" name="projectpercent" placeholder="진행률" max="100" min="0">
+      		
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="submit" class="btn btn-primary">진행률 수정</button>
+        <button type="submit" class="btn btn-primary project-update">진행률 수정</button>
       </div>
       </form>
     </div>
@@ -40,10 +41,13 @@
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
                   	 <div class="col-12 row text-center align-items-center">
-                  	 	<div class="col-6 text-start">
-                     		<h1 class="mb-2 card-title">프로젝트 관리</h1>
+                  	 	<div class="col-3 text-start">
+                     		 <h1 class="card-title">프로젝트 관리</h1>
                      	</div>
-                     	<c:if test="${role == '[ROLE_ADMIN]' || role == '[ROLE_TEAMLEADER]'}" >
+                     	<div class="col-3 text-start">
+                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	</div>
+                     	<c:if test="${role == '[ROLE_TEAMLEADER]'}" >
 	                     	<div class="col-6 text-end">
 	                     		<a href="teamleader/projectwrite" class="btn btn-primary text-white float-right">프로젝트 등록</a>
 	                     	</div>
@@ -53,36 +57,71 @@
                </div>
                <div class="p-0 card-body">
                   <div class="mt-4 table-responsive">
-                     <table id="basic-table" class="table mb-0 table-striped" role="grid">
+                     <table id="basic-table" class="table mb-0 table-hover" role="grid">
                         <thead>
                            <tr>
+                              
                               <th>프로젝트 제목</th>
+                              <th></th>
                               <th>시작일</th>
                               <th>종료일</th>
+                              <th>남은 날</th>
+                              <th>담당자</th>
                               <th>프로젝트 진행률</th>
+                              <c:if test="${role == '[ROLE_TEAMLEADER]'}" >
                               <th>수정</th>
+                              </c:if>
                            </tr>
                         </thead>
                         <tbody>
                         	<c:forEach items="${projectList}" var="project" >
 	                           <tr>
-	                           	  
-		                              <td class="col-md-4">
-		                              <a href="project/view/${project.projectno}">
-		                                 <div class="d-flex align-items-center">
-		                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
-		                                    <h6>${project.projecttitle}</h6>
-		                                 </div>
-		                              </a>
-		                              </td>
-	                              
-	                              <td class="col-md-2">
+	                              <td class="col-md-4" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
+	                              <a href="project/view/${project.projectno}">
+	                                 <div class="d-flex align-items-center">
+	                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
+	                                    <h6>${project.projecttitle}&nbsp; 
+	                                    	
+	                                    </h6>
+	                                 </div>
+	                              </a>
+	                              </td>
+	                              <td class="align-items-center text-center">
+	                              	<c:choose>
+                                    	<c:when test="${project.projectpercent == 100}"> 
+                                    		<span class="badge badge-secondary" style="background-color:var(--bs-success)" >완료</span>
+                                    	</c:when>
+                                    	<c:when test="${project.projectdiffdate < 0}">
+                                   			<span class="badge badge-secondary" style="background-color:var(--bs-secondary)" >기한 만료</span>
+                                   		</c:when>
+                                    	<c:when test="${project.projectpercent < 100}"> 
+                                    		<span class="badge badge-secondary" style="background-color:var(--bs-warning)" >진행중</span>
+                                    	</c:when>
+                                   	</c:choose>
+	                              </td>
+	                              <td class="col-md-1">
 	                                 ${project.projectstart}
 	                              </td>
-	                              <td class="col-md-2">
+	                              <td class="col-md-1">
 									 ${project.projectend}
 								  </td>
-	                              <td class="col-md-4">
+								  <td>
+								  	<c:choose>
+								  		<c:when test="${project.projectdiffdate >= 1}">
+								  			${project.projectdiffdate} 일
+								  		</c:when>
+								  		<c:when test="${project.projectdiffdate == 0}">
+								  			오늘
+								  		</c:when>
+								  		<c:otherwise>
+								  			기한 만료
+								  		</c:otherwise>
+								  	</c:choose>
+								  </td>
+								  <td class="col-md-1 align-items-center">
+	                           	     ${project.empname }
+	                           	  </td>
+	                              <td class="col-md-3">
 	                                 <h6>${project.projectpercent} %</h6>
 	                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
 	                                 	<c:if test="${project.projectpercent < 100}">
@@ -93,9 +132,16 @@
 	                                 	</c:if>
 	                                 </div>
 	                              </td>
-	                              <td class="col-md-2">
-	                              	<button type="button" class="btn btn-primary project_popup" data-bs-toggle="modal" data-bs-target="#exampleModal" project="${project.projectno}" percent="${project.projectpercent}" title="${project.projecttitle}">진행률 수정</button>
-	                              </td>
+	                              <c:choose>
+	                              	<c:when test="${role == '[ROLE_TEAMLEADER]'}">
+	                              		<td class="col-md-1">
+			                              	<button type="button" class="btn btn-primary project_popup" data-bs-toggle="modal" data-bs-target="#exampleModal" project="${project.projectno}" percent="${project.projectpercent}" title="${project.projecttitle}">진행률 수정</button>
+			                            </td>
+	                              	</c:when>
+	                              	<c:when test="${project.projectpercent == 100}">
+	                              		
+	                              	</c:when>
+	                              </c:choose>
 	                           </tr>
                            </c:forEach>
                         </tbody>
@@ -126,6 +172,13 @@
 				$("#projectno").val(project_no);
 				$("#projectpercent").val(project_percent);
 				$(".modal-title").text(project_title);
+			})
+			$(".project-update").click(function(e){
+				const percent = $("#projectpercent").val();
+				if(percent >= 100 || percent < 0){
+					e.preventDefault();
+					alert("값을 제대로 입력해주세요")
+				}
 			})
 		})
 	  </script>
