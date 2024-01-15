@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group4.miroffice.dto.Dept;
-import com.group4.miroffice.dto.UserUpdateDto;
 import com.group4.miroffice.user.Users;
 
 @Controller
@@ -73,12 +72,10 @@ public class InfoController {
 	}
 	
 	@PostMapping("/update")
-	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto) {
-		
-		Users userUpdate = new Users();
-		
-		userUpdate.set
+	public String InfoUpdate(@ModelAttribute Users users) {
 
+		service.InfoUpdate(users);
+			
 		return "redirect:/main";
 	}
 
