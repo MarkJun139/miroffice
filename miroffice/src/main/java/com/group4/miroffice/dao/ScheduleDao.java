@@ -26,7 +26,13 @@ public interface ScheduleDao {
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end} where sche_title = #{title}")
 	int updateSchedule(Map<String, Object> updateSchedule);
 	
-	// delete 수정예정
-	@Delete("delete from schedule where sche_title = #{title}")
+	
+	@Delete("delete from schedule where sche_title = #{title} and sche_start_date = #{start}"
+			+ "and emp_no = #{empNo} and dept_no = #{deptNo}")
 	int deleteSchedule(Map<String, Object> delSchedule);
+	
+	@Select("select sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
+			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color,"
+			+ " emp_no, dept_no from schedule where dept_no = #{deptNo}")
+	List<Map<String, Object>> deptSchedule(Map<String, Object> deptSchedule);
 }

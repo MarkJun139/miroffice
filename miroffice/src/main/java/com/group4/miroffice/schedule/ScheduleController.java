@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.group4.miroffice.config.SecurityUser;
 import com.group4.miroffice.dto.Users;
 
-
 @Controller
 @RequestMapping("/main/schedule")
 public class ScheduleController {
@@ -39,6 +38,12 @@ public class ScheduleController {
 		return "schedule/schedule";
 	}
 
+	@GetMapping("/dept")
+	public String deptViewCalendar(Model m) {
+		// List<Map<String, Object>> deptSchedule = service.
+		return "schedule/deptSchedule";
+	}
+
 	@PostMapping("/insert")
 	@ResponseBody
 	public String newSchedule(@AuthenticationPrincipal SecurityUser user,
@@ -47,10 +52,7 @@ public class ScheduleController {
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
 			@RequestParam(value = "color", defaultValue = "default") String color) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String newStart = sdf.format(start);
-//		String newEnd = sdf.format(end);
-		
+
 		Users dto = user.getUsers();
 		Map<String, Object> newSchedule = new HashMap<>();
 		newSchedule.put("title", title);
@@ -58,7 +60,7 @@ public class ScheduleController {
 		newSchedule.put("end", end);
 		newSchedule.put("allDay", allDay);
 		newSchedule.put("color", color);
-		newSchedule.put("deptNo", dto.getDeptNo());;
+		newSchedule.put("deptNo", dto.getDeptNo());
 		newSchedule.put("empNo", dto.getEmpNo());
 		System.out.println("insert: " + newSchedule);
 		service.insertSchedule(newSchedule);
@@ -72,9 +74,6 @@ public class ScheduleController {
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
 			@RequestParam(value = "color", defaultValue = "default") String color) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String newStart = sdf.format(start);
-//		String newEnd = sdf.format(end);
 		Map<String, Object> upSchedule = new HashMap<>();
 		upSchedule.put("title", title);
 		upSchedule.put("start", start);
@@ -88,13 +87,17 @@ public class ScheduleController {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public String deleteSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
-			@RequestParam(value = "start", defaultValue = "default") Date start) {
+	public String deleteSchedule(@AuthenticationPrincipal SecurityUser user,
+			@RequestParam(value = "start", defaultValue = "default") Date start,
+			@RequestParam(value = "title", defaultValue = "default") String title) {
+		Users dto = user.getUsers();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String newStart = sdf.format(start);
 		Map<String, Object> delSchedule = new HashMap<>();
-		delSchedule.put("title", title);
 		delSchedule.put("start", newStart);
+		delSchedule.put("title", title);
+		delSchedule.put("deptNo", dto.getDeptNo());
+		delSchedule.put("empNo", dto.getEmpNo());
 		System.out.println("delete: " + delSchedule);
 		service.deleteSchedule(delSchedule);
 		return "delete";
