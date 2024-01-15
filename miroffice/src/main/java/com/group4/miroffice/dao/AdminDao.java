@@ -20,6 +20,9 @@ public interface AdminDao {
 	@Select("select * from department where not dept_no in(99)")
 	List<Dept> deptList();
 	
+	@Select("select COUNT(*) from department where dept_no = #{deptNo}")
+	int isDeptNo(int deptNo);
+	
 	@Select("SELECT LPAD(count(*), 3, '0') AS count FROM employee where dept_no in(#{deptNo})")
 	String getEmpCount(int deptNo);
 	

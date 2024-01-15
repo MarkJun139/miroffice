@@ -10,7 +10,7 @@
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <!-- 부서 추가 팝업 창 -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<form action="/main/admin/dept/adddept" method="post">
+<form action="/main/admin/dept/adddept" method="post" class="addDeptForm">
   <div class="modal-dialog">
     <div class="modal-content">
     
@@ -32,7 +32,7 @@
       </div>
       <div class="modal-footer">
        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-       		<input type="submit" class="btn btn-primary project_popup" value="부서 추가">
+       		<button type="submit" class="btn btn-primary project_popup" id="addDepartment">부서 추가</button>
       </div>
     </div>
   </div>
@@ -106,12 +106,15 @@
                      </div>                          
                   </div>
                </div>
+               <form action="/main/admin/dept/deletecheck" method="post">
+               <input type="hidden" name="_method" value="delete" />
                <div class="p-0 card-body">
+               
                   <div class="mt-4 table-responsive">
                      <table id="basic-table" class="table mb-0 table-striped" role="grid">
                         <thead>
                            <tr>
-                           	  <th><input class="form-check-input" type="checkbox" value="" id="deptListCheck"></th>
+                           	  <th><input class="form-check-input" type="checkbox" id="deptListCheck"></th>
                               <th>부서 번호</th>
                               <th>부서 이름</th>
                               <th>부서 수정</th>
@@ -119,10 +122,11 @@
                            </tr>
                         </thead>
                         <tbody>
+                        
                         	<c:forEach items="${deptList}" var="dept" >
 	                           <tr>
 	                              <td class="col-md-1">
-	                              	<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+	                              	<input class="form-check-input" name="deptDelCheck" type="checkbox" value="${dept.deptNo}" id="flexCheckDefault">
 	                              </td>
 	                           	  <td class="col-md-1">
 	                                 ${dept.deptNo} 
@@ -139,11 +143,17 @@
 	                              	<button type="button" class="btn btn-danger delete_popup" data-bs-toggle="modal" data-bs-target="#deleteModal" deptNo="${dept.deptNo}" deptName="${dept.deptName}">부서 삭제</button>
 	                              </td>
 	                           </tr>
+	                          
                            </c:forEach>
+                        
                         </tbody>
                      </table>
                   </div>
                </div>
+               <div class="card-footer align-items-center">
+               		<button type="submit" class="btn btn-danger" deptNo="${dept.deptNo}" deptName="${dept.deptName}">선택 삭제</button>
+               </div>
+               </form>
             </div>
          </div>
       </div>
@@ -173,6 +183,46 @@
 				$(".deptNo").val(deptNo);
 				$(".deptName").val(deptName);
 				$(".deptNameBody").text(deptName);
+			})
+			$("#deptListCheck").change(function() {
+	            // #deptListCheck 체크 여부에 따라 #flexCheckDefault 체크박스를 모두 체크 또는 해제
+	            if ($(this).prop("checked")) {
+	                $("[name='deptDelCheck']").prop("checked", true);
+	            } else {
+	                $("[name='deptDelCheck']").prop("checked", false);
+	            }
+	        });
+			
+			
+			$("#addDepartment").click(function(e) {
+				const deptNo = $("#deptNo").val();
+				const deptName = $("#deptName").val();
+				
+				if(!deptNo || !deptName){
+					alert("내용을 입력하세요");
+					e.preventDefault();
+				} else if(deptNo <= 0 || deptNo == 99){
+					
+					alert("지정할 수 없는 부서번호 입니다");
+					e.preventDefault();
+				} else {
+					$.ajax({
+						type:"GET",
+						url: "/main/checkDeptNo",
+						data: {deptno : deptNo},
+						success: function(res){
+							if(res == 1) {
+								alert("부서번호가 이미 존재합니다");
+							} else {
+								$(".addDeptForm").submit();
+							}
+						},
+						error : function(){
+							alert("에러")
+						}
+					})
+					e.preventDefault();
+				}
 			})
 			
 		})

@@ -12,9 +12,13 @@ public class Project {
 	private int deptno;	
 	private String projecttitle;
 	private String projecttext;
+	private int projectdiffdate;
 	private LocalDate projectstart;
 	private LocalDate projectend;
 	private int projectpercent;
+	
+	private String empname; 
+	private String deptname;
 	
 	
 }

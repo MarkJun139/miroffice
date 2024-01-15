@@ -22,12 +22,11 @@ public class MainController {
 	// 메인 화면 정보
 	
 	@GetMapping("/main")
-	public String main(Model m) {
-		
-		
+	public String main(Model m, Authentication authentication) {
+		int empno = Integer.parseInt(authentication.getName());
 		
 		// 프로젝트 리스트 
-		List<Project> projectList = projectService.projectList();
+		List<Project> projectList = projectService.projectList(empno);
 		m.addAttribute("projectList", projectList);
 		
 		
