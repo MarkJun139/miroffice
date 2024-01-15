@@ -236,15 +236,19 @@
                     <img src="/images/avatars/avtar_5.png" alt="User-Profile" class="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded">
                     <img src="/images/avatars/avtar_3.png" alt="User-Profile" class="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded">
                     <div class="caption ms-3 d-none d-md-block ">
-                        <h6 class="mb-0 caption-title">Austin Robertson</h6>
+                        <h6 class="mb-0 caption-title">
+                        <sec:authentication property = "principal.users.empRank"/>
+						<sec:authentication property= "principal.users.empName"/>
+						<sec:authentication property = "principal.users.empRole"/>
+						</h6>
                         <p class="mb-0 caption-sub-title">Marketing Administrator</p>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="../dashboard/app/user-profile.html">Profile</a></li>
+                    <li><a class="dropdown-item" href="../dashboard/app/user-profile.html">내 정보</a></li>
                     <li><a class="dropdown-item" href="../dashboard/app/user-privacy-setting.html">Privacy Setting</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="../logout">로그아웃</a></li>
                   </ul>
                 </li>
               </ul>

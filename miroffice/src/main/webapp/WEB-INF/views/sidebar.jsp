@@ -219,7 +219,7 @@
                         </a>
                         <ul class="sub-nav collapse" id="sidebar-auth" data-bs-parent="#sidebar-menu">
                             <li class="nav-item">
-                                <a class="nav-link" href="../dashboard/auth/sign-in.html">
+                                <a class="nav-link" href="../main/forumlist">
                                     <i class="icon">
                                         <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                                             <g>
@@ -228,7 +228,7 @@
                                         </svg>
                                     </i>
                                     <i class="sidenav-mini-icon"> L </i>
-                                    <span class="item-name">Login</span>
+                                    <span class="item-name">우리 부서 게시판</span>
                                 </a>
                             </li>
                             <li class="nav-item">

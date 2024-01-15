@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="/ckeditor/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -9,22 +9,20 @@
 
 <html lang="ko">
   <head>
-  	<style>
-	.ck-editor__editable {
-	    min-height: 300px; }
-	.ck-editor__editable p {margin: 0}
-	.ck-content { font-size: 13px; }
-	</style>
+
+
 	
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>미르오피스</title>
+      <title>미s르오피스</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/favicon.ico" />
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="/css/core/libs.min.css" />
+      
+      <link rel="stylesheet" type="text/css" href="/css/core/usercs.css"/>
       
       <!-- Aos Animation Css -->
       <link rel="stylesheet" href="/vendor/aos/dist/aos.css" />
@@ -49,21 +47,18 @@
 
 <body class="  ">
     <!-- loader Start -->
-    <div id="loading">
-      <div class="loader simple-loader">
-          <div class="loader-body"></div>
-      </div>    </div>
+
     <!-- loader END -->
     <%@include file="../sidebar.jsp" %>
    
-   <!--  메인 여기부터!!! -->      
-      
-        <main class="main-content">
+
+      <main class="main-content">
         
       <div class="position-relative iq-banner">
         <!--Nav Start-->
         
             <%@include file="../header.jsp" %>
+               <!--  메인 여기부터!!! -->      
         <!--Nav End -->
       </div>
 
@@ -73,10 +68,7 @@
             <p>전체문서<br>내문서 ..</p>
             <div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
-               	<div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-               		<div class="row align items-center">
-               		</div>
-               	</div>
+		
                   <thead>
                      <tr>
                         <th>결재양식</th>
@@ -99,15 +91,15 @@
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
-	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
-	            <div id="toolbar-container"></div>
-		        <div>	
-				<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
-				</div>
+		            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
+			            <div id="toolbar-container"></div>
+				        <div>	
+						<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
+						</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<button type="button" id="btnList" class="btn btn-pirmary">결재</button>
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" style="top: 550px;" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
 	   			
 
 				
@@ -252,6 +244,8 @@
     <!-- App Script -->
     <script src="/js/hope-ui.js" defer></script>
     
+
+    
         
     <script>
 	var url= window.location.href;
@@ -265,6 +259,9 @@
 		}
 
 	})
+
+
+
 
 	</script>
   </body>

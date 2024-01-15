@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.dataTables_wrapper.dt-bootstrap5.no-footer > .row.align-items-center > .col-md-6 {
+  width: 10px
+}
+.sLengthSelect{
+	display: none;
+}

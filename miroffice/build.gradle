@@ -45,6 +45,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
 	
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs
+	implementation 'org.springframework.security:spring-security-taglibs:6.2.1'
+	
+	
 	
 }
 
