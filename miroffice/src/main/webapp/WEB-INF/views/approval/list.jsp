@@ -1,45 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="/ckeditor/ckeditor.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/ckeditor/content-styles.css" type="text/css">
 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-
-<!DOCTYPE html>
 <html lang="ko">
-<head>
-	<style>
+  <head>
+  	<style>
 	.ck-editor__editable {
 	    min-height: 300px; }
 	.ck-editor__editable p {margin: 0}
 	.ck-content { font-size: 13px; }
 	</style>
+	
     <meta charset="utf-8">
-    <title>버근가?</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>미르오피스</title>
+      
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="/images/favicon.ico" />
+      
+      <!-- Library / Plugin Css Build -->
+      <link rel="stylesheet" href="/css/core/libs.min.css" />
+      
+      <!-- Aos Animation Css -->
+      <link rel="stylesheet" href="/vendor/aos/dist/aos.css" />
+      
+      <!-- Hope Ui Design System Css -->
+      <link rel="stylesheet" href="/css/hope-ui.min.css?v=2.0.0" />
+      
+      <!-- Custom Css -->
+      <link rel="stylesheet" href="/css/custom.min.css?v=2.0.0" />
+      
+      <!-- Dark Css -->
+      <link rel="stylesheet" href="/css/dark.min.css"/>
+      
+      <!-- Customizer Css -->
+      <link rel="stylesheet" href="/css/customizer.min.css" />
+      
+      <!-- RTL Css -->
+      <link rel="stylesheet" href="/css/rtl.min.css"/>
+      
+      
+  </head>
 
-</head>
-<body>
-<div class="card-body" style="border: 1px; float:left; margin-right:50px;">
-            <p>ㅁㄴㅇㄹ</p>
+<body class="  ">
+    <!-- loader Start -->
+    <div id="loading">
+      <div class="loader simple-loader">
+          <div class="loader-body"></div>
+      </div>    </div>
+    <!-- loader END -->
+    <%@include file="../sidebar.jsp" %>
+   
+   <!--  메인 여기부터!!! -->      
+      
+        <main class="main-content">
+        
+      <div class="position-relative iq-banner">
+        <!--Nav Start-->
+        
+            <%@include file="../header.jsp" %>
+        <!--Nav End -->
+      </div>
+
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+         
+<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
+            <p>전체문서<br>내문서 ..</p>
             <div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
+               	<div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+               		<div class="row align items-center">
+               		</div>
+               	</div>
                   <thead>
                      <tr>
                         <th>결재양식</th>
+                        <th>날짜</th>
                      </tr>
                   </thead>
                   <tbody>
                   <c:forEach items="${list }" var="f">
                      <tr>
-                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a></td>
-                        <td>${f.empName }</td>
+                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a>
+                        <br>작성자 ${f.empName }</td>
                         <td><fmt:formatDate value="${f.appDate }" dateStyle="short"/></td>
                      </tr>
                      </c:forEach>
+                  </tbody>
                </table>
             </div>
          </div>
@@ -55,7 +107,7 @@
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
 		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<button type="button" id="btnList">취소</button>
+	   			<button type="button" id="btnList" class="btn btn-pirmary">결재</button>
 	   			
 
 				
@@ -82,19 +134,20 @@
 
 				      <div class="modal-footer">
 				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='submit'">결재 신청</button>
+				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='./approval/submit'">결재 신청</button>
 				      </div>
 				    </div>
 				  </div>
 				</div>
 
 	    	</form>
-    	</div>
+	</div>
+	</div>
     	<script>
 		function getApproval(no) {
 			$.ajax({
 				type : "POST",	
-				url : "../admin/approval/one/" + no,
+				url : "./approval/one/" + no,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			})
@@ -157,5 +210,63 @@
 			})
 		})
 </script>
-</body>
+
+
+      <!-- 메인 여기까지 -->
+<!-- Footer Section Start -->
+      <%@include file = "../footer.jsp" %>
+      <!-- Footer Section End -->    </main>
+
+    <%@include file = "../setting.jsp" %>
+    
+
+
+    <!-- Library Bundle Script -->
+    <script src="/js/core/libs.min.js"></script>
+    
+    <!-- External Library Bundle Script -->
+    <script src="/js/core/external.min.js"></script>
+    
+    <!-- Widgetchart Script -->
+    <script src="/js/charts/widgetcharts.js"></script>
+    
+    <!-- mapchart Script -->
+    <script src="/js/charts/vectore-chart.js"></script>
+    <script src="/js/charts/dashboard.js" ></script>
+    
+    <!-- fslightbox Script -->
+    <script src="/js/plugins/fslightbox.js"></script>
+    
+    <!-- Settings Script -->
+    <script src="/js/plugins/setting.js"></script>
+    
+    <!-- Slider-tab Script -->
+    <script src="/js/plugins/slider-tabs.js"></script>
+    
+    <!-- Form Wizard Script -->
+    <script src="/js/plugins/form-wizard.js"></script>
+    
+    <!-- AOS Animation Plugin-->
+    <script src="/vendor/aos/dist/aos.js"></script>
+    
+    <!-- App Script -->
+    <script src="/js/hope-ui.js" defer></script>
+    
+        
+    <script>
+	var url= window.location.href;
+	$(".nav-item").find('a').each(function() {
+		var burl = $(this).prop('href')
+		var burl2 = burl+"#"
+		if(url == burl || url == burl2){
+    		console.log($(this).prop('pathname'))
+			console.log($(this).prop('href'))
+    		$(this).toggleClass('active', $(this).attr('href'));
+		}
+
+	})
+
+	</script>
+  </body>
 </html>
+

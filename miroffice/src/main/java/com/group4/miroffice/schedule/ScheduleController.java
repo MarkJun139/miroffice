@@ -40,41 +40,33 @@ public class ScheduleController {
 	@PostMapping("/insert")
 	@ResponseBody
 	public String newSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
-			@RequestParam(value = "start", defaultValue = "default") String start,
-			@RequestParam(value = "end", defaultValue = "default") String end,
-			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
-			@RequestParam(value = "color", defaultValue = "default") String color) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String newStart = sdf.format(start);
-//		String newEnd = sdf.format(end);
+			@RequestParam(value = "start", defaultValue = "default") Date start,
+			@RequestParam(value = "end", defaultValue = "default") Date end) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String newStart = sdf.format(start);
+		String newEnd = sdf.format(end);
 		Map<String, Object> newSchedule = new HashMap<>();
 		newSchedule.put("title", title);
-		newSchedule.put("start", start);
-		newSchedule.put("end", end);
-		newSchedule.put("allDay", allDay);
-		newSchedule.put("color", color);
-		System.out.println("insert: " + newSchedule);
+		newSchedule.put("start", newStart);
+		newSchedule.put("end", newEnd);
+		System.out.println(newSchedule);
 		service.insertSchedule(newSchedule);
 		return "insert";
 	}
 
-	@PatchMapping("/update")
+	@PatchMapping("update")
 	@ResponseBody
 	public String updateSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
-			@RequestParam(value = "start", defaultValue = "default") String start,
-			@RequestParam(value = "end", defaultValue = "default") String end,
-			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
-			@RequestParam(value = "color", defaultValue = "default") String color) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String newStart = sdf.format(start);
-//		String newEnd = sdf.format(end);
+			@RequestParam(value = "start", defaultValue = "default") Date start,
+			@RequestParam(value = "end", defaultValue = "default") Date end) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String newStart = sdf.format(start);
+		String newEnd = sdf.format(end);
 		Map<String, Object> upSchedule = new HashMap<>();
 		upSchedule.put("title", title);
-		upSchedule.put("start", start);
-		upSchedule.put("end", end);
-		upSchedule.put("allDay", allDay);
-		upSchedule.put("color", color);
-		System.out.println("update: " + upSchedule);
+		upSchedule.put("start", newStart);
+		upSchedule.put("end", newEnd);
+		System.out.println(upSchedule);
 		service.updateSchedule(upSchedule);
 		return "update";
 	}
@@ -88,7 +80,7 @@ public class ScheduleController {
 		Map<String, Object> delSchedule = new HashMap<>();
 		delSchedule.put("title", title);
 		delSchedule.put("start", newStart);
-		System.out.println("delete: " + delSchedule);
+		System.out.println(delSchedule);
 		service.deleteSchedule(delSchedule);
 		return "delete";
 	}
