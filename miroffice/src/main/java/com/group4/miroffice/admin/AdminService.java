@@ -1,5 +1,9 @@
 package com.group4.miroffice.admin;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +22,9 @@ public class AdminService {
 	@Autowired
 	AdminDao dao;
 	
-	public int addEmp(Admin admin) {
-		return dao.addEmp(admin);
+	public void addEmp(Admin admin) {
+		dao.addEmp(admin);
+		dao.addCheckOut(admin);
 	}
 	public List<Dept> deptList() {
 		return dao.deptList();
@@ -48,6 +53,9 @@ public class AdminService {
 	public int addDept(Dept dept) {
 		return dao.addDept(dept);
 	}
+	public int isEmpNo(int empNo) {
+		return dao.isEmpNo(empNo);
+	}
 	public int updateDept(Dept dept) {
 		return dao.updateDept(dept);
 	}
@@ -58,6 +66,11 @@ public class AdminService {
 	}
 	public int isDeptNo(int deptNo) {
 		return dao.isDeptNo(deptNo);
+	}
+	public void deleteEmpCheck(List<String> checkList){
+		for(String empNo : checkList) {
+			dao.deleteEmp(Integer.parseInt(empNo));
+		}
 	}
 	
 }

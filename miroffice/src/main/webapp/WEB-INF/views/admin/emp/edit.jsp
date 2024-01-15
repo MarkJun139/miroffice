@@ -3,6 +3,7 @@
 <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <div class="row">
@@ -16,6 +17,9 @@
                   	 	<div class="col-6 text-start">
                      		<h1 class="mb-2 card-title">사원 정보 수정</h1>
                      	</div>
+                     	<div class="col-6 text-end">
+                     		<a href="/main/admin/emp/list" class="btn btn-secondary text-white float-right">사원 목록</a>
+                     	</div>
                      </div>                          
                   </div>
                </div>
@@ -27,7 +31,7 @@
                  	 	<div class="card-body">
 	                 	 	<h5 class="card-title text-center">사진 등록</h5>
 	                 	 	<label for="preview">
-	                 	 		<img class="card-img-top" src="/images${emp.empPhoto}" width="150px" height="170px" alt="미리보기" id="previewImage">
+	                 	 		<img class="card-img-top" src="/images${emp.empPhoto}" width="170px" height="200px" style="object-fit:cover" alt="미리보기" id="previewImage">
 	                 	 	</label>
 	               			<input type="file" class="form-control" id="empPhotoFile" name="empPhotoFile" onchange="handleFileSelect()" value="${emp.empPhoto}">
                			</div>
@@ -63,19 +67,23 @@
 					    </div>
 					  </div>
 					  <div class="row">
-					  	<div class="form-group col-md-6">
+					  	<div class="form-group col-md-5">
 						    <label for="Address">주소</label>
-						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소" value="${emp.empAddress}" readonly>
+						    <input type="text" class="form-control" id="address" name="empAddress" placeholder="주소" readonly value="${emp.empAddress}">
 						</div>
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-5">
 						    <label for="Address2">상세주소</label>
-						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}" readonly>
+						    <input type="text" class="form-control" id="address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}">
+					    </div>
+					    <div class="form-group col-md-2">
+					    	<label>&nbsp;</label>
+						    <a href="#" class="col-md-12 btn btn-primary pull-right" id="findAddress">주소 찾기</a>
 					    </div>
 					  </div>
 					  <div class="row">
 					    <div class="form-group col-md-3">
 					      <label for="sal">연봉(단위 만)</label>
-					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}" >
+					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}" min="0">
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="hireDate">입사일</label>
@@ -106,7 +114,7 @@
 						</div>
 					  </div>
 					  </div>
-					  <button type="submit" class="col-md-12 btn btn-primary pull-right">사원 등록</button>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right">사원 정보 수정</button>
 					  </form>
 					</div>
                </div>
@@ -157,27 +165,22 @@
  	    reader.readAsDataURL(file);
 	}
  	
- 	/* $("#addEmployee").submit(function(e){ 
- 		e.preventDefault();
- 		
- 		var formData = new FormData(this);
- 		
- 		$.ajax({
- 			url: '/main/admin/emp/addemp',
- 			type: 'POST',
- 			data: formData,
- 			cache: false,
- 			contentType: false,
- 	        processData: false,
- 	        success: function(response) {
- 	            console.log(response);
- 	        },
- 	        error: function(error) {
- 	            console.error(error);
+ 	$("#findAddress").click(function(){
+		new daum.Postcode({
+ 	        oncomplete: function(data) {
+ 	            $("#address").val(data.address);
+ 	            $("#address2").focus();
  	        }
- 		})
- 		
- 	}); */
+ 	    }).open();	
+	})
+	$("#address").click(function(){
+		new daum.Postcode({
+ 	        oncomplete: function(data) {
+ 	            $("#address").val(data.address);
+ 	            $("#address2").focus();
+ 	        }
+ 	    }).open();	
+	})
  	
  </script>     
       
