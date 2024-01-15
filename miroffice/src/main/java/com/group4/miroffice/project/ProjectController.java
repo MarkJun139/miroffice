@@ -33,8 +33,13 @@ public class ProjectController {
 	
 	@GetMapping("/projectlist")
 	public String projectList(Model m, Authentication authentication) {
-		// 권한 잇는사람은 버튼 보여주기
-		List<Project> projectList = service.projectList();
+		// 본인 부서만 보여주기
+		System.out.println(authentication.getName());
+		int empno = Integer.parseInt(authentication.getName());
+		System.out.println("프로젝트 목록");
+		List<Project> projectList = service.projectList(empno);
+		String deptName = service.getDeptName(empno);
+		m.addAttribute("deptName", deptName);
 		m.addAttribute("projectList", projectList);
 		
 		return "project/list";
@@ -42,6 +47,7 @@ public class ProjectController {
 	
 	@GetMapping("/teamleader/projectwrite")
 	public String projectWriteForm(Authentication authentication) {
+		System.out.println(authentication.getName());
 		return "project/write";
 	}
 	@PostMapping("/teamleader/project/write")
@@ -86,13 +92,15 @@ public class ProjectController {
 		
 		
 		service.projectUpdate(dto);
-		System.out.println(dto.toString());
+		System.out.println("프로젝트 수정");
+		System.out.println("수정된 값 : " + dto.toString());
 		return "redirect:/main/projectlist";
 	}
 	
 	@PutMapping("/teamleader/project/editprogress")
 	public String projectEditProgress(Project dto) {
-		service.projectUpdateProgress(dto);	
+		service.projectUpdateProgress(dto);
+		System.out.println("진행률 수정");
 		System.out.println(dto.toString());
 		
 		return "redirect:/main/projectlist";
@@ -100,6 +108,7 @@ public class ProjectController {
 	
 	@DeleteMapping("/teamleader/project/delete/{id}")
 	public String projectDelete(@PathVariable(name = "id") int id) {
+		System.out.println(id + " 번 프로젝트 삭제");
 		
 		service.projectDelete(id);
 		

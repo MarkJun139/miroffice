@@ -16,8 +16,9 @@ public class ProjectService {
 	@Autowired
 	ProjectDao dao;
 	
-	public List<Project> projectList(){
-		return dao.projectList();
+	public List<Project> projectList(int empNo){
+		int deptno = dao.getDeptNo(empNo);
+		return dao.projectList(deptno);
 	}
 	public int projectWrite(Project dto) {
 		return dao.projectWrite(dto);
@@ -42,5 +43,7 @@ public class ProjectService {
 	public int projectDelete(int projectno) {
 		return dao.projectDelete(projectno);
 	}
-	
+	public String getDeptName(int empno) {
+		return dao.getDeptName(empno);
+	}
 }

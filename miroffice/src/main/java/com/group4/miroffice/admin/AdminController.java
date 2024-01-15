@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -198,11 +200,22 @@ public class AdminController {
 		
 		return "admin/dept/list";
 	}
+	@GetMapping("/checkDeptNo")
+	public ResponseEntity<Integer> deptCheck(@RequestParam("deptno") int deptNo) {
+		int i = adminService.isDeptNo(deptNo);
+		return ResponseEntity.ok(i);
+	}
+	
 	@PostMapping("/admin/dept/adddept")
-	public String AdminDeptAdd(Dept dept) {
+	public String AdminDeptAdd(@RequestParam("deptNo") int deptNo, Dept dept) {
 		
-		adminService.addDept(dept);
+		int check = adminService.isDeptNo(deptNo);
 		
+		try {
+			adminService.addDept(dept);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/main/admin/dept/list";
 	}
 	
@@ -221,5 +234,19 @@ public class AdminController {
 		
 		return "redirect:/main/admin/dept/list";
 	}
+	
+	@DeleteMapping("/admin/dept/deletecheck")
+	public String AdminDeptDeleteCheck(@RequestParam("deptDelCheck") List<Integer> checkList ) {
+		try {
+	        adminService.deleteCheck(checkList);
+	        System.out.println(checkList);
+	    } catch (Exception e) {
+	       
+	        System.out.println("데이터베이스 예외 발생: " + e.getMessage());
+	    }
+		return "redirect:/main/admin/dept/list";
+	}
+	
+	// --------------------------------------//
 	
 }
