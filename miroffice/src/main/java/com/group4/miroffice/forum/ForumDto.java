@@ -7,13 +7,16 @@ import lombok.Data;
 @Data
 public class ForumDto {
 
-	private int forum_no;
-	private int emp_no;
-	private int dept_no;
-	private String forum_title;
-	private String forum_text;
-	private Date forum_date;
-	private int forum_count;
-	private boolean forum_notice;
-	private String forum_files;
+	private int forumNo;
+	private int empNo;
+	private int deptNo;
+	private String forumTitle;
+	private String forumText;
+	private Date forumDate;
+	private int forumCount;
+	private boolean forumNotice;
+	private String forumFiles;
+	
+	private String empName;
+	private String empRank;
 }

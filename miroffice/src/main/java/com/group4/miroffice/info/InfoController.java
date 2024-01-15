@@ -77,7 +77,6 @@ public class InfoController {
 		
 		Users userUpdate = new Users();
 		
-		userUpdate.set
 
 		return "redirect:/main";
 	}

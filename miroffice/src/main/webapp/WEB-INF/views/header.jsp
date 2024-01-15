@@ -239,7 +239,7 @@
                         <h6 class="mb-0 caption-title">
                         <sec:authentication property = "principal.users.empRank"/>
 						<sec:authentication property= "principal.users.empName"/>
-						<sec:authentication property = "principal.users.empRole"/>
+						<p id="empRole" name='empRole'><sec:authentication property = "principal.users.empRole"/></p>
 						</h6>
                         <p class="mb-0 caption-sub-title">Marketing Administrator</p>
                     </div>

@@ -29,3 +29,4 @@ public class Users {
 	private String empJob;	
 	
 	private Boolean empApprove;
+}

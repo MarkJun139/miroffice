@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<<<<<<< HEAD
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 
-=======
-<c:set var="name" value="${pageContext.request.userPrincipal.name}" />
-<c:set var="role" value="${pageContext.request.userPrincipal.authorities}" />
->>>>>>> refs/remotes/origin/markjun
+
 <html lang="ko">
   <head>
     <meta charset="utf-8">

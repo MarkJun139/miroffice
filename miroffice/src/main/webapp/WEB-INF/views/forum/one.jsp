@@ -43,35 +43,52 @@
          <%@include file="../header.jsp" %>
 <!--  메인 여기부터!!! -->      
       
-<div class="conatiner-fluid content-inner mt-n5 py-0">
-         
-<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
-            
-            <div class="table-responsive">
-               <table id="datatable2" class="table table-striped" data-toggle="data-table">
-		
-                  <thead>
-                     <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>조회수</th>
-                        <th>작성날짜</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                  <c:forEach items="${list }" var="f">
-                     <tr>
-                        <td><a href="#" onclick="return getApproval(${f.forumNo});">${f.forumTitle}</a></td>
-                        <td>${f.empRank } ${f.empName }</td>
-                        <td>${f.forumCount }</td>
-                        <td><fmt:formatDate value="${f.forumDate }" dateStyle="short" type="both" timeStyle="short"/></td>
-                     </tr>
-                     </c:forEach>
-                  </tbody>
-               </table>
-            </div>
-         </div>
-    
+         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+	        <form name="form" id="form" method="post">
+	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
+	        	<input type="hidden" name="appNo" id="appNo" value="">
+		            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
+			            <div id="toolbar-container"></div>
+				        <div>	
+						<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
+						</div>
+		    	<script src="/ckeditor/ckeditorapprove.js"></script>
+		    	
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" style="top: 550px;" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
+	   			
+
+				
+				<!-- Modal -->
+				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h1 class="modal-title fs-5" id="staticBackdropLabel">결재자 선택(최대 3명)</h1>
+				      </div>
+						<div class="bd-example">
+						    <div class="list-group">
+						    <input type="hidden" id="appAdmin1" name="appAdmin1">
+						    <input type="hidden" id="appAdmin2" name="appAdmin2">
+						    <input type="hidden" id="appAdmin3" name="appAdmin3">
+						    	<c:forEach items="${ulist }" var="u">
+							        <label class="list-group-item">
+							            <input class="form-check-input me-1" name="ckbox" type="checkbox" value="${u.empNo }">
+							            ${u.empRank } ${u.empName }
+							        </label>
+						        </c:forEach>
+						    </div>
+						</div>
+
+				      <div class="modal-footer">
+				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='./approval/submit'">결재 신청</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+	    	</form>
 	</div>
 
 
