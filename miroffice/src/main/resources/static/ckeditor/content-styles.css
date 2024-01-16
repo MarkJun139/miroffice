@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .ck-editor__editable{
-	position: absolute; top: 45px;
+	
 	min-width: 850px;
 	
 	min-height: 500px;	
@@ -11,7 +11,7 @@ apptext
 .ck-editor__editable p {margin: 0}
 .ck-content { font-size: 13px; color: black; line-height: 0.3em;}
 .ck-toolbar.ck-toolbar_grouping {
-	position: absolute;
+	
 	width: 850px;
 }
 .ck-toolbar__items {

@@ -10,9 +10,13 @@
 	display: none;
 }
 .dataTables_wrapper.dt-bootstrap5.no-footer > .table-responsive{
-	max-width: 330px;
+	min-width: 330px;
 }
 .dataTables_wrapper.dt-bootstrap5.no-footer{
 	
 	max-width: 330px;
+}
+
+#datatable > thead > tr > th.sorting.sorting_asc {
+	width: 100px;
 }

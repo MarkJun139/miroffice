@@ -2,14 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="/ckeditor/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/ckeditor/content-styles.css" type="text/css">
+
+
 <html lang="ko">
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스</title>
       
-      <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"/> -->
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/favicon.ico" />
       
@@ -56,7 +59,7 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-3 text-start">
-                     		 <h1 class="card-title">게시판</h1>
+                     		 <h1 class="card-title">글쓰기</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
@@ -66,38 +69,57 @@
                      	</div>
 <!--  메인 여기부터!!! -->      
 
-<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
+<form name="form" id="form" action="write" method="post">
+		<input type="hidden" id="empNo" name="empNo" value="${pageContext.request.userPrincipal.name}"/>
+		
+    	<tr> 
+    	<h2>
+			<td class="orange">문서명</td>
+			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="font-size: 30"/></td>
+			</h2>
+		</tr>
+
+    <!-- The toolbar will be rendered in this container. -->
+    <div id="toolbar-container"></div>
+
+    <!-- This container will become the editable. -->
+    <div>	
+		<textarea id="forumText" name="forumText" placeholder="내용을 입력해 주세요"></textarea>
+	</div>
+    	<script src="/ckeditor/ckeditorforum.js"></script>
+		<!--
+		<div class="bd-example">
+	        <div class="mb-3">
+                <label class="form-label" for="customFile">Upload</label>
+                <input type="file" class="form-control" id="customFile">
+            </div>
+        </div>
+        -->
             
+    <button type="button" id="btnSave">완료</button>
+    <button type="button" id="btnList">취소</button>
+    </form>
     
-    <form name="form" id="form" method="post">
-  <div class="table-responsive" style="width: 1200px;">
-     <table id="datatable2" class="table table-striped" data-toggle="data-table" style="width: 100%;">
-	        
-        <thead>
-           <tr>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>조회수</th>
-              <th>작성날짜</th>
-           </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${list }" var="f">
-           <tr>
-              <td><a href="./forum/${f.forumNo }">${f.forumTitle}</a></td>
-              <td>${f.empRank } ${f.empName }</td>
-              <td>${f.forumCount }</td>
-              <td><fmt:formatDate value="${f.forumDate }" dateStyle="short" type="both" timeStyle="short"/></td>
-           </tr>
-           </c:forEach>
-        </tbody>
-
-     </table>
-
-  </div>
-          </form>
-</div>
-
+    <script>
+	$(document).on('click', '#btnSave', function(e){
+		e.preventDefault();
+		
+		if(document.getElementById('forumTitle').value == ''){
+			alert('제목을 입력하세요');
+		}
+		else if(newEditor.getData() == ''){
+			alert('내용을 입력하세요');
+		}
+		else{
+			<!--e.preventDefault();-->
+			$("#form").submit();
+		}
+	});
+	$(document).on('click', '#btnList', function(e){
+		e.preventDefault();	
+		location.href="../approval";
+	});
+	</script>
 
 
 
@@ -112,7 +134,6 @@
       <!-- Footer Section End -->    </main>
       <%@include file = "../setting.jsp" %>
     
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <!-- Library Bundle Script -->
     <script src="/js/core/libs.min.js"></script>
@@ -147,8 +168,6 @@
     
     <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
     <script>
-
-
       function getApproval(no) {
         $.ajax({
           type : "POST",	
@@ -175,19 +194,11 @@
     
       <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
       $(function(){
-         $('#datatable2').removeAttr('width').DataTable({
+         $('#datatable2').dataTable({
           aaSorting: [],
           lengthMenu: [10, 30],
           order : [[ 3, "desc" ]],
-          destroy : true,
-          autoWidth: false,
-          columnDefs: [
-        	  {width: 400, targets: 0},
-        	  {width: 200, targets: 1},
-        	  {width: 200, targets: 2},
-        	  {width: 200, targets: 3}
-          ]
-
+          destroy : true
          });
         });
       

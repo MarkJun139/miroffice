@@ -9,6 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스</title>
       
+      <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"/> -->
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/favicon.ico" />
       
@@ -40,10 +41,35 @@
     <%@include file="../sidebar.jsp" %>
    
         <main class="main-content">
-         <%@include file="../header.jsp" %>
+
+      <div class="position-relative iq-banner">
+        <!--Nav Start-->
+        
+            <%@include file="../header.jsp" %>
+        <!--Nav End -->
+      </div>
+     
+      <div class="conatiner-fluid content-inner mt-n5 py-0">
+
+            <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="100" style="overflow-x: auto">
+                           <div class="flex-wrap card-header d-flex justify-content-between">
+                  <div class="header-title col-12">
+                  <div class="col-12 row text-center align-items-center">
+                              	 	<div class="col-3 text-start">
+                     		 <h1 class="card-title">전자결재</h1>
+                     	</div>
+                     	<div class="col-3 text-start">
+                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	</div>
+                     	</div>
+                     	</div>
+                     	</div>
 <!--  메인 여기부터!!! -->      
-      
-         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+
+<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
+            
+    
+         <div class="col-md-6" style = "padding: 5px; border: 1px">
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
@@ -54,49 +80,31 @@
 						</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" style="top: 550px;" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
 	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
 	   			
 
 				
 				<!-- Modal -->
-				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h1 class="modal-title fs-5" id="staticBackdropLabel">결재자 선택(최대 3명)</h1>
-				      </div>
-						<div class="bd-example">
-						    <div class="list-group">
-						    <input type="hidden" id="appAdmin1" name="appAdmin1">
-						    <input type="hidden" id="appAdmin2" name="appAdmin2">
-						    <input type="hidden" id="appAdmin3" name="appAdmin3">
-						    	<c:forEach items="${ulist }" var="u">
-							        <label class="list-group-item">
-							            <input class="form-check-input me-1" name="ckbox" type="checkbox" value="${u.empNo }">
-							            ${u.empRank } ${u.empName }
-							        </label>
-						        </c:forEach>
-						    </div>
-						</div>
-
-				      <div class="modal-footer">
-				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='./approval/submit'">결재 신청</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
 
 	    	</form>
-	</div>
+	    	</div>
+
+
+
+
 
 
       <!-- 메인 여기까지 -->
+</div>
+</div>
+
 <!-- Footer Section Start -->
       <%@include file = "../footer.jsp" %>
       <!-- Footer Section End -->    </main>
       <%@include file = "../setting.jsp" %>
+    
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <!-- Library Bundle Script -->
     <script src="/js/core/libs.min.js"></script>
@@ -129,57 +137,68 @@
     <!-- App Script -->
     <script src="/js/hope-ui.js" defer></script>
     
-
+    <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
     <script>
-	function getApproval(no) {
-		$.ajax({
-			type : "POST",	
-			url : "./forum/one/" + no,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		})
-		.done(function (result){
-			console.log(result)
-			document.getElementById("appNo").value = result.appNo
-			document.getElementById("appTitle").value = result.appTitle
-			$("#btnSave").attr("disabled", true)
-			$("#btnEdit").attr("disabled", false)
-			newEditor.setData(result.appText)
-		})
-		.fail(function(jqXHR){
-			console.log("jqXHR 오류래요")
-			console.log(jqXHR)
-		})
-		.always(function(){
-			console.log(no);
-		})
-	}
+    
 
-	<!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
-	$(function(){
-		 $('#datatable2').dataTable({
-		  aaSorting: [],
-		  lengthMenu: [10, 30],
-		  order : [[ 3, "desc" ]],
-		  destroy : true
-		 });
-		});
-	
-	
-	var url= window.location.href;
-	$(".nav-item").find('a').each(function() {
-		var burl = $(this).prop('href')
-		var burl2 = burl+"#"
-		if(url == burl || url == burl2){
-    		console.log(url);
-			console.log($(this).prop('href'))
-    		$(this).toggleClass('active', $(this).attr('href'));
-		}
+      function getApproval(no) {
+        $.ajax({
+          type : "POST",	
+          url : "./forum/one/" + no,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json"
+        })
+        .done(function (result){
+          console.log(result)
+          document.getElementById("appNo").value = result.appNo
+          document.getElementById("appTitle").value = result.appTitle
+          $("#btnSave").attr("disabled", true)
+          $("#btnEdit").attr("disabled", false)
+          newEditor.setData(result.appText)
+        })
+        .fail(function(jqXHR){
+          console.log("jqXHR 오류래요")
+          console.log(jqXHR)
+        })
+        .always(function(){
+          console.log(no);
+        })
+      }
+    
+      <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
+      $(function(){
+         $('#datatable2').removeAttr('width').DataTable({
+          aaSorting: [],
+          lengthMenu: [10, 30],
+          order : [[ 3, "desc" ]],
+          destroy : true,
+          autoWidth: false,
+          columnDefs: [
+        	  {width: 400, targets: 0},
+        	  {width: 200, targets: 1},
+        	  {width: 200, targets: 2},
+        	  {width: 200, targets: 3}
+          ]
 
-	})
+         });
+        });
+      
+      
+      var url= window.location.href;
+      $(".nav-item").find('a').each(function() {
+        var burl = $(this).prop('href')
+        var burl2 = burl+"#"
+        if(url == burl || url == burl2){
+            console.log(url);
+          console.log($(this).prop('href'))
+            $(this).toggleClass('active', $(this).attr('href'));
+        }
+    
+      })
+    
+      
+      </script>
 
-	
-	</script>
 
   </body>
 </html>

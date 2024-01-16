@@ -27,5 +27,6 @@ public class LoginUserDetailsService implements UserDetailsService {
 		} else {
 			return new SecurityUser(user);
 		}
+		
 	}
 }
