@@ -4,7 +4,7 @@
 
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../main" class="navbar-brand">
+            <a href="/main" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -64,7 +64,7 @@
                             <span class="item-name">대시보드</span>
                         </a>
                     </li>
-                     <li class="nav-item">
+                     <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="https://templates.iqonic.design/hope-ui/html/dist/" target="_blank">
                             <i class="icon">
                                  <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +76,7 @@
                             </i>
                             <span class="item-name">Design System<span class="badge rounded-pill bg-success item-name">UI</span></span>
                         </a>
-                    </li>
+                    </li> -->
                     <li><hr class="hr-horizontal"></li>
                     <li class="nav-item static-item">
                         <a class="nav-link static-item disabled" href="#" tabindex="-1">
@@ -85,7 +85,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link "  href="../dashboard/admin.html">
+                        <a class="nav-link "  href="/main/checkout">
                             <i class="icon">
                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z" fill="currentColor"></path>
@@ -106,7 +106,7 @@
                             <span class="item-name">주소록</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-special" role="button" aria-expanded="false" aria-controls="sidebar-special">
                             <i class="icon">
                                 <svg class="icon-20"  width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +201,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-auth" role="button" aria-expanded="false" aria-controls="sidebar-user">
                             <i class="icon">
@@ -219,7 +219,7 @@
                         </a>
                         <ul class="sub-nav collapse" id="sidebar-auth" data-bs-parent="#sidebar-menu">
                             <li class="nav-item">
-                                <a class="nav-link" href="../main/forumlist">
+                                <a class="nav-link" href="/main/forumlist">
                                     <i class="icon">
                                         <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                                             <g>
@@ -244,7 +244,7 @@
                                     <span class="item-name">Register</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="../dashboard/auth/confirm-mail.html">
                                     <i class="icon">
                                         <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
@@ -282,7 +282,7 @@
                                     <i class="sidenav-mini-icon"> R </i>
                                     <span class="item-name">Recover password</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -347,58 +347,15 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#utilities-error" role="button" aria-expanded="false" aria-controls="utilities-error">
+                        <a class="nav-link" href="/main/schedule" role="button">
                             <i class="icon">
-                                <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M11.9912 18.6215L5.49945 21.864C5.00921 22.1302 4.39768 21.9525 4.12348 21.4643C4.0434 21.3108 4.00106 21.1402 4 20.9668V13.7087C4 14.4283 4.40573 14.8725 5.47299 15.37L11.9912 18.6215Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89526 2H15.0695C17.7773 2 19.9735 3.06605 20 5.79337V20.9668C19.9989 21.1374 19.9565 21.3051 19.8765 21.4554C19.7479 21.7007 19.5259 21.8827 19.2615 21.9598C18.997 22.0368 18.7128 22.0023 18.4741 21.8641L11.9912 18.6215L5.47299 15.3701C4.40573 14.8726 4 14.4284 4 13.7088V5.79337C4 3.06605 6.19625 2 8.89526 2ZM8.22492 9.62227H15.7486C16.1822 9.62227 16.5336 9.26828 16.5336 8.83162C16.5336 8.39495 16.1822 8.04096 15.7486 8.04096H8.22492C7.79137 8.04096 7.43991 8.39495 7.43991 8.83162C7.43991 9.26828 7.79137 9.62227 8.22492 9.62227Z" fill="currentColor"></path>
+                                <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20"  viewBox="0 0 24 24" fill="none">
+                                    <path d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z" fill="currentColor" stroke="currentColor"/>
+                                    <path d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20" stroke="currentColor"/>
                                 </svg>
                             </i>
                             <span class="item-name">일정</span>
-                            <i class="right-icon">
-                                <svg class="icon-18" xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
                         </a>
-                        <ul class="sub-nav collapse" id="utilities-error" data-bs-parent="#sidebar-menu">
-                            <li class="nav-item">
-                                <a class="nav-link " href="../dashboard/errors/error404.html">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <span class="item-name">Error 404</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="../dashboard/errors/error500.html">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <span class="item-name">Error 500</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="../dashboard/errors/maintenance.html">
-                                    <i class="icon">
-                                        <svg  class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <span class="item-name">Maintenance</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link "  href="/main/projectlist">

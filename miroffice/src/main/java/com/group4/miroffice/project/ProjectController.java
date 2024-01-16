@@ -32,7 +32,6 @@ public class ProjectController {
 	@Autowired
 	ProjectService service;
 
-	
 	@GetMapping("/projectlist")
 	public String projectList(Model m, Authentication authentication) {
 		// 본인 부서만 보여주기
@@ -53,6 +52,8 @@ public class ProjectController {
 		
 		return "project/list";
 	}
+	
+
 	
 	@GetMapping("/teamleader/projectwrite")
 	public String projectWriteForm(Authentication authentication) {
