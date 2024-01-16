@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class Checkout {
 	
+	private int check_no;
 	private int emp_no;
 	private int dept_no;
 	private LocalDate check_date;

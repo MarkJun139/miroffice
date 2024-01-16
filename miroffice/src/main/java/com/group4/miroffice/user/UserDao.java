@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.group4.miroffice.dto.CheckDate;
 import com.group4.miroffice.dto.Checkout;
 import com.group4.miroffice.dto.DayCheck;
 import com.group4.miroffice.dto.Dept;
@@ -26,9 +27,6 @@ public interface UserDao {
 	
 	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where emp_no = #{u1} or emp_no = #{u2} or emp_no = #{u3}")
 	List<Users> findMyApproveEmp(Map<String, Integer> map);
-	
-	@Select("SELECT * FROM checkout WHERE emp_no = #{empNo} AND check_date = #{check_date}")
-	Checkout checkout(DayCheck dayCheck);
 	
 	@Select("select * from department where dept_no = #{deptNo}")
 	Dept dept(int deptNo);
@@ -49,6 +47,31 @@ public interface UserDao {
 	@Update("UPDATE checkout SET check_end_time = #{check_end_time}, check_work_time = timediff(#{check_end_time}, check_start_time)"
 			+ " WHERE dept_no = #{dept_no} AND check_date = #{check_date}")
 	int end(Checkout checkout);
+	
+	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
+			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
+			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
+			+ " sum(check_absenteeism) as checkAbsenteenism from checkout"
+			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}")
+	CheckDate checkdate(DayCheck daycheck);
+	
+	@Select("select week(check_date) AS weekNumber, sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
+			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
+			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
+			+ " sum(check_absenteeism) as checkAbsenteenism from checkout"
+			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}"
+			+ " and week(check_date) = #{week} group by weekNumber order by weekNumber")
+	CheckDate weekCheck(DayCheck daycheck);
+	
+	@Select("select emp_name from employee where dept_no = #{deptNo}")
+	List<String> searchEmp(int deptNo);
+	
+	@Select("select * from employee where emp_name = #{empName}")
+	Users leaderCheck(String empName);
+	
+	@Select("select * from checkout where check_date = #{checkDate} and emp_no = #{empNo}")
+	List<Checkout> checkout(DayCheck dayCheck);
+	
 //	@Insert("insert into users values (#{id}, #{password}, #{name}, #{role}, 'T')")
 //	int insertUser(Users user);
 }
