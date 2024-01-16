@@ -71,9 +71,11 @@ public class CheckController {
 		
 		List<Checkout> checkout = service2.checkout(dayCheck);
 		
-		System.out.println(checkout);
+		LocalTime start = checkout.get(0).getCheckStartTime();
+		LocalTime end = checkout.get(0).getCheckEndTime();
 		
-		
+		m.addAttribute("start", start);
+		m.addAttribute("end", end);
 		m.addAttribute("searchEmp", searchEmp);
 		m.addAttribute("user", users);
 		m.addAttribute("checkdate", checkdate);
@@ -101,10 +103,10 @@ public class CheckController {
 
 		Checkout checkout = new Checkout();
 
-		checkout.setEmp_no(users.getEmpNo());
-		checkout.setDept_no(users.getDeptNo());
-		checkout.setCheck_date(currentDate);
-		checkout.setCheck_start_time(currentTime);
+		checkout.setEmpNo(users.getEmpNo());
+		checkout.setDeptNo(users.getDeptNo());
+		checkout.setCheckDate(currentDate);
+		checkout.setCheckStartTime(currentTime);
 
 		if (currentTime.isBefore(time)) {
 
@@ -132,10 +134,10 @@ public class CheckController {
 
 		Checkout checkout = new Checkout();
 
-		checkout.setEmp_no(users.getEmpNo());
-		checkout.setDept_no(users.getDeptNo());
-		checkout.setCheck_date(currentDate);
-		checkout.setCheck_end_time(currentTime);
+		checkout.setEmpNo(users.getEmpNo());
+		checkout.setDeptNo(users.getDeptNo());
+		checkout.setCheckDate(currentDate);
+		checkout.setCheckEndTime(currentTime);
 
 		service2.End(checkout);
 

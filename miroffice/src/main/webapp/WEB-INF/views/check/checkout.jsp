@@ -34,8 +34,8 @@
 			<td>퇴근시간</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td></td>
+			<td>${start}</td>
+			<td>${end}</td>
 		</tr>		
 	</table>
 	

@@ -37,15 +37,15 @@ public interface UserDao {
 	int infoUpdate(Users user);
 	
 	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time)"
-			+ " VALUES (#{emp_no}, #{dept_no}, #{check_date}, #{check_start_time})")
+			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime})")
 	int start(Checkout checkout);
 	
 	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time, check_late)"
-			+ " VALUES (#{emp_no}, #{dept_no}, #{check_date}, #{check_start_time}, 1)")
+			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1)")
 	int lateStart(Checkout checkout);
 	
-	@Update("UPDATE checkout SET check_end_time = #{check_end_time}, check_work_time = timediff(#{check_end_time}, check_start_time)"
-			+ " WHERE dept_no = #{dept_no} AND check_date = #{check_date}")
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timediff(#{checkEndTime}, check_Start_Time)"
+			+ " WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
 	int end(Checkout checkout);
 	
 	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
