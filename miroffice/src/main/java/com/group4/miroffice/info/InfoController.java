@@ -72,7 +72,11 @@ public class InfoController {
 	}
 	
 	@PostMapping("/update")
-	public String InfoUpdate(@ModelAttribute Users users) {
+
+	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto) {
+		
+		Users userUpdate = new Users();
+		
 
 		service.InfoUpdate(users);
 			

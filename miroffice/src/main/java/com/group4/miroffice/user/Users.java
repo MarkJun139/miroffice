@@ -27,4 +27,9 @@ public class Users {
 	private Role empRole;
 	private int empDayoff;
 	private String empJob;	
+
+}
+
+	
+	private Boolean empApprove;
 }
