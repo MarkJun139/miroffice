@@ -58,7 +58,7 @@
       </div>
       <div class="modal-footer">
        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-       		<input type="submit" class="btn btn-primary project_popup" value="부서명 수정">
+       		<input type="submit" class="btn btn-primary project_popup deptUpdateSubmit" value="부서명 수정">
       </div>
     </div>
   </div>
@@ -80,9 +80,9 @@
       <div class="modal-footer">
       <form action="/main/admin/dept/delete" method="post" class="deptDeleteForm">
        		<input type="hidden" name="_method" value="delete" />
-       		<input type="hidden" name="deptNo" class="deptNo"/>
+       		<input type="hidden" name="deptNo" class="deptDeleteNo"/>
        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-       		<input type="submit" class="btn btn-danger project_popup" value="부서 삭제">
+       		<input type="submit" class="btn btn-danger project_popup deptDeleteSubmit" value="부서 삭제">
        	</form>
       </div>
     </div>
@@ -126,7 +126,7 @@
                         	<c:forEach items="${deptList}" var="dept" >
 	                           <tr>
 	                              <td class="col-md-1">
-	                              	<input class="form-check-input" name="deptDelCheck" type="checkbox" value="${dept.deptNo}" id="flexCheckDefault">
+	                              	<input class="form-check-input deptCheckbox" name="deptDelCheck" type="checkbox" value="${dept.deptNo}" id="flexCheckDefault">
 	                              </td>
 	                           	  <td class="col-md-1">
 	                                 ${dept.deptNo} 
@@ -151,7 +151,7 @@
                   </div>
                </div>
                <div class="card-footer align-items-center">
-               		<button type="submit" class="btn btn-danger" deptNo="${dept.deptNo}" deptName="${dept.deptName}">선택 삭제</button>
+               		<button type="submit" class="btn btn-danger deptDeleteCheckbox" deptNo="${dept.deptNo}" deptName="${dept.deptName}">선택 삭제</button>
                </div>
                </form>
             </div>
@@ -174,8 +174,8 @@
 			$(".delete_popup").on("click",function(){
 				const deptNo = $(this).attr("deptNo");
 				const deptName = $(this).attr("deptName");
-				$(".deptNo").val(deptNo);
-				$(".deptNameBody").text(deptName);
+				$(".deptDeleteNo").val(deptNo);
+				$("#deptNameBody").text(deptName);
 			})
 			$(".update_popup").on("click",function(){
 				const deptNo = $(this).attr("deptNo");
@@ -185,13 +185,52 @@
 				$(".deptNameBody").text(deptName);
 			})
 			$("#deptListCheck").change(function() {
-	            // #deptListCheck 체크 여부에 따라 #flexCheckDefault 체크박스를 모두 체크 또는 해제
 	            if ($(this).prop("checked")) {
 	                $("[name='deptDelCheck']").prop("checked", true);
 	            } else {
 	                $("[name='deptDelCheck']").prop("checked", false);
 	            }
 	        });
+			
+			$(".deptUpdateSubmit").click(function(e) {
+				const deptNo = $(".deptNo").val();
+				const deptName = $(".deptName").val();
+				if(!deptNo || !deptName){
+					alert("내용을 입력하세요");
+					e.preventDefault();
+				} else if(deptNo < 0 || deptNo == 99){
+					alert("지정할 수 없는 부서번호 입니다");
+					e.preventDefault();
+				} else {
+					const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					if(reg.test(deptName)){
+						alert("부서이름에 특수문자를 사용할 수 없습니다");
+						e.preventDefault();
+						return;
+					}
+					
+					const deptData = {
+						deptNo : deptNo,
+						deptName : deptName
+					};
+					$.ajax({
+						type:"PUT",
+						url: "/main/admin/dept/update",
+						contentType: "application/json",
+						data: JSON.stringify(deptData),
+						success: function(res){
+							alert("수정 성공");
+							window.location.href = "/main/admin/dept/list";
+						},
+						error : function(){
+							alert("에러")
+						}
+					})
+					e.preventDefault();
+				}
+				
+			})
+			
 			
 			
 			$("#addDepartment").click(function(e) {
@@ -201,11 +240,17 @@
 				if(!deptNo || !deptName){
 					alert("내용을 입력하세요");
 					e.preventDefault();
-				} else if(deptNo <= 0 || deptNo == 99){
-					
+				} else if(deptNo < 0 || deptNo == 99){
 					alert("지정할 수 없는 부서번호 입니다");
 					e.preventDefault();
 				} else {
+					const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					if(reg.test(deptName)){
+						alert("부서이름에 특수문자를 사용할 수 없습니다");
+						e.preventDefault();
+						return;
+					}
+					
 					$.ajax({
 						type:"GET",
 						url: "/main/checkDeptNo",
@@ -225,6 +270,49 @@
 				}
 			})
 			
+			$(".deptDeleteSubmit").click(function(e){
+				const deptNo = $(".deptDeleteNo").val();
+				
+				$.ajax({
+					type:"POST",
+					url: "/main/admin/dept/delete",
+					data : {deptno : deptNo},
+					success : function(res) {
+						window.location.href = "/main/admin/dept/list";
+					},
+					error : function(){
+						alert("해당 부서 부서원을 먼저 삭제, 수정해주세요");
+					}
+				})
+				e.preventDefault();
+			})
+			$(".deptDeleteCheckbox").on("click",function(e){
+				const select = $(".deptCheckbox:checked").map(function() {
+			        return this.value;
+			    }).get();
+				if(select.length === 0){
+					alert("삭제할 부서를 선택해주세요");
+					e.preventDefault();
+					return;
+				} 
+				$.ajax({
+					type:"POST",
+					url: "/main/admin/dept/deletecheck",
+					data : {deptDelCheck : select},
+					traditional: true,
+					success : function(res) {
+						alert("부서번호 : " + select + "삭제 성공");
+						window.location.href = "/main/admin/dept/list";
+					},
+					error: function(a, b, c) {
+						alert("체크된 해당 부서 부서원을 먼저 삭제, 수정해주세요")
+			            console.error("ajax Error : ", a, b,c);
+			            console.log(select);
+			        }
+				})
+				e.preventDefault();
+			})
+				
 		})
 	  </script>
 

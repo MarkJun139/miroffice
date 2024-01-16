@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <div class="row">
    <div class="col-md-12 col-lg-12 mt-5">
@@ -14,6 +17,9 @@
                   	 	<div class="col-6 text-start">
                      		<h1 class="mb-2 card-title">사원 추가</h1>
                      	</div>
+                     	<div class="col-6 text-end">
+                     		<a href="/main/admin/emp/list" class="btn btn-secondary text-white float-right">사원 목록</a>
+                     	</div>
                      </div>                          
                   </div>
                </div>
@@ -24,7 +30,7 @@
                  	 	<div class="card-body">
 	                 	 	<h5 class="card-title text-center">사진 등록</h5>
 	                 	 	<label for="preview">
-	                 	 		<img class="card-img-top img-fluid" src="https://blog.kakaocdn.net/dn/bftRiB/btqAjaghSBk/5CcN9W5qyCU8HLylVYcXb1/img.png" alt="미리보기" id="previewImage">
+	                 	 		<img class="card-img-top img-fluid" width="170px" height="200px" style="object-fit:cover" src="https://blog.kakaocdn.net/dn/bftRiB/btqAjaghSBk/5CcN9W5qyCU8HLylVYcXb1/img.png" alt="미리보기" id="previewImage">
 	                 	 	</label>
 	               			<input type="file" class="form-control" id="empPhotoFile" name="empPhotoFile" onchange="handleFileSelect()">
                			</div>
@@ -60,31 +66,35 @@
 					    </div>
 					  </div>
 					  <div class="row">
-					  	<div class="form-group col-md-6">
+					  	<div class="form-group col-md-5">
 						    <label for="Address">주소</label>
-						    <input type="text" class="form-control" id="Address" name="empAddress" placeholder="주소">
+						    <input type="text" class="form-control" id="address" name="empAddress" placeholder="주소" readonly>
 						</div>
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-5">
 						    <label for="Address2">상세주소</label>
-						    <input type="text" class="form-control" id="Address2" name="empAddress2" placeholder="상세주소">
+						    <input type="text" class="form-control" id="address2" name="empAddress2" placeholder="상세주소">
+					    </div>
+					    <div class="form-group col-md-2">
+					    	<label>&nbsp;</label>
+						    <a href="#" class="col-md-12 btn btn-primary pull-right" id="findAddress">주소 찾기</a>
 					    </div>
 					  </div>
 					  <div class="row">
 					    <div class="form-group col-md-3">
 					      <label for="sal">연봉(단위 만)</label>
-					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉">
+					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" min="0">
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="hireDate">입사일</label>
-					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일">
+					      <input type="date" class="form-control" id="hiredate" name="empHiredate" placeholder="입사일">
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empJob">직군</label>
-					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군">
+					      <input type="text" class="form-control" id="job" name="empJob" placeholder="직군">
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empRank">직급</label>
-					      <input type="text" class="form-control" id="empRank" name="empRank" placeholder="직급">
+					      <input type="text" class="form-control" id="rank" name="empRank" placeholder="직급">
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -103,7 +113,7 @@
 						</div>
 					  </div>
 					  </div>
-					  <button type="submit" class="col-md-12 btn btn-primary pull-right">사원 등록</button>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="addEmployee">사원 등록</button>
 					  </form>
 					</div>
                </div>
@@ -154,6 +164,54 @@
  	    };
  	    reader.readAsDataURL(file);
 	}
+ 	$(function(){
+
+ 		$("#addEmployee").click(function(e){
+ 			const name = $("#name").val();
+ 			const email = $("#email").val();
+ 			const birth = $("#birth").val();
+ 			const phone = $("#phoneNumber").val();
+ 			const dept = $("#dept").val();
+ 			const address = $("#address").val();
+ 			const adderss2 = $("#address2").val();
+ 			const sal = $("#sal").val();
+ 			const hiredate = $("#hiredate").val();
+ 			const job = $("#job").val();
+ 			const rank = $("#rank").val();
+ 			
+ 			const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+ 			
+ 			
+ 			if(!name || !email || !birth || !phone || !dept || !address || !address2 || !sal || !hiredate || !job || !rank){
+ 				console.log(dept + name + email + birth + phone + address + address2 + sal + hiredate + job + rank)
+ 				alert("누락된 항목이 있습니다.");
+ 				e.preventDefault();
+ 			} else if(reg.test(name) || reg.test(job) || reg.test(rank) || reg.test(phone) || reg.test(dept)){
+ 				
+				alert("특수문자를 제거해주세요");
+				e.preventDefault();
+ 			
+ 			}
+			
+ 		})
+ 		$("#findAddress").click(function(){
+ 			new daum.Postcode({
+ 	 	        oncomplete: function(data) {
+ 	 	            $("#address").val(data.address);
+ 	 	            $("#address2").focus();
+ 	 	        }
+ 	 	    }).open();	
+ 		})
+ 		$("#address").click(function(){
+ 			new daum.Postcode({
+ 	 	        oncomplete: function(data) {
+ 	 	            $("#address").val(data.address);
+ 	 	            $("#address2").focus();
+ 	 	        }
+ 	 	    }).open();	
+ 		})
+ 	})
+ 	
  	
  	
  </script>

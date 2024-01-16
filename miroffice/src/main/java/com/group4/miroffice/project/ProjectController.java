@@ -2,6 +2,7 @@ package com.group4.miroffice.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.HtmlUtils;
 
 import com.group4.miroffice.dto.Project;
 import com.group4.miroffice.user.Users;
@@ -37,8 +39,15 @@ public class ProjectController {
 		System.out.println(authentication.getName());
 		int empno = Integer.parseInt(authentication.getName());
 		System.out.println("프로젝트 목록");
-		List<Project> projectList = service.projectList(empno);
 		String deptName = service.getDeptName(empno);
+		List<Project> projectList = service.projectList(empno);
+		
+		projectList.forEach(project -> {
+		    project.setProjecttitle(HtmlUtils.htmlEscape(project.getProjecttitle()));
+		    project.setProjecttext(HtmlUtils.htmlEscape(project.getProjecttext()));
+		});
+		
+	
 		m.addAttribute("deptName", deptName);
 		m.addAttribute("projectList", projectList);
 		
@@ -52,20 +61,23 @@ public class ProjectController {
 	}
 	@PostMapping("/teamleader/project/write")
 	public String projectWrite(Project dto, Authentication authentication) {
-		
-		if (authentication != null) {
-			int empno = Integer.parseInt(authentication.getName());
-			List<Users> user = new ArrayList<Users>();
-			user = service.userInfo(empno);
-			
-			dto.setEmpno(user.get(0).getEmpNo());
-			dto.setDeptno(user.get(0).getDeptNo());
-			service.projectWrite(dto);
-			System.out.println("프로젝트 등록 완료");
-			System.out.println("프로젝트 작성자 : " + user.get(0).getEmpName());
-		} else {
-			System.out.println("프로젝트 등록 실패");
-			return "project/list";
+		try {
+			if (authentication != null) {
+				int empno = Integer.parseInt(authentication.getName());
+				List<Users> user = new ArrayList<Users>();
+				user = service.userInfo(empno);
+				
+				dto.setEmpno(user.get(0).getEmpNo());
+				dto.setDeptno(user.get(0).getDeptNo());
+				service.projectWrite(dto);
+				System.out.println("프로젝트 등록 완료");
+				System.out.println("프로젝트 작성자 : " + user.get(0).getEmpName());
+			} else {
+				System.out.println("프로젝트 등록 실패");
+				return "project/list";
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return "redirect:/main/projectlist";
 	}
@@ -74,6 +86,8 @@ public class ProjectController {
 	public String projectView(@PathVariable(name = "id") int id, Model m) {
 		System.out.println(id + "번 프로젝트");
 		Project project = service.projectView(id);
+		project.setProjecttitle(HtmlUtils.htmlEscape(project.getProjecttitle()));
+		project.setProjecttext(HtmlUtils.htmlEscape(project.getProjecttext()));
 		m.addAttribute("project",project);
 		
 		return "project/view";
@@ -82,6 +96,8 @@ public class ProjectController {
 	public String projectEditForm(@PathVariable(name = "id") int id, Model m) {
 		
 		Project project = service.projectView(id);
+		project.setProjecttitle(HtmlUtils.htmlEscape(project.getProjecttitle()));
+		project.setProjecttext(HtmlUtils.htmlEscape(project.getProjecttext()));
 		m.addAttribute("project", project);
 		
 		return "project/edit";
@@ -89,29 +105,36 @@ public class ProjectController {
 	
 	@PutMapping("/teamleader/project/edit")
 	public String projectEdit(Project dto) {
-		
-		
-		service.projectUpdate(dto);
-		System.out.println("프로젝트 수정");
-		System.out.println("수정된 값 : " + dto.toString());
+		try {
+			service.projectUpdate(dto);
+			System.out.println("프로젝트 수정");
+			System.out.println("수정된 값 : " + dto.toString());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/main/projectlist";
 	}
 	
 	@PutMapping("/teamleader/project/editprogress")
 	public String projectEditProgress(Project dto) {
-		service.projectUpdateProgress(dto);
-		System.out.println("진행률 수정");
-		System.out.println(dto.toString());
-		
+		try {
+			service.projectUpdateProgress(dto);
+			System.out.println("진행률 수정");
+			System.out.println(dto.toString());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/main/projectlist";
 	}
 	
 	@DeleteMapping("/teamleader/project/delete/{id}")
 	public String projectDelete(@PathVariable(name = "id") int id) {
-		System.out.println(id + " 번 프로젝트 삭제");
-		
-		service.projectDelete(id);
-		
+		try {
+			System.out.println(id + " 번 프로젝트 삭제");
+			service.projectDelete(id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/main/projectlist";
 	}
 	

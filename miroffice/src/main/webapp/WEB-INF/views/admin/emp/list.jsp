@@ -4,6 +4,7 @@
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
 <script>
 	$(function(){
+		
 		$("head > title").text("사원 관리");
 	})
 </script>
@@ -19,6 +20,7 @@
       
       <div class="modal-body">
       <h4><span style="font-weight: bold;" class="empNameBody"></span> 님을 정말 삭제하시겠습니까?</h4>
+      <h7>해당 사원을 삭제하면 게시판, 근태 등 관련 정보를 함께 삭제합니다</h7>
       </div>
       <div class="modal-footer">
       <form action="" method="post" class="empDeleteForm">
@@ -55,6 +57,7 @@
                      <table id="basic-table" class="table mb-0 table-striped" role="grid">
                         <thead>
                            <tr>
+                              <th><input class="form-check-input" type="checkbox" id="empListCheck"></th>
                               <th></th>
                               <th>사원번호</th>
                               <th>사원이름</th>
@@ -71,7 +74,10 @@
                         	<c:forEach items="${empList}" var="emp" >
 	                           <tr>
 	                           	  <td class="col-md-1">
-	                                 <img src="/images${emp.empPhoto}" width="125px" height="150px" alt="사원 사진">	 
+	                              	<input class="form-check-input empCheckbox" name="empDelCheck" type="checkbox" value="${emp.empNo}" id="flexCheckDefault">
+	                              </td>
+	                           	  <td class="col-md-1">
+	                                 <img src="/images${emp.empPhoto}" width="125px" height="150px" style="object-fit:cover" alt="사원 사진">	 
 	                              </td>
 	                              <td class="col-md-1">
 	                                 ${emp.empNo}
@@ -113,6 +119,9 @@
                      </table>
                   </div>
                </div>
+               <div class="card-footer align-items-center">
+               		<button type="submit" class="btn btn-danger empDeleteCheckbox">선택 삭제</button>
+               </div>
             </div>
          </div>
       </div>
@@ -137,6 +146,42 @@
 				$("#empNo").val(empNo);
 				$(".empNameBody").text(empName);
 				$(".empDeleteForm").attr("action","/main/admin/emp/delete/" + empNo);
+			})
+			$("#empListCheck").change(function() {
+	            if ($(this).prop("checked")) {
+	                $("[name='empDelCheck']").prop("checked", true);
+	            } else {
+	                $("[name='empDelCheck']").prop("checked", false);
+	            }
+	        });
+			
+			
+			$(".empDeleteCheckbox").on("click",function(e){
+				const select = $(".empCheckbox:checked").map(function() {
+			        return this.value;
+			    }).get();
+				
+				if(select.length === 0){
+					alert("삭제할 사원을 선택해주세요");
+					return;
+					e.preventDefault();
+				}
+				$.ajax({
+					type:"DELETE",
+					url: "/main/admin/emp/deletecheck",
+					data : {empDelCheck : select},
+					traditional: true,
+					success : function(res) {
+						alert("사원번호 : " + select + "삭제 성공");
+						window.location.href = "/main/admin/emp/list";
+					},
+					error: function(a, b, c) {
+						alert("참조된 값 존재")
+			            console.error("ajax Error : ", a, b,c);
+			            console.log(select);
+			        }
+				})
+				e.preventDefault();
 			})
 		})
 	  </script>

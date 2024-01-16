@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.util.HtmlUtils;
 
 import com.group4.miroffice.dto.Project;
 import com.group4.miroffice.project.ProjectService;
@@ -27,6 +28,10 @@ public class MainController {
 		
 		// 프로젝트 리스트 
 		List<Project> projectList = projectService.projectList(empno);
+		projectList.forEach(project -> {
+		    project.setProjecttitle(HtmlUtils.htmlEscape(project.getProjecttitle()));
+		    project.setProjecttext(HtmlUtils.htmlEscape(project.getProjecttext()));
+		});
 		m.addAttribute("projectList", projectList);
 		
 		
