@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.group4.miroffice.config.SecurityUser;
-import com.group4.miroffice.dto.Users;
+import com.group4.miroffice.user.Users;
 
 @Controller
 @RequestMapping("/main/schedule")
@@ -78,8 +78,7 @@ public class ScheduleController {
 
 		Map<String, Object> upSchedule = new HashMap<>();
 		upSchedule.put("title", title);
-		upSchedule.put("start", newStart);
-		upSchedule.put("end", newEnd);
+		
 		System.out.println(upSchedule);
 		service.updateSchedule(upSchedule);
 		return "update";

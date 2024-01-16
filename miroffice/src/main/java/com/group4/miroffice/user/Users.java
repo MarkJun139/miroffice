@@ -28,8 +28,6 @@ public class Users {
 	private int empDayoff;
 	private String empJob;	
 
-}
-
 	
 	private Boolean empApprove;
 }
