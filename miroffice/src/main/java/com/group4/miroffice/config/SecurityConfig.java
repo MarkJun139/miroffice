@@ -3,9 +3,7 @@ package com.group4.miroffice.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -13,17 +11,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Configuration
-public class SecurityConfig {	
-	
+public class SecurityConfig {
+
 	@Autowired
-	private BoardUserDetailsService boardUserDetailsService;
-	
+	private LoginUserDetailsService boardUserDetailsService;
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(AbstractHttpConfigurer::disable)
+
 
 		.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 		
@@ -46,28 +44,19 @@ public class SecurityConfig {
 		.invalidateHttpSession(true).logoutSuccessUrl("/main"))
  		.exceptionHandling((exception)-> exception.accessDeniedPage("/accessDenied"));
 
-		http.userDetailsService(boardUserDetailsService);
 
-	return http.build();
+		http.rememberMe() // rememberMe(아이디 저장) 기능
+			.key("key")
+			.rememberMeParameter("remember-me")
+			.tokenValiditySeconds(86400)
+			.alwaysRemember(false)
+			.userDetailsService(boardUserDetailsService);
+
+		return http.build();
 
 	}
-	
-	@Bean 
+
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-/*	
-	@Autowired
-	public void authenticate(AuthenticationManagerBuilder auth) throws Exception{
-		auth.inMemoryAuthentication().withUser("manager")
-		.password("{noop}manager123")
-		.roles("MANAGER");
-		
-		auth.inMemoryAuthentication().withUser("admin")
-		.password("{noop}admin123")
-		.roles("ADMIN");
-	}
-*/
-}
-
-	

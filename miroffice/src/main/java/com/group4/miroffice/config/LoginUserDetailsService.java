@@ -10,8 +10,10 @@ import com.group4.miroffice.user.UserDao;
 import com.group4.miroffice.user.Users;
 
 
+
+
 @Service
-public class BoardUserDetailsService implements UserDetailsService {
+public class LoginUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;

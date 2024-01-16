@@ -4,7 +4,7 @@
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>미르오피스</title>
+<title>부서 일정</title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="/images/favicon.ico" />
@@ -61,7 +61,7 @@
 <body>
 	<!-- 캘린더 영역 -->
 	<div id="calendar"></div>
-	
+
 	<!-- 일정 추가 modal -->
 	<div class="modal fade" id="scheduleInsert" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,30 +72,32 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label> 
-						<input type="text" class="form-control" id="schedule_title" name="schedule_title">
-						<label for="taskId" class="col-form-label">시작 날짜</label> 
-						<input type="date" class="form-control" id="schedule_start" name="schedule_start">
-						<label for="taskId" class="col-form-label">종료 날짜</label>
-						<input type="date" class="form-control" id="schedule_end" name="schedule_end">
-						<label for="taskId" class="col-form-label">일정 종류</label>
-						<select class="form-control" id="schedule_type" name="schedule_type">
+						<label for="taskId" class="col-form-label">일정 제목</label> <input
+							type="text" class="form-control" id="schedule_title"
+							name="schedule_title"> <label for="taskId"
+							class="col-form-label">시작 날짜</label> <input type="date"
+							class="form-control" id="schedule_start" name="schedule_start">
+						<label for="taskId" class="col-form-label">종료 날짜</label> <input
+							type="date" class="form-control" id="schedule_end"
+							name="schedule_end"> <label for="taskId"
+							class="col-form-label">일정 종류</label> <select class="form-control"
+							id="schedule_type" name="schedule_type">
 							<option value="red">출장</option>
 							<option value="green">휴가</option>
 							<option value="blue">기타</option>
-						</select>
-						<label for="taskId" class="col-form-label">종일</label>
-						<input type="checkbox" id="schedule_allDay" name="schedule_allDay">
+						</select> <label for="taskId" class="col-form-label">종일</label> <input
+							type="checkbox" id="schedule_allDay" name="schedule_allDay">
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
 					<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 일정 수정, 삭제 modal -->
 	<div class="modal fade" id="updateAndDeleteModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,25 +108,30 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label>
-						<input type="text" class="form-control" id="update_schedule_title" name="update_schedule_title">
-						<label for="taskId" class="col-form-label">시작 날짜</label>
-						<input type="date" class="form-control" id="update_schedule_start" name="update_schedule_start">
-						<label for="taskId" class="col-form-label">종료 날짜</label>
-						<input type="date" class="form-control" id="update_schedule_end" name="update_schedule_end">
-						<label for="taskId" class="col-form-label">일정 종류</label>
-						<select class="form-control" id="update_schedule_type" name="update_schedule_type">
+						<label for="taskId" class="col-form-label">일정 제목</label> <input
+							type="text" class="form-control" id="update_schedule_title"
+							name="update_schedule_title"> <label for="taskId"
+							class="col-form-label">시작 날짜</label> <input type="date"
+							class="form-control" id="update_schedule_start"
+							name="update_schedule_start"> <label for="taskId"
+							class="col-form-label">종료 날짜</label> <input type="date"
+							class="form-control" id="update_schedule_end"
+							name="update_schedule_end"> <label for="taskId"
+							class="col-form-label">일정 종류</label> <select class="form-control"
+							id="update_schedule_type" name="update_schedule_type">
 							<option value="red">출장</option>
 							<option value="green">휴가</option>
 							<option value="blue">기타</option>
-						</select>
-						<label for="taskId" class="col-form-label">종일</label>
-						<input type="checkbox" id="update_schedule_allDay" name="update_schedule_allDay">
+						</select> <label for="taskId" class="col-form-label">종일</label> <input
+							type="checkbox" id="update_schedule_allDay"
+							name="update_schedule_allDay">
 					</div>
 				</div>
 				<div class="modal-footer d-flex bd-highlight mb-3">
-					<button type="button" class="btn btn-danger me-auto" id="deleteSchedule">삭제</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger me-auto"
+						id="deleteSchedule">삭제</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
 					<button type="button" class="btn btn-primary" id="updateSchedule">수정</button>
 				</div>
 			</div>
@@ -179,7 +186,8 @@
                      var end_date = $("#schedule_end").val();
                      var all_day = $("#schedule_allDay").val();
                      var color = $("#schedule_type").val();
-
+                     var def_id = $();
+                     var instance_id = $();
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
                     	 start : start_date,
@@ -276,7 +284,7 @@
                   	})
                  })
              },
-			events : ${schedule}, // DB에 저장되어 있는 일정 불러오기
+			//  events : ${schedule}, // DB에 저장되어 있는 일정 불러오기
 		});
 		calendar.render();
 	});
