@@ -71,17 +71,17 @@ public class InfoController {
 		return "info/update";
 	}
 	
-	@PostMapping("/update")
-
-	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto) {
-		
-		Users userUpdate = new Users();
-		
-
-		service.InfoUpdate(users);
-			
-		return "redirect:/main";
-	}
+//	@PostMapping("/update")
+//
+//	public String InfoUpdate(@ModelAttribute UserUpdateDto userUpdateDto) {
+//		
+//		Users userUpdate = new Users();
+//		
+//
+//		service.InfoUpdate(userUpdate);
+//			
+//		return "redirect:/main";
+//	}
 
 	
 	

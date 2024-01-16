@@ -6,11 +6,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.group4.miroffice.dto.Role;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
 public class Users {
-	
+
 	private int empNo;
 	private int deptNo;
 	private String empPw;
@@ -26,10 +28,7 @@ public class Users {
 	private String empPhoto;
 	private Role empRole;
 	private int empDayoff;
-	private String empJob;	
+	private String empJob;
 
-}
-
-	
 	private Boolean empApprove;
 }
