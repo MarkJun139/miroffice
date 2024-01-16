@@ -224,8 +224,8 @@
 		var burl = $(this).prop('href')
 		var burl2 = burl+"#"
 		if(url == burl || url == burl2){
-    		console.log($(this).prop('pathname'))
-			console.log($(this).prop('href'))
+    		// console.log($(this).prop('pathname'))
+			// console.log($(this).prop('href'))
     		$(this).toggleClass('active', $(this).attr('href'));
 		}
 
@@ -278,7 +278,6 @@ const checkbox = document.getElementById('schedule_allDay');
                      document.forms['modalf'].reset();
                  })
             	 $('#scheduleInsert').on('shown.bs.modal', function (e) { // 일정 기본값 설정
-            		console.log(data)
              		$(this).find('.form-control')[0].value = '';
              		$(this).find('.form-control')[1].value = data.startStr;
              		$(this).find('.form-control')[2].value = data.endStr;
@@ -337,9 +336,7 @@ const checkbox = document.getElementById('schedule_allDay');
              },
              eventClick : function (info) { // 일정 클릭 시
             	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) {
-             		// 기본값 설정
-             		console.log(info.event._def.extendedProps);
-             		
+             		// 기본값 설정           		
              		$(this).find('.form-control')[0].value = info.event._def.title;
               		$(this).find('.form-control')[1].value = info.event.startStr;
               		$(this).find('.form-control')[2].value = info.event.endStr;
@@ -361,8 +358,7 @@ const checkbox = document.getElementById('schedule_allDay');
                      var all_day = info.event.allDay;
                      let sche_no = info.event._def.extendedProps.sche_no;
                      var color = $("#update_schedule_type").val();
-
-                     console.log(info);
+                     
                      $(function updateData() {
                          $.ajax({
                         	 cache:"false",

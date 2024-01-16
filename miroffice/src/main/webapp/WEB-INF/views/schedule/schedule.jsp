@@ -163,8 +163,7 @@
 							<option value="green">휴가</option>
 							<option value="blue">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
-							type="checkbox" id="schedule_allDay" name="schedule_allDay"
-							checked>
+							type="checkbox" id="schedule_allDay" name="schedule_allDay">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -222,8 +221,8 @@
 		var burl = $(this).prop('href')
 		var burl2 = burl+"#"
 		if(url == burl || url == burl2){
-    		console.log($(this).prop('pathname'))
-			console.log($(this).prop('href'))
+    		// console.log($(this).prop('pathname'))
+			// console.log($(this).prop('href'))
     		$(this).toggleClass('active', $(this).attr('href'));
 		}
 
@@ -232,6 +231,12 @@
     </script>
 </body>
 <script>
+day =  $(document).ready(function(){
+    $("input[type='checkbox']").on("click", function(){
+        return $("input:checkbox[id='schedule_allDay']").is(":checked");
+
+    })
+}) 
 	document.addEventListener('DOMContentLoaded', function() {
 
 		var calendarEl = document.getElementById('calendar');
@@ -279,20 +284,21 @@
              		$(this).find('.form-control')[2].value = data.endStr;
              		$(this).find('.form-control')[3].value = 'red';
                  })
-                 
                  insert = 0;
-                 $("#scheduleInsert").modal("show"); // modal 나타내기
+             
+                 $("#scheduleInsert").modal("show"); // modal 나타내기      
+                	
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
                 	 
                 	 insert++;
                  
                 	 if(insert == 1){	 
+                	 var day = $('#update_schedule_allDay').is(":checked");
                      var title = $("#schedule_title").val();
                      var start_date = $("#schedule_start").val();
                      var end_date = $("#schedule_end").val();
-                     var all_day = $("#schedule_allDay").val();
+                     var all_day = day;
                      var color = $("#schedule_type").val();
-
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
                     	 start : start_date,
@@ -318,10 +324,12 @@
                          .done(function (result) {
                              alert("일정을 등록하였습니다.");
                              $("#scheduleInsert").modal("hide");
+                             location.reload();
                          })
                          .fail(function (request, status, error) {
                               alert("일정 등록에 실패하였습니다." + error);
                               $("#scheduleInsert").modal("hide");
+                              location.reload();
                          })
                 	 
                      calendar.unselect()
@@ -338,6 +346,8 @@
                		$(this).find('.form-control')[3].value = info.event.backgroundColor;
                 		if(info.event.allDay == true){
                			$('#update_schedule_allDay').prop("checked", true)
+                   } else {
+                	   $('#update_schedule_allDay').prop("checked", false)
                    }
              	 })
                  $("#updateAndDeleteModal").modal("show"); // modal 나타내기

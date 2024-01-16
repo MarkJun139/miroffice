@@ -28,7 +28,7 @@ public class ScheduleController {
 
 	@Autowired
 	ScheduleService service;
-
+	
 	@GetMapping // 기본 페이지 표시
 	public String viewCalendar(@AuthenticationPrincipal SecurityUser user, Model m) {
 		Users dto = user.getUsers();
