@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>비밀번호 찾기</title>
+      <title>임시 비밀번호 발급</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="../images/favicon.ico" />
@@ -75,9 +75,9 @@
                         
                         
                         
-                        <h4 class="logo-title ms-3">Hope UI</h4>
+                        <h4 class="logo-title ms-3">미르 오피스</h4>
                      </a>
-                     <h2 class="mb-2">비밀번호 변경</h2>
+                     <h2 class="mb-2">임시 비밀번호 발급</h2>
                      <form method="post" action="/findpasswordresult">
                         <div class="row">
                            <div class="col-lg-12">

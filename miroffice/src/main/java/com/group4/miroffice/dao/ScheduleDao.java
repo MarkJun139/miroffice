@@ -34,8 +34,11 @@ public interface ScheduleDao {
 	
 	
 	// 부서별 일정
-	@Select("select sche_no,sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
+	@Select("select emp_name, sche_no, sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
 			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color,"
-			+ " emp_no, dept_no from schedule where dept_no = #{deptNo}")
+			+ " emp_no, dept_no from schedule natural join employee where dept_no = #{deptNo}")
 	List<Map<String, Object>> deptSchedule(int deptNo);
+	
+	@Select("select emp_name from employee natural join schedule where sche_no = #{scheNo}")
+	String findEmpName(String scheNo);
 }

@@ -1,7 +1,5 @@
 package com.group4.miroffice.schedule;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +97,8 @@ public class ScheduleController {
 
 	// 부서별 일정
 	@GetMapping("/dept")
-	public String deptViewCalendar(@AuthenticationPrincipal SecurityUser user, Model m) {
+	public String deptViewCalendar(@AuthenticationPrincipal SecurityUser user,
+			Model m) {
 		Users dto = user.getUsers();
 		int deptNo = dto.getDeptNo();
 		List<Map<String, Object>> schedule = service.deptSchedule(deptNo);
@@ -108,6 +107,15 @@ public class ScheduleController {
 		service.deptSchedule(deptNo);
 		m.addAttribute("deptschedule", json);
 		return "schedule/deptSchedule";
+	}
+	
+	@PostMapping("/selectname")
+	@ResponseBody
+	public String selectName(@RequestParam(value = "scheNo", defaultValue = "default") String scheNo, Model m) {
+		String name = service.findEmpName(scheNo);
+		System.out.println(name);
+		m.addAttribute("name", name);
+		return "ok";
 	}
 
 }

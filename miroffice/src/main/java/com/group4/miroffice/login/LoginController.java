@@ -92,9 +92,9 @@ public class LoginController {
 			service.resetPassword(temppw, name, no);
 			service.sendMail(temppw, name, email);
 		}
-
 		System.out.println("temppw: " + temppw);
 
+		m.addAttribute("password", password);
 		m.addAttribute("name", name);
 		m.addAttribute("email", email);
 		return "login/findpasswordresult";
