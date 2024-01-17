@@ -59,7 +59,7 @@ public class LoginController {
 		String result = service.findId(name, phone);
 
 		m.addAttribute("findid", result);
-
+		System.out.println(result);
 		return "login/findidresult";
 	}
 
