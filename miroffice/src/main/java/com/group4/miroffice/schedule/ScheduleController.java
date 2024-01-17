@@ -78,6 +78,7 @@ public class ScheduleController {
 		upSchedule.put("scheNo", scheNo);
 		upSchedule.put("allDay", allDay);
 		System.out.println("update: " + upSchedule);
+
 		service.updateSchedule(upSchedule);
 		return "update";
 	}
