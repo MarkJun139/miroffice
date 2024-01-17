@@ -14,7 +14,7 @@
 	
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>미s르오피스</title>
+      <title>미르오피스</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/favicon.ico" />
@@ -53,6 +53,7 @@
    
 
       <main class="main-content">
+
         
       <div class="position-relative iq-banner">
         <!--Nav Start-->
@@ -61,11 +62,27 @@
                <!--  메인 여기부터!!! -->      
         <!--Nav End -->
       </div>
+      <div class="conatiner-fluid content-inner mt-n5 py-0">
 
-<div class="conatiner-fluid content-inner mt-n5 py-0">
+            <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="100" style="overflow-x: auto">
+                           <div class="flex-wrap card-header d-flex justify-content-between">
+                  <div class="header-title col-12">
+                  <div class="col-12 row text-center align-items-center">
+                              	 	<div class="col-3 text-start">
+                     		 <h1 class="card-title">전자결재</h1>
+                     	</div>
+                     	<div class="col-3 text-start">
+                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	</div>
+                     	</div>
+                     	</div>
+                     	</div>
+                     	
+                     	
+
          
-<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
-            <p>전체문서<br>내문서 ..</p>
+<div class="p-2 card-body" style="border: 1px; margin-right:20px;">
+         <div style="float: left;">
             <div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
 		
@@ -86,8 +103,9 @@
                   </tbody>
                </table>
             </div>
-         </div>
-         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+            </div>
+         
+         <div class="col-md-6" style = "padding: 5px; border: 1px; float:left;">
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
@@ -98,12 +116,16 @@
 						</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" style="top: 550px;" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
 	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
 	   			
 
 				
 				<!-- Modal -->
+
+	    	</form>
+	    	
+	    	<form id="modalf">
 				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
@@ -131,11 +153,13 @@
 				    </div>
 				  </div>
 				</div>
-
 	    	</form>
 	</div>
 	</div>
+	</div>
+	</div>
     	<script>
+
 		function getApproval(no) {
 			$.ajax({
 				type : "POST",	
@@ -159,6 +183,7 @@
 				console.log(no);
 			})
 		}
+
 		$(document).on('click', '#btnEdit', function(e){
 			
 			e.preventDefault();
@@ -184,7 +209,9 @@
 		});
 		$(document).on('click', '#btnClose', function(e){
 			$('#modal1').modal("hide");
+			document.forms['modalf'].reset();
 		});
+
 		$(document).ready(function(){
 			$("input[type='checkbox']").on("click", function(){
 				let count = $("input:checked[type='checkbox']").length;

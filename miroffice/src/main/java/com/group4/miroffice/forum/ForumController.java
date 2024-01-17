@@ -7,11 +7,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group4.miroffice.approval.ApprovalDto;
 import com.group4.miroffice.config.SecurityUser;
 import com.group4.miroffice.user.UserService;
 import com.group4.miroffice.user.Users;
@@ -26,7 +29,7 @@ public class ForumController {
 	@Autowired
 	UserService us;
 	
-	@GetMapping("/forumlist")
+	@GetMapping("/forum")
 	public String forumList(Model m, @AuthenticationPrincipal SecurityUser userLog, @RequestParam(value="status", defaultValue="1") String status) {
 		Users dto = userLog.getUsers();
 		List<ForumDto> fl = service.forumList(dto.getDeptNo());
@@ -46,8 +49,9 @@ public class ForumController {
 		return "forum/list";
 	}
 	
-	@PostMapping("/forum/one/{no}")
+	@GetMapping("/forum/{no}")
 	public String forumList(Model m, @PathVariable(name="no") int no) {
+		
 		ForumDto fl = service.forumOne(no);
 		
 		System.out.println(fl);
@@ -56,5 +60,25 @@ public class ForumController {
 		
 		return "forum/one";
 	}
+	
+	@GetMapping("/forum/write")
+	public String forumWrite2() {
+		return "forum/write";
+	}
+	
+	@PostMapping("/forum/write")
+	public String forumWrite(@ModelAttribute ForumDto dto, RedirectAttributes rttr) throws Exception {
+		Users user = us.findById(dto.getEmpNo());
+
+		user.getDeptNo();
+		dto.setDeptNo(user.getDeptNo());
+		System.out.println(dto);
+
+		service.forumWrite(dto);
+		
+		
+		return "redirect:/main/forum";
+	}
+
 	
 }

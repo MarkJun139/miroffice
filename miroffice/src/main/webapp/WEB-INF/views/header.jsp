@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
           <div class="container-fluid navbar-inner">
-            <a href="/main" class="navbar-brand">
+            <a href="${pageContext.request.contextPath}/main" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -239,7 +239,10 @@
                         <h6 class="mb-0 caption-title">
                         <sec:authentication property = "principal.users.empRank"/>
 						<sec:authentication property= "principal.users.empName"/>
-						<p id="empRole" name='empRole'><sec:authentication property = "principal.users.empRole"/></p>
+						<sec:authentication property = "principal.users.empRole"/>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							He who remains
+						</sec:authorize>
 						</h6>
                         <p class="mb-0 caption-sub-title">Marketing Administrator</p>
                     </div>

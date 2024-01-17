@@ -17,4 +17,8 @@ public class ForumService {
 	public ForumDto forumOne(int forumno) {
 		return dao.forumOne(forumno);
 	}
+	
+	public int forumWrite(ForumDto dto) {
+		return dao.forumWrite(dto);
+	}
 }

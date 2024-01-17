@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.group4.miroffice.forum.ForumDao"> 
+	
+	<insert id="forumWrite" parameterType="com.group4.miroffice.forum.ForumDto">
+		insert into forum (emp_no, dept_no, forum_title, forum_text, forum_date, forum_notice, forum_files)
+		values (#{empNo}, #{deptNo}, #{forumTitle}, #{forumText}, now(), #{forumNotice}, #{forumFiles})
+	</insert>
+	
+	
+	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
+		select * from forum where dept_no = #{deptno}
+	</select>
+	
+	
+	<select id="forumOne" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
+		select * from forum where forum_no = #{forumno}
+	</select>
+	
+</mapper>  
