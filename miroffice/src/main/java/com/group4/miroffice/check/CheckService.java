@@ -33,7 +33,7 @@ public class CheckService {
 		return userDao.checkdate(daycheck);
 	}
 	
-	public CheckDate weekCHeck(DayCheck daycheck) {
+	public CheckDate weekCheck(DayCheck daycheck) {
 		return userDao.weekCheck(daycheck);
 	}
 	

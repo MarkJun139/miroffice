@@ -51,6 +51,8 @@ public class CheckController {
 		CheckDate checkdate = service2.checkdate(dayCheck);
 
 		List<CheckDate> weekCheck = new ArrayList<>();
+		
+		List<LocalTime> weekWorkTime = new ArrayList<>();
 
 		for (int i = 1; i < 5; i++) {
 
@@ -61,8 +63,18 @@ public class CheckController {
 			day.setCheckMonthStart(startDate);
 			day.setWeek(i);
 
-			CheckDate day2 = service2.weekCHeck(day);
-
+			CheckDate day2 = service2.weekCheck(day);
+			
+			int u = day2.getCheckWorkTime();
+			
+			int Hour = (u/60)/60;
+			
+			int Minute = ((u/60)%60) * 60;
+			
+			LocalTime time = LocalTime.of(Hour, Minute, 00);
+			
+			
+			weekWorkTime.add(time);
 			weekCheck.add(day2);
 
 		}
@@ -74,6 +86,7 @@ public class CheckController {
 		LocalTime start = checkout.get(0).getCheckStartTime();
 		LocalTime end = checkout.get(0).getCheckEndTime();
 		
+		
 		m.addAttribute("start", start);
 		m.addAttribute("end", end);
 		m.addAttribute("searchEmp", searchEmp);
@@ -83,6 +96,10 @@ public class CheckController {
 		m.addAttribute("second", weekCheck.get(1));
 		m.addAttribute("third", weekCheck.get(2));
 		m.addAttribute("four", weekCheck.get(3));
+		m.addAttribute("firstTime", weekWorkTime.get(0));
+		m.addAttribute("secondTime", weekWorkTime.get(1));
+		m.addAttribute("thirdTime", weekWorkTime.get(2));
+		m.addAttribute("fourTime", weekWorkTime.get(3));
 
 		return "check/checkout";
 
@@ -172,7 +189,7 @@ public class CheckController {
 			day.setCheckMonthStart(startDate);
 			day.setWeek(i);
 
-			CheckDate day2 = service2.weekCHeck(day);
+			CheckDate day2 = service2.weekCheck(day);
 
 			weekCheck.add(day2);
 

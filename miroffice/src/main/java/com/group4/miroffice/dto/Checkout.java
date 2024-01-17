@@ -14,7 +14,7 @@ public class Checkout {
 	private LocalDate checkDate;
 	private LocalTime checkStartTime;
 	private LocalTime checkEndTime;
-	private int checkWorkTime;
+	private LocalTime checkWorkTime;
 	private boolean checkOn;
 	private boolean checkLeaveEarly;
 	private boolean checkHalfoff;
