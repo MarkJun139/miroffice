@@ -8,6 +8,8 @@ import lombok.Data;
 public class DayCheck {
 	
 	String empNo;
-	LocalDate check_date;
+	LocalDate checkDate;
+	LocalDate checkMonthStart;
+	int week;
 
 }

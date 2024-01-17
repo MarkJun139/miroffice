@@ -8,18 +8,19 @@ import lombok.Data;
 @Data
 public class Checkout {
 	
-	private int emp_no;
-	private int dept_no;
-	private LocalDate check_date;
-	private LocalTime check_start_time;
-	private LocalTime check_end_time;
-	private int check_work_time;
-	private boolean check_on;
-	private boolean check_leave_early;
-	private boolean check_halfoff;
-	private boolean check_dayoff;
-	private boolean check_vacation;
-	private boolean check_late;
-	private boolean check_absenteeism;
+	private int checkNo;
+	private int empNo;
+	private int deptNo;
+	private LocalDate checkDate;
+	private LocalTime checkStartTime;
+	private LocalTime checkEndTime;
+	private int checkWorkTime;
+	private boolean checkOn;
+	private boolean checkLeaveEarly;
+	private boolean checkHalfoff;
+	private boolean checkDayoff;
+	private boolean checkVacation;
+	private boolean checkLate;
+	private boolean checkAbsenteeism;
 	
 }
