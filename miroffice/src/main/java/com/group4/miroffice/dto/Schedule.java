@@ -15,4 +15,5 @@ public class Schedule {
 	private String scheTitle;
 	private int scheAllday;
 	private String scheCategory;
+	private String color;
 }

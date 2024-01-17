@@ -19,6 +19,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,12 +44,18 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
-	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	// ---------------- 사원 관리 ---------------- //
 	@GetMapping("/admin/emp/list")
-	public String AdminEmpList(Model m) {
-		
+	public String AdminEmpList(Model m) throws IOException {
+		String dir = "src/main/resources/static/images/emp_photo/"; // 사원 이미지 경로
+		Path uploadPath = Paths.get(dir); // 폴더 없으면 생성
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        
 		List<Main> empList =  adminService.empList();
 		
 		m.addAttribute("empList", empList);
@@ -122,8 +129,8 @@ public class AdminController {
 		admin.setEmpNo(Integer.parseInt(empNo));
 		admin.setEmpDayoff(0);
 		
-		admin.setEmpPw(simplePW);
-		
+		String encodedPwd = passwordEncoder.encode(simplePW);
+		admin.setEmpPw(encodedPwd);
 		
 		adminService.addEmp(admin);
 		} catch (Exception e) {
@@ -190,7 +197,7 @@ public class AdminController {
 		System.out.println("사원 정보 수정 : " + admin);
 		} catch (Exception e) {
 			System.out.println("사원 정보 수정 실패");
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		
 		
@@ -198,15 +205,21 @@ public class AdminController {
 	}
 	
 	
-	@DeleteMapping("/admin/emp/delete/{id}")
-	public String AdminEmpDelete(@PathVariable(name = "id") int id) throws IOException {
+	@PostMapping("/admin/emp/delete")
+	public String AdminEmpDelete(@RequestParam("empNo") int empNo) throws IOException {
+		try {
+			
+			adminService.deleteEmp(empNo);
+			String empPhoto = adminService.getEmpPhoto(empNo);
+			Path path = Paths.get("src/main/resources/static/images" + empPhoto);
+			Files.deleteIfExists(path);
+			
+			return "redirect:/main/admin/emp/list";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:/main/admin/emp/list";
+		}
 		
-		String empPhoto = adminService.getEmpPhoto(id);
-		Path path = Paths.get("src/main/resources/static/images" + empPhoto);
-		Files.deleteIfExists(path);
-		
-		adminService.deleteEmp(id);
-		return "redirect:/main/admin/emp/list";
 	}
 	
 	@DeleteMapping("/admin/emp/deletecheck")
