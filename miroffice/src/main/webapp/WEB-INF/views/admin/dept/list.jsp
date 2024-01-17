@@ -1,12 +1,49 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:include page="/WEB-INF/views/layout/header.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/views/layout/navbar.jsp"></jsp:include>
-<script>
-	$(function(){
-		$("head > title").text("부서 관리");
-	})
-</script>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>부서 목록</title>
+      
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="/images/favicon.ico" />
+      
+      <!-- Library / Plugin Css Build -->
+      <link rel="stylesheet" href="/css/core/libs.min.css" />
+      
+      <!-- Aos Animation Css -->
+      <link rel="stylesheet" href="/vendor/aos/dist/aos.css" />
+      
+      <!-- Hope Ui Design System Css -->
+      <link rel="stylesheet" href="/css/hope-ui.min.css?v=2.0.0" />
+      
+      <!-- Custom Css -->
+      <link rel="stylesheet" href="/css/custom.min.css?v=2.0.0" />
+      
+      <!-- Dark Css -->
+      <link rel="stylesheet" href="/css/dark.min.css"/>
+      
+      <!-- Customizer Css -->
+      <link rel="stylesheet" href="/css/customizer.min.css" />
+      
+      <!-- RTL Css -->
+      <link rel="stylesheet" href="/css/rtl.min.css"/>
+      
+      
+  </head>
+
+<body class="  ">
+    <%@include file="/WEB-INF/views/sidebar.jsp" %>
+   
+        <main class="main-content">
+         <%@include file="/WEB-INF/views/header.jsp" %>
+<!--  메인 여기부터!!! -->      
+      
+
 <div class="conatiner-fluid content-inner mt-n5 py-0">
 <!-- 부서 추가 팝업 창 -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,7 +95,7 @@
       </div>
       <div class="modal-footer">
        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-       		<input type="submit" class="btn btn-primary project_popup" value="부서명 수정">
+       		<input type="submit" class="btn btn-primary project_popup deptUpdateSubmit" value="부서명 수정">
       </div>
     </div>
   </div>
@@ -80,9 +117,9 @@
       <div class="modal-footer">
       <form action="/main/admin/dept/delete" method="post" class="deptDeleteForm">
        		<input type="hidden" name="_method" value="delete" />
-       		<input type="hidden" name="deptNo" class="deptNo"/>
+       		<input type="hidden" name="deptNo" class="deptDeleteNo"/>
        		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-       		<input type="submit" class="btn btn-danger project_popup" value="부서 삭제">
+       		<input type="submit" class="btn btn-danger project_popup deptDeleteSubmit" value="부서 삭제">
        	</form>
       </div>
     </div>
@@ -90,9 +127,9 @@
 </div>
 <!-- 부서 삭제 팝업 창 -->
 <div class="row">
-   <div class="col-md-12 col-lg-12 mt-5">
+   <div class="col-md-12 col-lg-12">
       <div class="row ">
-         <div class="col-md-12 col-lg-12 mt-5">
+         <div class="col-md-12 col-lg-12">
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="600">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
@@ -126,7 +163,7 @@
                         	<c:forEach items="${deptList}" var="dept" >
 	                           <tr>
 	                              <td class="col-md-1">
-	                              	<input class="form-check-input" name="deptDelCheck" type="checkbox" value="${dept.deptNo}" id="flexCheckDefault">
+	                              	<input class="form-check-input deptCheckbox" name="deptDelCheck" type="checkbox" value="${dept.deptNo}" id="flexCheckDefault">
 	                              </td>
 	                           	  <td class="col-md-1">
 	                                 ${dept.deptNo} 
@@ -151,7 +188,7 @@
                   </div>
                </div>
                <div class="card-footer align-items-center">
-               		<button type="submit" class="btn btn-danger" deptNo="${dept.deptNo}" deptName="${dept.deptName}">선택 삭제</button>
+               		<button type="submit" class="btn btn-danger deptDeleteCheckbox" deptNo="${dept.deptNo}" deptName="${dept.deptName}">선택 삭제</button>
                </div>
                </form>
             </div>
@@ -174,8 +211,8 @@
 			$(".delete_popup").on("click",function(){
 				const deptNo = $(this).attr("deptNo");
 				const deptName = $(this).attr("deptName");
-				$(".deptNo").val(deptNo);
-				$(".deptNameBody").text(deptName);
+				$(".deptDeleteNo").val(deptNo);
+				$("#deptNameBody").text(deptName);
 			})
 			$(".update_popup").on("click",function(){
 				const deptNo = $(this).attr("deptNo");
@@ -185,13 +222,52 @@
 				$(".deptNameBody").text(deptName);
 			})
 			$("#deptListCheck").change(function() {
-	            // #deptListCheck 체크 여부에 따라 #flexCheckDefault 체크박스를 모두 체크 또는 해제
 	            if ($(this).prop("checked")) {
 	                $("[name='deptDelCheck']").prop("checked", true);
 	            } else {
 	                $("[name='deptDelCheck']").prop("checked", false);
 	            }
 	        });
+			
+			$(".deptUpdateSubmit").click(function(e) {
+				const deptNo = $(".deptNo").val();
+				const deptName = $(".deptName").val();
+				if(!deptNo || !deptName){
+					alert("내용을 입력하세요");
+					e.preventDefault();
+				} else if(deptNo < 0 || deptNo == 99){
+					alert("지정할 수 없는 부서번호 입니다");
+					e.preventDefault();
+				} else {
+					const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					if(reg.test(deptName)){
+						alert("부서이름에 특수문자를 사용할 수 없습니다");
+						e.preventDefault();
+						return;
+					}
+					
+					const deptData = {
+						deptNo : deptNo,
+						deptName : deptName
+					};
+					$.ajax({
+						type:"PUT",
+						url: "/main/admin/dept/update",
+						contentType: "application/json",
+						data: JSON.stringify(deptData),
+						success: function(res){
+							alert("수정 성공");
+							window.location.href = "/main/admin/dept/list";
+						},
+						error : function(){
+							alert("에러")
+						}
+					})
+					e.preventDefault();
+				}
+				
+			})
+			
 			
 			
 			$("#addDepartment").click(function(e) {
@@ -201,11 +277,17 @@
 				if(!deptNo || !deptName){
 					alert("내용을 입력하세요");
 					e.preventDefault();
-				} else if(deptNo <= 0 || deptNo == 99){
-					
+				} else if(deptNo < 0 || deptNo == 99){
 					alert("지정할 수 없는 부서번호 입니다");
 					e.preventDefault();
 				} else {
+					const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					if(reg.test(deptName)){
+						alert("부서이름에 특수문자를 사용할 수 없습니다");
+						e.preventDefault();
+						return;
+					}
+					
 					$.ajax({
 						type:"GET",
 						url: "/main/checkDeptNo",
@@ -225,9 +307,109 @@
 				}
 			})
 			
+			$(".deptDeleteSubmit").click(function(e){
+				const deptNo = $(".deptDeleteNo").val();
+				
+				$.ajax({
+					type:"POST",
+					url: "/main/admin/dept/delete",
+					data : {deptno : deptNo},
+					success : function(res) {
+						window.location.href = "/main/admin/dept/list";
+					},
+					error : function(){
+						alert("해당 부서 부서원을 먼저 삭제, 수정해주세요");
+					}
+				})
+				e.preventDefault();
+			})
+			$(".deptDeleteCheckbox").on("click",function(e){
+				const select = $(".deptCheckbox:checked").map(function() {
+			        return this.value;
+			    }).get();
+				if(select.length === 0){
+					alert("삭제할 부서를 선택해주세요");
+					e.preventDefault();
+					return;
+				} 
+				$.ajax({
+					type:"POST",
+					url: "/main/admin/dept/deletecheck",
+					data : {deptDelCheck : select},
+					traditional: true,
+					success : function(res) {
+						alert("부서번호 : " + select + "삭제 성공");
+						window.location.href = "/main/admin/dept/list";
+					},
+					error: function(a, b, c) {
+						alert("체크된 해당 부서 부서원을 먼저 삭제, 수정해주세요")
+			            console.error("ajax Error : ", a, b,c);
+			            console.log(select);
+			        }
+				})
+				e.preventDefault();
+			})
+				
 		})
 	  </script>
 
 
 
-<jsp:include page="/WEB-INF/views/layout/footer.jsp"></jsp:include>
+
+
+      <!-- 메인 여기까지 -->
+<!-- Footer Section Start -->
+      <%@include file = "/WEB-INF/views/footer.jsp" %>
+      <!-- Footer Section End -->    </main>
+      <%@include file = "/WEB-INF/views/setting.jsp" %>
+    
+
+    <!-- Library Bundle Script -->
+    <script src="/js/core/libs.min.js"></script>
+    
+    <!-- External Library Bundle Script -->
+    <script src="/js/core/external.min.js"></script>
+    
+    <!-- Widgetchart Script -->
+    <script src="/js/charts/widgetcharts.js"></script>
+    
+    <!-- mapchart Script -->
+    <script src="/js/charts/vectore-chart.js"></script>
+    <script src="/js/charts/dashboard.js" ></script>
+    
+    <!-- fslightbox Script -->
+    <script src="/js/plugins/fslightbox.js"></script>
+    
+    <!-- Settings Script -->
+    <script src="/js/plugins/setting.js"></script>
+    
+    <!-- Slider-tab Script -->
+    <script src="/js/plugins/slider-tabs.js"></script>
+    
+    <!-- Form Wizard Script --> 
+    <script src="/js/plugins/form-wizard.js"></script>
+    
+    <!-- AOS Animation Plugin-->
+    <script src="/vendor/aos/dist/aos.js"></script>
+    
+    <!-- App Script -->
+    <script src="/js/hope-ui.js" defer></script>
+    
+    <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
+    <script>
+	var url= window.location.href;
+	$(".nav-item").find('a').each(function() {
+		var burl = $(this).prop('href')
+		var burl2 = burl+"#"
+		if(url == burl || url == burl2){
+    		console.log($(this).prop('pathname'))
+			console.log($(this).prop('href'))
+    		$(this).toggleClass('active', $(this).attr('href'));
+		}
+
+	})
+    </script>
+
+
+  </body>
+</html>

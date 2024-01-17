@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +17,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -39,12 +44,18 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
-	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	// ---------------- 사원 관리 ---------------- //
 	@GetMapping("/admin/emp/list")
-	public String AdminEmpList(Model m) {
-		
+	public String AdminEmpList(Model m) throws IOException {
+		String dir = "src/main/resources/static/images/emp_photo/"; // 사원 이미지 경로
+		Path uploadPath = Paths.get(dir); // 폴더 없으면 생성
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        
 		List<Main> empList =  adminService.empList();
 		
 		m.addAttribute("empList", empList);
@@ -63,7 +74,13 @@ public class AdminController {
 	
 	@PostMapping("/admin/emp/addemp")
 	public String AdminEmpAdd(@RequestParam("empHiredate") String hiredate,@RequestParam("deptNo") int deptno, @RequestPart("empPhotoFile") MultipartFile file,Admin admin) throws IOException {
-		
+		try {
+		// 입사일 6자리
+		LocalDate simple = LocalDate.parse(hiredate);
+		String simplePW = simple.format(DateTimeFormatter.ofPattern("yyMMdd"));
+		System.out.println(simplePW);
+		// --- 
+				
 		String empNoYear = hiredate.substring(2,4);
 		int dno = admin.getDeptNo();
 		String deptNo;
@@ -74,7 +91,11 @@ public class AdminController {
 		}
 		String empCount = adminService.getEmpCount(deptno);
 		String empNo = empNoYear + deptNo + empCount;
-		
+		int checkEmpNo = Integer.parseInt(empNo);
+		while(adminService.isEmpNo(checkEmpNo) > 0) {
+			checkEmpNo += 1;
+		}
+		empNo = checkEmpNo + "";
 		// ----- // 
 		
 		String fileType = file.getOriginalFilename();
@@ -108,11 +129,13 @@ public class AdminController {
 		admin.setEmpNo(Integer.parseInt(empNo));
 		admin.setEmpDayoff(0);
 		
-		admin.setEmpPw("1234");
-		
+		String encodedPwd = passwordEncoder.encode(simplePW);
+		admin.setEmpPw(encodedPwd);
 		
 		adminService.addEmp(admin);
-		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "redirect:/main/admin/emp/list";
 	}
 
@@ -131,6 +154,8 @@ public class AdminController {
 	
 	@PutMapping("/admin/emp/editemp")
 	public String AdminEmpUpdate(@RequestPart("empPhotoFile") MultipartFile file,@RequestParam("empNo") int empNo , Admin admin) throws IOException {
+		try {
+			
 		
 		// 기존 사진
 		String empPhoto = adminService.getEmpPhoto(empNo);
@@ -169,22 +194,52 @@ public class AdminController {
 			admin.setEmpPhoto(empPhoto);
 		}
 		adminService.empUpdate(admin);
-		
 		System.out.println("사원 정보 수정 : " + admin);
+		} catch (Exception e) {
+			System.out.println("사원 정보 수정 실패");
+			System.out.println(e.getMessage());
+		}
+		
 		
 		return "redirect:/main/admin/emp/list";
 	}
 	
 	
-	@DeleteMapping("/admin/emp/delete/{id}")
-	public String AdminEmpDelete(@PathVariable(name = "id") int id) throws IOException {
+	@PostMapping("/admin/emp/delete")
+	public String AdminEmpDelete(@RequestParam("empNo") int empNo) throws IOException {
+		try {
+			
+			adminService.deleteEmp(empNo);
+			String empPhoto = adminService.getEmpPhoto(empNo);
+			Path path = Paths.get("src/main/resources/static/images" + empPhoto);
+			Files.deleteIfExists(path);
+			
+			return "redirect:/main/admin/emp/list";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:/main/admin/emp/list";
+		}
 		
-		String empPhoto = adminService.getEmpPhoto(id);
-		Path path = Paths.get("src/main/resources/static/images" + empPhoto);
-		Files.deleteIfExists(path);
-		
-		adminService.deleteEmp(id);
-		return "redirect:/main/admin/emp/list";
+	}
+	
+	@DeleteMapping("/admin/emp/deletecheck")
+	public ResponseEntity<String> AdminEmpDeleteCheck(@RequestParam("empDelCheck") List<String> checkList) {
+		try {
+			System.out.println(checkList);
+			adminService.deleteEmpCheck(checkList);
+			for(String empNo : checkList) {
+				
+				String empPhoto = adminService.getEmpPhoto(Integer.parseInt(empNo));
+				Path path = Paths.get("src/main/resources/static/images" + empPhoto);
+				Files.deleteIfExists(path);
+				
+			}	
+			
+			return ResponseEntity.ok("삭제 성공");
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패");
+		}
 	}
 	
 	// ---------------- 사원 관리 ---------------- //
@@ -220,31 +275,36 @@ public class AdminController {
 	}
 	
 	@PutMapping("/admin/dept/update")
-	public String AdminDeptUpdate(@RequestParam("deptNo") int deptNo ,Dept dept) {
-		
-		adminService.updateDept(dept);
-		
-		return "redirect:/main/admin/dept/list";
+	public ResponseEntity<String> AdminDeptUpdate(@RequestBody Dept dept) {
+		System.out.println(dept);
+		try {
+			adminService.updateDept(dept);
+			return ResponseEntity.ok("" + dept);
+			
+		} catch(Exception e) {
+			System.out.println("데이터베이스 예외 발생: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 실패");
+		}		
 	}
 	
-	@DeleteMapping("/admin/dept/delete")
-	public String AdminDeptDelete(@RequestParam("deptNo") int deptNo ) {
+	@PostMapping("/admin/dept/delete") // 삭제
+	public String AdminDeptDelete(@RequestParam("deptno") int deptNo ) {
 		 
 		adminService.deleteDept(deptNo);
 		
 		return "redirect:/main/admin/dept/list";
 	}
 	
-	@DeleteMapping("/admin/dept/deletecheck")
-	public String AdminDeptDeleteCheck(@RequestParam("deptDelCheck") List<Integer> checkList ) {
+	@PostMapping("/admin/dept/deletecheck") // 삭제
+	public ResponseEntity<String> AdminDeptDeleteCheck(@RequestParam("deptDelCheck") List<Integer> checkList ) {
 		try {
 	        adminService.deleteCheck(checkList);
 	        System.out.println(checkList);
-	    } catch (Exception e) {
-	       
+	        return ResponseEntity.ok("삭제 성공");
+	    } catch (Exception e) {  
 	        System.out.println("데이터베이스 예외 발생: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패");
 	    }
-		return "redirect:/main/admin/dept/list";
 	}
 	
 	// --------------------------------------//

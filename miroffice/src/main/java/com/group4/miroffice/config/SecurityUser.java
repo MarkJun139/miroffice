@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.User;
 
 import com.group4.miroffice.user.Users;
 
+
 public class SecurityUser extends User {
 	private static final long serialVersionUID = 1L;
 

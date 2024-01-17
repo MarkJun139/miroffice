@@ -28,6 +28,7 @@ ClassicEditor
         const toolbarContainer = document.querySelector( '#toolbar-container' );
 
         toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+        
         newEditor = editor;
     } )
     .catch( error => {

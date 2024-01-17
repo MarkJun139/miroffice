@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="name" value="${pageContext.request.userPrincipal.name}" />
-<c:set var="role" value="${pageContext.request.userPrincipal.authorities}" />
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
 <html lang="ko">
   <head>
     <meta charset="utf-8">
@@ -36,11 +38,9 @@
   </head>
 
 <body class="  ">
+
     <!-- loader Start -->
-    <div id="loading">
-      <div class="loader simple-loader">
-          <div class="loader-body"></div>
-      </div>    </div>
+
     <!-- loader END -->
     <%@include file="sidebar.jsp" %>
     <main class = "main-content">
@@ -52,7 +52,7 @@
       </div>
       <div class="conatiner-fluid content-inner mt-n5 py-0">
 <div class="row">
-   <div class="col-md-12 col-lg-12">
+   <!-- <div class="col-md-12 col-lg-12">
       <div class="row row-cols-1">
          <div class="overflow-hidden d-slider1 ">
             <ul  class="p-0 m-0 mb-2 swiper-wrapper list-inline">
@@ -166,121 +166,65 @@
             <div class="swiper-button swiper-button-prev"></div>
          </div>
       </div>
-   </div>
+   </div> -->
+   <c:set var="now" value="<%=new java.util.Date()%>" />
+   <c:set var="nowDate"><fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일" /></c:set> 
    <div class="col-md-12 col-lg-7">
       <div class="row">
-         <div class="col-md-12">
-            <div class="card" data-aos="fade-up" data-aos-delay="800">
-               <div class="flex-wrap card-header d-flex justify-content-between align-items-center">
-                  <div class="header-title">
-                     <h4 class="card-title">$855.8K</h4>
-                     <p class="mb-0">Gross Sales</p>          
-                  </div>
-                  <div class="d-flex align-items-center align-self-center">
-                     <div class="d-flex align-items-center text-primary">
-                        <svg class="icon-12" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="currentColor">
-                           <g>
-                              <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                           </g>
-                        </svg>
-                        <div class="ms-2">
-                           <span class="text-gray">Sales</span>
-                        </div>
-                     </div>
-                     <div class="d-flex align-items-center ms-3 text-info">
-                        <svg class="icon-12" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="currentColor">
-                           <g>
-                              <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                           </g>
-                        </svg>
-                        <div class="ms-2">
-                           <span class="text-gray">Cost</span>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="dropdown">
-                     <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton22" data-bs-toggle="dropdown" aria-expanded="false">
-                     This Week
-                     </a>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton22">
-                        <li><a class="dropdown-item" href="#">This Week</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                     </ul>
-                  </div>
-               </div>
-               <div class="card-body">
-                  <div id="d-main" class="d-main"></div>
-               </div>
-            </div>
-         </div>
-         <div class="col-md-12 col-xl-6">
-            <div class="card" data-aos="fade-up" data-aos-delay="900">
+         <div class="col-md-12 col-xl-12">
+            <div class="card" data-aos="fade-up" data-aos-delay="500">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">Earnings</h4>            
-                  </div>   
-                  <div class="dropdown">
-                     <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        This Week
-                     </a>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">This Week</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                     </ul>
+                     <h1 class="card-title">부서 공지사항</h1>
                   </div>
                </div>
-               <div class="card-body">
-                  <div class="flex-wrap d-flex align-items-center justify-content-between">
-                     <div id="myChart" class="col-md-8 col-lg-8 myChart"></div>
-                     <div class="d-grid gap col-md-4 col-lg-4">
-                        <div class="d-flex align-items-start">
-                           <svg class="mt-2 icon-14" xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 24 24" fill="#3a57e8">
-                              <g>
-                                 <circle cx="12" cy="12" r="8" fill="#3a57e8"></circle>
-                              </g>
-                           </svg>
-                           <div class="ms-3">
-                              <span class="text-gray">Fashion</span>
-                              <h6>251K</h6>
-                           </div>
-                        </div>
-                        <div class="d-flex align-items-start">
-                           <svg class="mt-2 icon-14" xmlns="http://www.w3.org/2000/svg" width="14" viewBox="0 0 24 24" fill="#4bc7d2">
-                              <g>
-                                 <circle cx="12" cy="12" r="8" fill="#4bc7d2"></circle>
-                              </g>
-                           </svg>
-                           <div class="ms-3">
-                              <span class="text-gray">Accessories</span>
-                              <h6>176K</h6>
-                           </div>
-                        </div>
-                     </div>
+               <div class="p-0 card-body">
+                  <div class="mt-4 table-responsive">
+                     <table id="basic-table" class="table mb-0" role="grid"> 
+                        <thead>
+                           <tr>
+                              <th>제목</th>
+                              <th>작성일</th>
+                              <th>작성자</th>
+                              <th>조회수</th>
+                              <th>첨부파일</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        	<c:forEach items="${forumList}" var="forum" >
+	                           <tr>
+	                              <td class="col-md-6 align-items-center ">
+	                              	 ${forum.forumTitle}&nbsp;
+	                              	 <c:if test="${forum.forumNotice == true}">
+	                              	 	<span class="badge badge-info" style="background-color:var(--bs-info)" >중요</span>
+	                              	 </c:if>
+	                              	 
+	                              </td>
+	                              <td class="col-md-2 align-items-center ">
+	                              	 <fmt:formatDate var="forumDate" pattern="yyyy-MM-dd" value="${forum.forumDate}"/>
+	                              	 ${forumDate}
+	                              </td>
+	                              <td class="col-md-2 align-items-center ">
+									  ${forum.empName}
+								  </td>
+								  <td class="col-md-1 align-items-center text-center">
+								  	 ${forum.forumCount }
+								  </td>
+								  <td class="col-md-1 align-items-center text-center">
+								  	<c:if test="${not empty forum.forumFiles}">
+								  		<i class="icon">
+			                                <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			                                    <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
+			                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
+			                                </svg>
+			                            </i>
+								  	</c:if>
+								  </td>
+	                           </tr>
+                           </c:forEach>
+                        </tbody>
+                     </table>
                   </div>
-               </div>
-            </div>
-         </div>
-         <div class="col-md-12 col-xl-6">
-            <div class="card" data-aos="fade-up" data-aos-delay="1000">
-               <div class="flex-wrap card-header d-flex justify-content-between">
-                  <div class="header-title">
-                     <h4 class="card-title">Conversions</h4>            
-                  </div>
-                  <div class="dropdown">
-                     <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                        This Week
-                     </a>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
-                        <li><a class="dropdown-item" href="#">This Week</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                     </ul>
-                  </div>
-               </div>
-               <div class="card-body">
-                  <div id="d-activity" class="d-activity"></div>
                </div>
             </div>
          </div>         
@@ -288,7 +232,7 @@
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="600">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <a href="/main/projectlist"><h4 class="mb-2 card-title">프로젝트 관리</h4></a>
+                     <a href="/main/projectlist"><h1 class="mb-2 card-title">프로젝트 관리</h1></a>
                      <p class="mb-0">
                         <!-- <svg class ="me-2 text-primary icon-24" width="24"  viewBox="0 0 24 24">
                            <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
@@ -299,12 +243,15 @@
                </div>
                <div class="p-0 card-body">
                   <div class="mt-4 table-responsive">
-                     <table id="basic-table" class="table mb-0 table-striped" role="grid">
+                     <table id="basic-table" class="table mb-0" role="grid">
                         <thead>
                            <tr>
                               <th>프로젝트 제목</th>
+                              <th></th>
                               <th>시작일</th>
                               <th>종료일</th>
+                              <th>남은 날</th>
+                              <th>담당자</th>
                               <th>프로젝트 진행률</th>
                            </tr>
                         </thead>
@@ -318,11 +265,40 @@
 	                                 </div>
 	                              </td>
 	                              <td>
+	                              	<c:choose>
+                                    	<c:when test="${project.projectpercent == 100}"> 
+                                    		<span class="badge badge-secondary" style="background-color:var(--bs-success)" >완료</span>
+                                    	</c:when>
+                                    	<c:when test="${project.projectdiffdate < 0}">
+                                   			<span class="badge badge-secondary" style="background-color:var(--bs-secondary)" >기한 만료</span>
+                                   		</c:when>
+                                    	<c:when test="${project.projectpercent < 100}"> 
+                                    		<span class="badge badge-secondary" style="background-color:var(--bs-warning)" >진행중</span>
+                                    	</c:when>
+                                   	</c:choose>
+	                              </td>
+	                              <td>
 	                                 ${project.projectstart}
 	                              </td>
 	                              <td>
 									 ${project.projectend}
 								  </td>
+								  <td>
+								  	<c:choose>
+								  		<c:when test="${project.projectdiffdate >= 1}">
+								  			${project.projectdiffdate} 일
+								  		</c:when>
+								  		<c:when test="${project.projectdiffdate == 0}">
+								  			오늘
+								  		</c:when>
+								  		<c:otherwise>
+								  			기한 만료
+								  		</c:otherwise>
+								  	</c:choose>
+								  </td>
+								  <td class="col-md-1 align-items-center">
+	                           	     ${project.empname }
+	                           	  </td>
 	                              <td>
 	                                 <div class="mb-2 d-flex align-items-center">
 	                                    <h6>${project.projectpercent} %</h6>
@@ -338,117 +314,6 @@
 	                              </td>
 	                           </tr>
                            </c:forEach>
-                           <!-- <tr>
-                              <td>
-                                 <div class="d-flex align-items-center">
-                                    <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/05.png" alt="profile">
-                                    <h6>Netflixer Platforms</h6>
-                                 </div>
-                              </td>
-                              <td>
-                                 <div class="iq-media-group iq-media-group-1">
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">SP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">PP</div>
-                                    </a>
-                                 </div>
-                              </td>
-                              <td>$30,000</td>
-                              <td>
-                                 <div class="mb-2 d-flex align-items-center">
-                                    <h6>25%</h6>
-                                 </div>
-                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
-                                    <div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="d-flex align-items-center">
-                                    <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/02.png" alt="profile">
-                                    <h6>Shopifi Stores</h6>
-                                 </div>
-                              </td>
-                              <td>                                 
-                                 <div class="iq-media-group iq-media-group-1">
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">PP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">TP</div>
-                                    </a>
-                                 </div>
-                              </td>
-                              <td>$8,500</td>
-                              <td>
-                                 <div class="mb-2 d-flex align-items-center">
-                                    <h6>100%</h6>
-                                 </div>
-                                 <div class="shadow-none progress bg-soft-success w-100" style="height: 4px">
-                                    <div class="progress-bar bg-success" data-toggle="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="d-flex align-items-center">
-                                    <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/03.png" alt="profile">
-                                    <h6>Bootstrap Technologies</h6>
-                                 </div>
-                              </td>
-                              <td>
-                                 <div class="iq-media-group iq-media-group-1">
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">SP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">PP</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">MM</div>
-                                    </a>
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">TP</div>
-                                    </a>
-                                 </div>
-                              </td>
-                              <td>$20,500</td>
-                              <td>
-                                 <div class="mb-2 d-flex align-items-center">
-                                    <h6>100%</h6>
-                                 </div>
-                                 <div class="shadow-none progress bg-soft-success w-100" style="height: 4px">
-                                    <div class="progress-bar bg-success" data-toggle="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="d-flex align-items-center">
-                                    <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/04.png" alt="profile">
-                                    <h6>Community First</h6>
-                                 </div>
-                              </td>
-                              <td>
-                                 <div class="iq-media-group iq-media-group-1">
-                                    <a href="#" class="iq-media-1">
-                                       <div class="icon iq-icon-box-3 rounded-pill">MM</div>
-                                    </a>
-                                 </div>
-                              </td>
-                              <td>$9,800</td>
-                              <td>
-                                 <div class="mb-2 d-flex align-items-center">
-                                    <h6>75%</h6>
-                                 </div>
-                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
-                                    <div class="progress-bar bg-primary" data-toggle="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                              </td>
-                           </tr> -->
                         </tbody>
                      </table>
                   </div>
@@ -460,81 +325,44 @@
    <div class="col-md-12 col-lg-5">
       <div class="row">
          <div class="col-md-12 col-lg-12">
-            <div class="card">
-               <div class="pb-4 border-0 card-header">
-                   <h3>근로시간 확인</h3>
-                  <!-- <div class="p-4 border border-white rounded primary-gradient-card">
-                     <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                           <h5 class="font-weight-bold">aaaVISA </h5>
-                           <P class="mb-0">PREMIUM ACCOUNT</P>  
-                        </div>
-                        <div class="master-card-content">
-                           <svg class="master-card-1 icon-60" width="60"  viewBox="0 0 24 24">
-                              <path fill="#ffffff" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                           </svg>
-                           <svg class="master-card-2 icon-60" width="60"  viewBox="0 0 24 24">
-                              <path fill="#ffffff" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                           </svg>
-                        </div>
-                     </div>
-                     <div class="my-4">
-                        <div class="card-number">
-                           <span class="fs-5 me-2">5789</span>
-                           <span class="fs-5 me-2">****</span>
-                           <span class="fs-5 me-2">****</span>
-                           <span class="fs-5">2847</span>
-                        </div>
-                     </div>
-                     <div class="mb-2 d-flex align-items-center justify-content-between">
-                        <p class="mb-0">Card holder</p>
-                        <p class="mb-0">Expire Date</p>
-                     </div>
-                     <div class="d-flex align-items-center justify-content-between">
-                        <h6>Mike Smith</h6>
-                        <h6 class="ms-5">06/11</h6>
-                     </div>
-                  </div> -->
+            <div class="card"  data-aos="fade-up" data-aos-delay="700">
+               <div class="card-header align-items-center">
+               		<div class="row">
+	               	   <div class="col-md-6">
+	                   	<h1>근태관리</h1>
+	                   </div>
+	                   <div class="col-md-6" style="text-align:right">
+	                   	<p class="h4">${nowDate}</p>
+	                   	<p id="nowClock" style="font-size:20px" >
+	                   		<span id="hour"></span>시
+	                   		<span id="minute"></span>분
+	                   		<span id="second"></span>초
+	                   	</p>	
+	                   </div>
+                    </div>
                </div>
                <div class="card-body">
-                  <div class="flex-wrap mb-4 d-flex align-itmes-center justify-content-between">
-                     <div class="d-flex align-itmes-center me-0 me-md-4">
-                        <div>
-                           <div class="p-3 mb-2 rounded bg-soft-primary">
-                              <svg class="icon-20"  width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9303 7C16.9621 6.92913 16.977 6.85189 16.9739 6.77432H17C16.8882 4.10591 14.6849 2 12.0049 2C9.325 2 7.12172 4.10591 7.00989 6.77432C6.9967 6.84898 6.9967 6.92535 7.00989 7H6.93171C5.65022 7 4.28034 7.84597 3.88264 10.1201L3.1049 16.3147C2.46858 20.8629 4.81062 22 7.86853 22H16.1585C19.2075 22 21.4789 20.3535 20.9133 16.3147L20.1444 10.1201C19.676 7.90964 18.3503 7 17.0865 7H16.9303ZM15.4932 7C15.4654 6.92794 15.4506 6.85153 15.4497 6.77432C15.4497 4.85682 13.8899 3.30238 11.9657 3.30238C10.0416 3.30238 8.48184 4.85682 8.48184 6.77432C8.49502 6.84898 8.49502 6.92535 8.48184 7H15.4932ZM9.097 12.1486C8.60889 12.1486 8.21321 11.7413 8.21321 11.2389C8.21321 10.7366 8.60889 10.3293 9.097 10.3293C9.5851 10.3293 9.98079 10.7366 9.98079 11.2389C9.98079 11.7413 9.5851 12.1486 9.097 12.1486ZM14.002 11.2389C14.002 11.7413 14.3977 12.1486 14.8858 12.1486C15.3739 12.1486 15.7696 11.7413 15.7696 11.2389C15.7696 10.7366 15.3739 10.3293 14.8858 10.3293C14.3977 10.3293 14.002 10.7366 14.002 11.2389Z" fill="currentColor"></path>                                            
-                              </svg>
-                           </div>
-                        </div>
-                        <div class="ms-3">
-                           <h5>1153</h5>
-                           <small class="mb-0">Products</small>
-                        </div>
-                     </div>
-                     <div class="d-flex align-itmes-center">
-                        <div>
-                           <div class="p-3 mb-2 rounded bg-soft-info">
-                              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.1213 11.2331H16.8891C17.3088 11.2331 17.6386 10.8861 17.6386 10.4677C17.6386 10.0391 17.3088 9.70236 16.8891 9.70236H14.1213C13.7016 9.70236 13.3719 10.0391 13.3719 10.4677C13.3719 10.8861 13.7016 11.2331 14.1213 11.2331ZM20.1766 5.92749C20.7861 5.92749 21.1858 6.1418 21.5855 6.61123C21.9852 7.08067 22.0551 7.7542 21.9652 8.36549L21.0159 15.06C20.8361 16.3469 19.7569 17.2949 18.4879 17.2949H7.58639C6.25742 17.2949 5.15828 16.255 5.04837 14.908L4.12908 3.7834L2.62026 3.51807C2.22057 3.44664 1.94079 3.04864 2.01073 2.64043C2.08068 2.22305 2.47038 1.94649 2.88006 2.00874L5.2632 2.3751C5.60293 2.43735 5.85274 2.72207 5.88272 3.06905L6.07257 5.35499C6.10254 5.68257 6.36234 5.92749 6.68209 5.92749H20.1766ZM7.42631 18.9079C6.58697 18.9079 5.9075 19.6018 5.9075 20.459C5.9075 21.3061 6.58697 22 7.42631 22C8.25567 22 8.93514 21.3061 8.93514 20.459C8.93514 19.6018 8.25567 18.9079 7.42631 18.9079ZM18.6676 18.9079C17.8282 18.9079 17.1487 19.6018 17.1487 20.459C17.1487 21.3061 17.8282 22 18.6676 22C19.4969 22 20.1764 21.3061 20.1764 20.459C20.1764 19.6018 19.4969 18.9079 18.6676 18.9079Z" fill="currentColor"></path>                                            
-                              </svg>                                        
-                           </div>
-                        </div>
-                        <div class="ms-3">
-                           <h5>81K</h5>
-                           <small class="mb-0">Order Served</small>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="mb-4">
-                     <div class="flex-wrap d-flex justify-content-between">
-                        <h2 class="mb-2">$405,012,300</h2>
-                        <div>
-                           <span class="badge bg-success rounded-pill">YoY 24%</span>
-                        </div>
-                     </div>
-                     <p class="text-info">Life time sales</p>
-                  </div>
-                  <div class="grid-cols-2 d-grid gap-card">
+               	<div class="row">
+	              <div class="col-sm-6">
+				    <div class="card">
+				      <div class="card-body">
+				        <h5 class="card-title">출근 시간</h5>
+				        <p class="card-text"></p>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-sm-6">
+				    <div class="card">
+				      <div class="card-body">
+				        <h5 class="card-title">퇴근 시간</h5>
+				        <p class="card-text"></p>
+				      </div>
+				    </div>
+				  </div>
+               </div>
+               </div>
+               <div class="card-footer">
+               	  <div class="grid-cols-2 d-grid gap-card">
                      <button class="p-2 btn btn-info text-uppercase">출근 등록</button>
                      <button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
                   </div>
@@ -554,55 +382,68 @@
                </div>
             </div>  -->
          </div>
+         <script>
+			window.onload = function(){
+			
+				let hour = document.getElementById("hour");
+				let minute = document.getElementById("minute");
+				let second = document.getElementById("second");
+		
+				getClock();
+				setInterval(getClock, 1000);
+				
+				function getClock() {
+				    const date = new Date();
+				    hour.innerText = date.getHours();
+				    minute.innerText = date.getMinutes();
+				    second.innerText = date.getSeconds();
+				}
+				
+			}
+		
+		
+		</script> 
          <div class="col-md-12 col-lg-12">
-            <div class="card" data-aos="fade-up" data-aos-delay="600">
+            <div class="card" data-aos="fade-up" data-aos-delay="800">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="mb-2 card-title">Activity overview</h4>
-                     <p class="mb-0">
-                        <svg class ="me-2 icon-24" width="24" height="24" viewBox="0 0 24 24">
-                           <path fill="#17904b" d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" />
-                        </svg>
-                        16% this month
-                     </p>
+                  	 <a href="/main/schedule">
+                     <h1 class="mb-2 card-title">일정</h1>
+                     </a>
+                  </div>
+                  <div class="dropdown">
+                     <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        일정 정렬
+                     </a>
+                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">모든 일정</a></li>
+                        <li><a class="dropdown-item" href="#">이번주 일정</a></li>
+                        <li><a class="dropdown-item" href="#">이번달 일정</a></li>
+                     </ul>
                   </div>
                </div>
                <div class="card-body">
-                  <div class="mb-2  d-flex profile-media align-items-top">
-                     <div class="mt-1 profile-dots-pills border-primary"></div>
-                     <div class="ms-4">
-                        <h6 class="mb-1 ">$2400, Purchase</h6>
-                        <span class="mb-0">11 JUL 8:10 PM</span>
-                     </div>
-                  </div>
-                  <div class="mb-2  d-flex profile-media align-items-top">
-                     <div class="mt-1 profile-dots-pills border-primary"></div>
-                     <div class="ms-4">
-                        <h6 class="mb-1 ">New order #8744152</h6>
-                        <span class="mb-0">11 JUL 11 PM</span>
-                     </div>
-                  </div>
-                  <div class="mb-2  d-flex profile-media align-items-top">
-                     <div class="mt-1 profile-dots-pills border-primary"></div>
-                     <div class="ms-4">
-                        <h6 class="mb-1 ">Affiliate Payout</h6>
-                        <span class="mb-0">11 JUL 7:64 PM</span>
-                     </div>
-                  </div>
-                  <div class="mb-2  d-flex profile-media align-items-top">
-                     <div class="mt-1 profile-dots-pills border-primary"></div>
-                     <div class="ms-4">
-                        <h6 class="mb-1 ">New user added</h6>
-                        <span class="mb-0">11 JUL 1:21 AM</span>
-                     </div>
-                  </div>
-                  <div class="mb-1  d-flex profile-media align-items-top">
-                     <div class="mt-1 profile-dots-pills border-primary"></div>
-                     <div class="ms-4">
-                        <h6 class="mb-1 ">Product added</h6>
-                        <span class="mb-0">11 JUL 4:50 AM</span>
-                     </div>
-                  </div>
+                  <c:forEach items="${scheduleList}" var="sche">
+	                  <div class="card rounded-0 shadow-lg " style="border-left: 5px solid ${sche.color};">
+	                  	<div class="card-body">
+		                     <h5 class="mb-2 card-title">${sche.scheTitle}</h5>
+		                     <p class="card-text">${sche.scheCategory}</p>
+		                     <div class="row">
+		                     	<div class="col-md-6 ">
+		                     		<p>
+		                     			<fmt:formatDate pattern = "yyyy-MM-dd E요일" value="${sche.scheStartDate}"/>
+		                     		</p>
+		                     	</div>
+		                     	<div class="col-md-6 text-right" style="text-align:right">
+		                     		<p class="text-right">
+		                     			<fmt:formatDate pattern = "yyyy-MM-dd E요일" value="${sche.scheEndDate}"/>
+		                     		</p>
+		                     	</div>
+		                     
+		                      </div>
+	                     </div>
+	                  </div>
+                  </c:forEach>
                </div>
             </div>
          </div>
@@ -619,6 +460,7 @@
           </a>
       </div>
 
+      
 <!-- Footer Section Start -->
       <%@include file = "footer.jsp" %>
       <!-- Footer Section End -->    </main>
