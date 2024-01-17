@@ -87,11 +87,11 @@
                                  <label for="name" class="form-label">이름</label>
                                  <input type="text" class="form-control" id="name" name="empName" aria-describedby="email" placeholder=" ">
                                  <label for="birth" class="form-label">이메일</label>
-                                 <input type="text" class="form-control" id="email" name="empEmail" aria-describedby="email" placeholder=" ">
+                                 <input type="email" class="form-control" id="email" name="empEmail" aria-describedby="email" placeholder=" ">
                               </div>
                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">발급</button>
+                        <button type="submit" class="btn btn-primary" id="findidbutton">발급</button>
                      </form>
                   </div>
                </div>         
@@ -139,8 +139,22 @@
     
     <!-- App Script -->
     <script src="../js/hope-ui.js" defer></script>
-    
   </body>
-</html>
-</body>
+  <script>
+  $('#findidbutton').click(function(){
+	    if($('#no').val() == ''){
+	    	  alert("사원번호를 입력하세요.");
+	          return false;
+	      }
+	    if($('#name').val() == ''){
+	    	alert("이름을 입력하세요.");
+	          return false;
+	      }
+	    if($('#email').val() == ''){
+	    	alert("이메일을 입력하세요.");
+	          return false;
+	      }
+	    return true;
+	});
+  </script>
 </html>

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface FindIdResetPwDao {
 
-	@Select("select emp_no from employee where emp_name = #{empName} and emp_phone = #{empPhone}")
+	@Select("select emp_no, emp_name from employee where emp_name = #{empName} and emp_phone = #{empPhone}")
 	String findId(@Param("empName") String name, @Param("empPhone") String phone);
 
 	@Select("select emp_pw from employee where emp_name = #{empName} and emp_no = #{empNo} and "

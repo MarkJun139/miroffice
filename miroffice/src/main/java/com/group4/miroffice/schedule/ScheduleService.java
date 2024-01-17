@@ -14,8 +14,8 @@ public class ScheduleService {
 	@Autowired
 	ScheduleDao dao;
 
-	public List<Map<String, Object>> mainSchedule() {
-		return dao.mainSchedule();
+	public List<Map<String, Object>> mainSchedule(int empNo) {
+		return dao.mainSchedule(empNo);
 	}
 
 	public int insertSchedule(Map<String, Object> newSchedule) {	
@@ -28,5 +28,9 @@ public class ScheduleService {
 
 	public int deleteSchedule(Map<String, Object> delSchedule) {
 		return dao.deleteSchedule(delSchedule);
+	}
+	
+	public List<Map<String, Object>> deptSchedule(int deptNo) {
+		return dao.deptSchedule(deptNo);
 	}
 }
