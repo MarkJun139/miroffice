@@ -159,9 +159,9 @@
 							name="schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="schedule_type" name="schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
+							<option value="#FFA500">출장</option>
+							<option value="#3CB371">휴가</option>
+							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
 							type="checkbox" id="schedule_allDay" name="schedule_allDay" checked>
 					</div>
@@ -196,9 +196,9 @@
 							name="update_schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="update_schedule_type" name="update_schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
+							<option value="#FFA500">출장</option>
+							<option value="#3CB371">휴가</option>
+							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
 							type="checkbox" id="update_schedule_allDay"
 							name="update_schedule_allDay">
@@ -276,7 +276,7 @@
              		$(this).find('.form-control')[0].value = '';
              		$(this).find('.form-control')[1].value = data.startStr;
              		$(this).find('.form-control')[2].value = data.endStr;
-             		$(this).find('.form-control')[3].value = 'red';
+             		$(this).find('.form-control')[3].value = '#FFA500';
                  })
                  insert = 0;
             	 
