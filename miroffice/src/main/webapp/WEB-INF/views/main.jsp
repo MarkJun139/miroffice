@@ -3,7 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <html lang="ko">
   <head>
     <meta charset="utf-8">
@@ -175,12 +174,12 @@
             <div class="card" data-aos="fade-up" data-aos-delay="500">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h1 class="card-title">부서 공지사항</h1>
+                     <a href="/main/forum"><h1 class="card-title">부서 공지사항</h1></a>
                   </div>
                </div>
                <div class="p-0 card-body">
                   <div class="mt-4 table-responsive">
-                     <table id="basic-table" class="table mb-0" role="grid"> 
+                     <table id="basic-table" class="table mb-0 table-hover" role="grid"> 
                         <thead>
                            <tr>
                               <th>제목</th>
@@ -191,6 +190,13 @@
                            </tr>
                         </thead>
                         <tbody>
+                        	<c:if test="${empty forumList}">
+                        		<tr>
+                        			<td colspan="6" class="text-center">
+                        				<h3>등록된 공지사항이 없습니다</h3>
+                        			</td>
+                        		</tr>
+                        	</c:if>
                         	<c:forEach items="${forumList}" var="forum" >
 	                           <tr>
 	                              <td class="col-md-6 align-items-center ">
@@ -243,22 +249,29 @@
                </div>
                <div class="p-0 card-body">
                   <div class="mt-4 table-responsive">
-                     <table id="basic-table" class="table mb-0" role="grid">
+                     <table id="basic-table" class="table mb-0 table-hover" role="grid">
                         <thead>
                            <tr>
                               <th>프로젝트 제목</th>
                               <th></th>
                               <th>시작일</th>
                               <th>종료일</th>
-                              <th>남은 날</th>
-                              <th>담당자</th>
+                              <!-- <th>남은 날</th> -->
+                              <!-- <th>담당자</th> -->
                               <th>프로젝트 진행률</th>
                            </tr>
                         </thead>
                         <tbody>
+                        	<c:if test="${empty projectList}">
+                        		<tr>
+                        			<td colspan="7" class="text-center">
+                        				<h3>등록된 프로젝트가 없습니다</h3>
+                        			</td>
+                        		</tr>
+                        	</c:if>
                         	<c:forEach items="${projectList}" var="project" >
 	                           <tr>
-	                              <td>
+	                              <td class="col-md-1">
 	                                 <div class="d-flex align-items-center">
 	                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
 	                                    <h6>${project.projecttitle}</h6>
@@ -283,7 +296,7 @@
 	                              <td>
 									 ${project.projectend}
 								  </td>
-								  <td>
+								  <%-- <td>
 								  	<c:choose>
 								  		<c:when test="${project.projectdiffdate >= 1}">
 								  			${project.projectdiffdate} 일
@@ -295,10 +308,10 @@
 								  			기한 만료
 								  		</c:otherwise>
 								  	</c:choose>
-								  </td>
-								  <td class="col-md-1 align-items-center">
+								  </td> --%>
+								  <%-- <td class="col-md-1 align-items-center">
 	                           	     ${project.empname }
-	                           	  </td>
+	                           	  </td> --%>
 	                              <td>
 	                                 <div class="mb-2 d-flex align-items-center">
 	                                    <h6>${project.projectpercent} %</h6>
@@ -333,7 +346,8 @@
 	                   </div>
 	                   <div class="col-md-6" style="text-align:right">
 	                   	<p class="h4">${nowDate}</p>
-	                   	<p id="nowClock" style="font-size:20px" >
+	                   	<p class="col-12" id="nowClock" style="font-size:15px" >
+	                   		<span>현재시간</span>
 	                   		<span id="hour"></span>시
 	                   		<span id="minute"></span>분
 	                   		<span id="second"></span>초
@@ -341,31 +355,72 @@
 	                   </div>
                     </div>
                </div>
+                
                <div class="card-body">
                	<div class="row">
-	              <div class="col-sm-6">
+	              <div class="col-6">
 				    <div class="card">
-				      <div class="card-body">
-				        <h5 class="card-title">출근 시간</h5>
-				        <p class="card-text"></p>
+				      <div class="card-body text-center">
+				        <h3 class="card-title">출근시간</h3>
+				        <c:choose>
+				        	<c:when test="${startTime.year == 70 }">
+				        		<p class="card-text">출근시간 미등록</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                   <a href="" class="p-2 btn btn-info text-uppercase">출근 등록</a>
+				                </div>
+				        	</c:when>
+				        	<c:when test="${empty startTime.year}">
+				        		<p class="card-text">출근시간 미등록</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                   <a href="" class="p-2 btn btn-info text-uppercase">출근 등록</a>
+				                </div>
+				        	</c:when>
+				        	<c:when test="${startTime.year != 70 }">
+				        		<p class="card-text">
+				        			<fmt:formatDate pattern = "HH시 mm분 ss초" value="${startTime}"/>
+				        		</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                   <button class="p-2 btn btn-info text-uppercase" disabled>출근 등록</button>
+				                </div>
+				        	</c:when>
+				        	
+				        </c:choose>
+				        
+		                 
 				      </div>
-				    </div>
+				    </div> 
 				  </div>
-				  <div class="col-sm-6">
+				  <div class="col-6">
 				    <div class="card">
-				      <div class="card-body">
-				        <h5 class="card-title">퇴근 시간</h5>
-				        <p class="card-text"></p>
+				      <div class="card-body text-center">
+				        <h3 class="card-title">퇴근시간</h3>
+				        <c:choose>
+				        	<c:when test="${endTime.year == 70 }">
+				        		<p class="card-text">미등록</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                	<button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
+				                </div>
+				        	</c:when>
+				        	<c:when test="${empty endTime.year}">
+				        		<p class="card-text">퇴근시간 미등록</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                	<button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
+				                </div>
+				        	</c:when>
+				        	<c:when test="${endTime.year != 70 }">
+				        		<p class="card-text">
+				        			<fmt:formatDate pattern = "HH시 mm분 ss초" value="${endTime}"/>
+				        		</p>
+				        		<div class="grid-cols d-grid gap-card">
+				                	<button class="p-2 btn btn-primary text-uppercase" disabled>퇴근 등록</button>
+				                </div>
+				        	</c:when>
+				        </c:choose>
+				        
 				      </div>
 				    </div>
 				  </div>
                </div>
-               </div>
-               <div class="card-footer">
-               	  <div class="grid-cols-2 d-grid gap-card">
-                     <button class="p-2 btn btn-info text-uppercase">출근 등록</button>
-                     <button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
-                  </div>
                </div>
             </div>
             <!-- <div class="card" data-aos="fade-up" data-aos-delay="500">
@@ -383,23 +438,28 @@
             </div>  -->
          </div>
          <script>
-			window.onload = function(){
-			
-				let hour = document.getElementById("hour");
-				let minute = document.getElementById("minute");
-				let second = document.getElementById("second");
-		
-				getClock();
-				setInterval(getClock, 1000);
-				
-				function getClock() {
-				    const date = new Date();
-				    hour.innerText = date.getHours();
-				    minute.innerText = date.getMinutes();
-				    second.innerText = date.getSeconds();
-				}
-				
-			}
+         window.onload = function() {
+             let hour = document.getElementById("hour");
+             let minute = document.getElementById("minute");
+             let second = document.getElementById("second");
+
+             getClock();
+             setInterval(getClock, 1000);
+
+             function getClock() {
+                 const date = new Date();
+                 hour.innerText = addZero(date.getHours());
+                 minute.innerText = addZero(date.getMinutes());
+                 second.innerText = addZero(date.getSeconds());
+             }
+
+             function addZero(num) {
+            	 if(num < 10){
+            		 return "0" + num;
+            	 }
+                 return num;
+             }
+         }
 		
 		
 		</script> 
@@ -411,32 +471,32 @@
                      <h1 class="mb-2 card-title">일정</h1>
                      </a>
                   </div>
-                  <div class="dropdown">
-                     <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        일정 정렬
-                     </a>
-                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">모든 일정</a></li>
-                        <li><a class="dropdown-item" href="#">이번주 일정</a></li>
-                        <li><a class="dropdown-item" href="#">이번달 일정</a></li>
-                     </ul>
-                  </div>
                </div>
                <div class="card-body">
+               	  <c:if test="${empty scheduleList}">
+               		<div class="text-center">
+               			<h3>등록된 일정이 없습니다</h3>
+               		</div>
+               	 </c:if>
                   <c:forEach items="${scheduleList}" var="sche">
 	                  <div class="card rounded-0 shadow-lg " style="border-left: 5px solid ${sche.color};">
 	                  	<div class="card-body">
-		                     <h5 class="mb-2 card-title">${sche.scheTitle}</h5>
+		                     <h4 class="mb-2 card-title">${sche.scheTitle}</h4>
 		                     <p class="card-text">${sche.scheCategory}</p>
-		                     <div class="row">
-		                     	<div class="col-md-6 ">
+		                     <div class="row  justify-content-around">
+		                     	<div class="col-md-auto">
 		                     		<p>
-		                     			<fmt:formatDate pattern = "yyyy-MM-dd E요일" value="${sche.scheStartDate}"/>
+		                     			<fmt:formatDate pattern = "yyyy-MM-dd E" value="${sche.scheStartDate}"/>
 		                     		</p>
 		                     	</div>
-		                     	<div class="col-md-6 text-right" style="text-align:right">
+		                     	<div class="col-md-auto">
+		                     		<p>
+		                     			~
+		                     		</p>
+		                     	</div>
+		                     	<div class="col-md-auto">
 		                     		<p class="text-right">
-		                     			<fmt:formatDate pattern = "yyyy-MM-dd E요일" value="${sche.scheEndDate}"/>
+		                     			<fmt:formatDate pattern = "yyyy-MM-dd E" value="${sche.scheEndDate}"/>
 		                     		</p>
 		                     	</div>
 		                     

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>미르오피스</title>
+      <title>프로젝트 목록</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/favicon.ico" />
@@ -61,9 +61,9 @@
       <form action="teamleader/project/editprogress" method="post">
       <div class="modal-body">
       		<input type="hidden" name = "_method" value = "put"/>
-      		<input type="hidden" name="projectno" id="projectno" value="">  
-      		<input type="number" class="form-control" id="projectpercent" name="projectpercent" placeholder="진행률" max="100" min="0">
-      		
+      		<input type="hidden" name="projectno" id="projectno" value="">
+      		<h4><label for="projectpercent" class="form-label" id="percentRange"></label>%</h4>
+			<input type="range" name="projectpercent" class="form-range" min="0" max="100" step="1" id="projectpercent" value="">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -116,6 +116,13 @@
                            </tr>
                         </thead>
                         <tbody>
+                        	<c:if test="${empty projectList}">
+                        		<tr>
+                        			<td colspan="7" class="text-center">
+                        				<h2>등록된 프로젝트가 없습니다</h2>
+                        			</td>
+                        		</tr>
+                        	</c:if>
                         	<c:forEach items="${projectList}" var="project" >
 	                           <tr>
 	                              <td class="col-md-4" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
@@ -212,15 +219,22 @@
 				const project_percent = $(this).attr("percent");
 				const project_title = $(this).attr("title");
 				$("#projectno").val(project_no);
-				$("#projectpercent").val(project_percent);
+				$("#projectpercent").attr("value",project_percent);
 				$(".modal-title").text(project_title);
+				$("#percentRange").text(project_percent);
 			})
 			$(".project-update").click(function(e){
 				const percent = $("#projectpercent").val();
+				
 				if(percent > 100 || percent < 0){
 					e.preventDefault();
 					alert("값을 제대로 입력해주세요")
 				}
+			})
+			$("#projectpercent").on("mousemove",function(){
+				var value = $(this).val();
+				$("#percentRange").text(value);
+				
 			})
 		})
 	  </script>
