@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>아이디 찾기 결과</title>
+      <title>사번 찾기 결과</title>
       
       <!-- Favicon -->
       <link rel="shortcut icon" href="../images/favicon.ico" />
@@ -73,26 +73,25 @@
                            
                            
                            
-                           <h4 class="logo-title ms-3">Hope UI</h4>
+                           <h4 class="logo-title ms-3">미르 오피스</h4>
                         </a>
-                        <img src="../images/auth/mail.png" class="img-fluid" width="80" alt="">
-                        <h2 class="mt-3 mb-0">Success !</h2>
+                        <h2 class="mt-3 mb-0">사원번호 찾기 결과</h2>
                         <c:choose>
                         	<c:when test="${empty findid}">
                         	<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
 							</c:when>
 							<c:otherwise>
-							<p class="cnf-mail mb-1">사원번호: ${findid}</p>
+							<p class="cnf-mail mb-1">사원님의 사원번호는 [${findid}]입니다.</p>
 							</c:otherwise>
 						</c:choose>			
                         <div class="d-inline-block w-100">
-                           <a href="/login" class="btn btn-primary mt-3">메인 화면으로</a>
+                           <a href="/login" class="btn btn-primary mt-3">로그인 화면으로</a>
                         </div>
                   </div>
                </div>
             </div>
             <div class="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-               <img src="../../assets/images/auth/03.png" class="img-fluid gradient-main animated-scaleX" alt="images">
+               <img src="../images/auth/03.png" class="img-fluid gradient-main animated-scaleX" alt="images">
             </div>
          </div>
       </section>

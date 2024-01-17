@@ -28,20 +28,16 @@ public class ScheduleController {
 
 	@Autowired
 	ScheduleService service;
-
+	
 	@GetMapping // 기본 페이지 표시
-	public String viewCalendar(Model m) {
-		List<Map<String, Object>> schedule = service.mainSchedule();
+	public String viewCalendar(@AuthenticationPrincipal SecurityUser user, Model m) {
+		Users dto = user.getUsers();
+		int empNo = dto.getEmpNo();
+		List<Map<String, Object>> schedule = service.mainSchedule(empNo);
 		Gson gson = new Gson();
 		String json = gson.toJson(schedule);
 		m.addAttribute("schedule", json);
 		return "schedule/schedule";
-	}
-
-	@GetMapping("/dept")
-	public String deptViewCalendar(Model m) {
-		// List<Map<String, Object>> deptSchedule = service.
-		return "schedule/deptSchedule";
 	}
 
 	@PostMapping("/insert")
@@ -52,7 +48,6 @@ public class ScheduleController {
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
 			@RequestParam(value = "color", defaultValue = "default") String color) {
-
 		Users dto = user.getUsers();
 		Map<String, Object> newSchedule = new HashMap<>();
 		newSchedule.put("title", title);
@@ -70,16 +65,20 @@ public class ScheduleController {
 	@PatchMapping("update")
 	@ResponseBody
 	public String updateSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
-
-		@RequestParam(value = "start", defaultValue = "default") String start,
-		@RequestParam(value = "end", defaultValue = "default") String end,
-		@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
-		@RequestParam(value = "color", defaultValue = "default") String color) {
-
+			@RequestParam(value = "start", defaultValue = "default") String start,
+			@RequestParam(value = "end", defaultValue = "default") String end,
+			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
+			@RequestParam(value = "color", defaultValue = "default") String color,
+			@RequestParam(value = "scheNo", defaultValue = "default") String scheNo) {
 		Map<String, Object> upSchedule = new HashMap<>();
 		upSchedule.put("title", title);
-		
-		System.out.println(upSchedule);
+		upSchedule.put("start", start);
+		upSchedule.put("end", end);
+		upSchedule.put("color", color);
+		upSchedule.put("scheNo", scheNo);
+		upSchedule.put("allDay", allDay);
+		System.out.println("update: " + upSchedule);
+
 		service.updateSchedule(upSchedule);
 		return "update";
 	}
@@ -87,20 +86,28 @@ public class ScheduleController {
 	@DeleteMapping("/delete")
 	@ResponseBody
 	public String deleteSchedule(@AuthenticationPrincipal SecurityUser user,
-			@RequestParam(value = "start", defaultValue = "default") Date start,
-			@RequestParam(value = "title", defaultValue = "default") String title) {
+			@RequestParam(value = "scheNo", defaultValue = "default") String scheNo) {
 		Users dto = user.getUsers();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String newStart = sdf.format(start);
 		Map<String, Object> delSchedule = new HashMap<>();
-		delSchedule.put("start", newStart);
-
-		delSchedule.put("title", title);
 		delSchedule.put("deptNo", dto.getDeptNo());
 		delSchedule.put("empNo", dto.getEmpNo());
+		delSchedule.put("scheNo", scheNo);
 		System.out.println("delete: " + delSchedule);
-
 		service.deleteSchedule(delSchedule);
 		return "delete";
 	}
+
+	// 부서별 일정
+	@GetMapping("/dept")
+	public String deptViewCalendar(@AuthenticationPrincipal SecurityUser user, Model m) {
+		Users dto = user.getUsers();
+		int deptNo = dto.getDeptNo();
+		List<Map<String, Object>> schedule = service.deptSchedule(deptNo);
+		Gson gson = new Gson();
+		String json = gson.toJson(schedule);
+		service.deptSchedule(deptNo);
+		m.addAttribute("deptschedule", json);
+		return "schedule/deptSchedule";
+	}
+
 }
