@@ -287,8 +287,11 @@ const checkbox = document.getElementById('schedule_allDay');
              		$(this).find('.form-control')[2].value = data.endStr;
              		$(this).find('.form-control')[3].value = 'red';
                  })
+                 
                  insert = 0;
+             
                  $("#scheduleInsert").modal("show"); // modal 나타내기
+                 
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
              
                  	insert++;
@@ -340,6 +343,8 @@ const checkbox = document.getElementById('schedule_allDay');
              },
              eventClick : function (info) { // 일정 클릭 시
             	 var sche_no = info.event._def.extendedProps.sche_no;
+             	up = 0;
+             	del = 0;
               	 $(function selectName(){
               		 $.ajax({
               			 cache:"false",
@@ -365,8 +370,10 @@ const checkbox = document.getElementById('schedule_allDay');
 				
                  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
                 	 // console.log(info);
-                     if(confirm("일정을 변경하시겠습니까?")){
-                     }
+                	 up++;
+                	 if(up == 1){
+                     confirm("일정을 변경하시겠습니까?")
+                     
                      
                      var title = $("#update_schedule_title").val();
                      var start_date = $("#update_schedule_start").val();
@@ -400,12 +407,14 @@ const checkbox = document.getElementById('schedule_allDay');
                               location.reload();
                          })
                     })
+                	 }
                  });
                  
                   $("#deleteSchedule").on("click",function(){  // modal의 삭제 버튼 클릭 시
                 	 // console.log(info);
-                     if(confirm("일정을 삭제하시겠습니까?")){
-                     }
+                	  del++;
+                     if(del == 1){
+                	  confirm("일정을 삭제하시겠습니까?")
                      var sche_no = info.event._def.extendedProps.sche_no;
                      var emp_no = info.event._def.extendedProps.emp_no;
 
@@ -429,6 +438,7 @@ const checkbox = document.getElementById('schedule_allDay');
                               location.reload();
                          	})
                   	})
+                     }
                  })
              },
 			  events : ${deptschedule}, // DB에 저장되어 있는 일정 불러오기
