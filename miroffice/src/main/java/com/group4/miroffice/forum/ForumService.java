@@ -22,6 +22,10 @@ public class ForumService {
 		return dao.forumWrite(dto);
 	}
 	
+	public int forumEdit(ForumDto dto) {
+		return dao.forumEdit(dto);
+	}
+	
 	public int forumCountup(int forumno) {
 		return dao.forumCountup(forumno);
 	}

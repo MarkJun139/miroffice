@@ -50,7 +50,7 @@
             <%@include file="../header.jsp" %>
         <!--Nav End -->
       </div>
-     
+     <c:set var="userName" value="${pageContext.request.userPrincipal.name}" />
       <div class="conatiner-fluid content-inner mt-n5 py-0">
 
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="100" style="overflow-x: auto">
@@ -58,7 +58,7 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-3 text-start">
-                     		 <h1 class="card-title">게시글</h1>
+                     		 <h1 class="card-title">게시판</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
@@ -75,30 +75,99 @@
 	        <form name="form" id="form" method="post" style="min-width: 1000px;">
 
                         <p><h3>${list.forumTitle}</h3></p>
-                        <p style="margin-bottom: .1em; text-align: left"><br>작성자 ${list.empRank } ${list.empName }</p>
-                        <p><fmt:formatDate value="${list.forumDate }" pattern="yy.MM.dd HH:mm"/> &nbsp &nbsp 조회수 ${list.forumCount }</p>
+                        <div>
+                        <image src="/images${list.empPhoto }"
+                        alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
+                        <b style="color: black; position: relative; bottom: 10px; display: inline;">
+                        ${list.empName } ${list.empRank } </b>
+                        <p style="position: relative; top: 10px; right: 88px; display: inline; text-align: left;"><fmt:formatDate value="${list.forumDate }" pattern="yy.MM.dd HH:mm"/> &nbsp &nbsp 조회수 ${list.forumCount }</p>
+                        </div>
                         
 
-						<textarea id="forumText" name="forumText" value=${list.forumText }</textarea>
+						<textarea id="forumText" name="forumText">${list.forumText }</textarea>
 						<script src="${pageContext.request.contextPath }/ckeditor/ckeditorforumone.js"></script>
 						
 						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
 							<div id="action" style="display: none">
-							<button type="button" id="fedit" class="btn btn-light">수정</button>
+							<button type="submit" id="fedit" class="btn btn-light" onclick="javascript: form.action='/main/forum/edit/${list.forumNo}'">수정</button>
 							<button type="button" id="fdelete" class="btn btn-light">삭제</button>
+							<button type="button" id="flist" class="btn btn-light" style="float: right;">목록</button>
+							
 							</div>
                     	</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<button type="button" id="fadmindelete" class="btn btn-light">삭제</button>
                     	</sec:authorize>
                     	
-<%--                     	<div>
-                    	<c:forEach items="${list }" var="f">
-                    		<textarea id="forumText" name="forumText" value=${list.forumText }</textarea>
+
+                    	<div style="margin-top: 2em; border-top-style: solid; border-top-color: lightgreen;">
+                    	<p style="font-size: 20px; color: black;">댓글</p>
+                    	<div id="commentlist">
+                    	<c:forEach items="${clist }" var="f">
+                    	<br><div id="comment" style = "border-bottom-style: solid; border-bottom-color: lightgray; border-bottom-width: .1px">
+                    		
+                    	<image src="/images${f.empPhoto }"
+                        alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
+                    		
+                    		<b style="padding-left: 5px; color: black;">${f.empName } ${f.empRank }</b>
+                    		<div id="deletebt">
+                    			<input type="hidden" value=${f.commentNo }>
+	                      		<c:choose>
+	                    		<c:when test="${userName == f.empNo}">
+	                    			<button type="button" id="cdelete" class="btn btn-light" style="float: right;" onclick="return commentDelete(${f.commentNo})">삭제</button>
+	                    		</c:when>
+	                    		</c:choose>
+                    		</div>
+                    		<div id="editbt">
+                    			<input type="hidden" value=${f.commentNo }>
+	                    		<c:choose>
+			                   		<c:when test="${userName == f.empNo}">
+			                   			<button type="button" id="cedit" class="btn btn-light" style="float: right;" onclick="return commentEdits(${f.commentNo})">수정</button>
+			                   		</c:when>
+	                    		</c:choose>
+                    		</div>
+                    		<div id="cancelbt" style="display: none;">
+                    			<input type="hidden" value=${f.commentNo }>
+	                      		<c:choose>
+	                    		<c:when test="${userName == f.empNo}">
+	                    			<button type="button" id="cdelete" class="btn btn-light" style="float: right;" onclick="return commentCancel(${f.commentNo})">취소</button>
+	                    		</c:when>
+	                    		</c:choose>
+                    		</div>
+                    		<div id="perfectbt" style="display: none;">
+                    			<input type="hidden" value=${f.commentNo }>
+	                    		<c:choose>
+			                   		<c:when test="${userName == f.empNo}">
+			                   			<button type="button" id="cedit" class="btn btn-light" style="float: right;" onclick="return commentPerfect(${f.commentNo})">완료</button>
+			                   		</c:when>
+	                    		</c:choose>
+                    		</div>
+                    		<div id="editdiv" style="display: none;">
+                    			<input type="hidden" value=${f.commentNo }>
+                    			<textarea style="width: 700px;" id="commentEdit" name="commentEdit">${f.commentText }</textarea>
+                    		</div>
+                    		<div id="readdiv">
+                    			<input type="hidden" value=${f.commentNo }>
+                    			<p style="padding-left: 60px; margin-top: .3em; color: black;">
+                 				${f.commentText }</p>
+                 			</div>
+                    		<p style="padding-left: 60px; margin-top: .5em; display: inline;">
+                    		<fmt:formatDate value="${f.commentDate }" pattern="yy.MM.dd HH:mm"/></p>
+                    		</div>
                     	</c:forEach>
-                    	</div> --%>
+                    	</div>
+                    	</div>
                     	
 	        
+	    	</form>
+	    	<form method="post" name="form2" id="form2">
+	    	<div>
+	    	<b style="padding-left: 5px; color: black;">${list.empName } ${list.empRank }</b>
+	    	<input type="hidden" id="empNo" name="empNo" value="${list.empNo }">
+	    	<input type="hidden" id="forumNo" name="forumNo" value="${list.forumNo }">
+	    	<textarea id="commentText" name="commentText" placeholder="댓글을 입력하세요!" style="width: 1000px; height: 100px;"></textarea>
+	    	<button type="button" id="cwrite" class="btn btn-success" onclick="return commentWrite()">댓글쓰기</button>
+	    	</div>
 	    	</form>
 	    	</div>
 
@@ -151,50 +220,154 @@
     
     <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
     <script>
-    
 
-      function getApproval(no) {
-        $.ajax({
-          type : "POST",	
-          url : "./forum/one/" + no,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json"
-        })
-        .done(function (result){
-          console.log(result)
-          document.getElementById("appNo").value = result.appNo
-          document.getElementById("appTitle").value = result.appTitle
-          $("#btnSave").attr("disabled", true)
-          $("#btnEdit").attr("disabled", false)
-          newEditor.setData(result.appText)
-        })
-        .fail(function(jqXHR){
-          console.log("jqXHR 오류래요")
-          console.log(jqXHR)
-        })
-        .always(function(){
-          console.log(no);
-        })
-      }
-    
-      <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
-      $(function(){
-         $('#datatable2').removeAttr('width').DataTable({
-          aaSorting: [],
-          lengthMenu: [10, 30],
-          order : [[ 3, "desc" ]],
-          destroy : true,
-          autoWidth: false,
-          columnDefs: [
-        	  {width: 400, targets: 0},
-        	  {width: 200, targets: 1},
-        	  {width: 200, targets: 2},
-        	  {width: 200, targets: 3}
-          ]
 
-         });
-        });
-      
+	
+	function commentWrite() {
+		if(document.getElementById('commentText').value == ''){
+			alert('댓글 내용을 입력하세요');
+		}
+		else{
+			var submitObj = new Object();
+			submitObj.empNo = $('#empNo').val();
+			submitObj.forumNo = $('#forumNo').val();
+			submitObj.commentText = $('#commentText').val();
+			$.ajax({
+				type : "POST",	
+				url : "../comment/write",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify(submitObj)
+			})
+			.done(function (result){
+				console.log(result)
+				/* var htmls = $('#comment').html(); */
+	
+				/* $('#comment').html(htmls); */
+				/* $('#comment'.html(location.href)) */
+				/* $('#comment').replaceWith(location.href + ' :: #comment'); */
+				
+				/* $('#comment').children().remove();*/
+				$('#commentlist').load(location.href + ' #commentlist');
+			})
+			.fail(function(jqXHR){
+				console.log("jqXHR 오류래요")
+				console.log(jqXHR)
+			})
+		}
+	}
+
+	
+	function commentEditWrite() {
+		if(document.getElementById('commentText').value == ''){
+			alert('댓글 내용을 입력하세요');
+		}
+		else{
+			var submitObj = new Object();
+			submitObj.empNo = $('#empNo').val();
+			submitObj.forumNo = $('#forumNo').val();
+			submitObj.commentText = $('#commentText').val();
+			$.ajax({
+				type : "POST",	
+				url : "../comment/write",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify(submitObj)
+			})
+			.done(function (result){
+				console.log(result)
+				/* var htmls = $('#comment').html(); */
+	
+				/* $('#comment').html(htmls); */
+				/* $('#comment'.html(location.href)) */
+				/* $('#comment').replaceWith(location.href + ' :: #comment'); */
+				
+				/* $('#comment').children().remove();*/
+				$('#commentlist').load(location.href + ' #commentlist');
+			})
+			.fail(function(jqXHR){
+				console.log("jqXHR 오류래요")
+				console.log(jqXHR)
+			})
+		}
+	}
+
+	function commentEdits(no){
+		$('#readdiv input').each(function(){
+			if($(this).val() == no){
+				$(this).parent().css("display", "none");
+				$('#editdiv input').each(function(){
+					if($(this).val() == no){
+						$(this).parent().css("display", "");
+						
+						
+						$('#canceldiv input').each(function(){
+							if($(this).val() == no){
+								#(this).parent().css("display", "")
+							}
+						})
+						
+						
+					}
+				})
+			}
+		})
+
+		
+	}
+	
+	function commentDelete(commentno) {
+		var no = commentno;
+		var no2 = $('#forumNo').val();
+		$.ajax({
+			type : "POST",	
+			url : "../comment/delete",
+			data: { "id": no, "fid": no2 }
+		})
+		.done(function (result){
+			console.log(result)
+			/* var htmls = $('#comment').html(); */
+
+			/* $('#comment').html(htmls); */
+			/* $('#comment'.html(location.href)) */
+			/* $('#comment').replaceWith(location.href + ' :: #comment'); */
+			
+			/* $('#comment').children().remove();*/
+			$('#commentlist').load(location.href + ' #commentlist');
+		})
+		.fail(function(jqXHR){
+			console.log("jqXHR 오류래요")
+			console.log(jqXHR)
+		})
+	
+	}
+	
+	
+	
+	function forumEdit(no) {
+		var suc;
+		$.ajax({
+			type : "POST",	
+			url : "../forum/edit/" + no,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		})
+		.done(function (result){
+			console.log(result)
+			/* document.getElementById("forumText").value = result.forumText
+			document.getElementById("forumTitle").value = result.forumTitle
+			$("#btnSave").attr("disabled", true)
+			$("#btnEdit").attr("disabled", false) */
+			newEditor.setData(result.forumText)
+		})
+		.fail(function(jqXHR){
+			console.log("jqXHR 오류래요")
+			console.log(jqXHR)
+		});
+			
+	}
+	
+
+	
+
       
       var url= window.location.href;
       $(".nav-item").find('a').each(function() {

@@ -125,35 +125,7 @@
 
 	    	</form>
 	    	
-	    	<form id="modalf">
-				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h1 class="modal-title fs-5" id="staticBackdropLabel">결재자 선택(최대 3명)</h1>
-				      </div>
-						<div class="bd-example">
-						    <div class="list-group">
-						    <input type="hidden" id="appAdmin1" name="appAdmin1">
-						    <input type="hidden" id="appAdmin2" name="appAdmin2">
-						    <input type="hidden" id="appAdmin3" name="appAdmin3">
-						    	<c:forEach items="${ulist }" var="u">
-							        <label class="list-group-item">
-							            <input class="form-check-input me-1" name="ckbox" type="checkbox" value="${u.empNo }">
-							            ${u.empRank } ${u.empName }
-							        </label>
-						        </c:forEach>
-						    </div>
-						</div>
 
-				      <div class="modal-footer">
-				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='./approval/submit'">결재 신청</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-	    	</form>
 	</div>
 	</div>
 	</div>
@@ -291,6 +263,35 @@
 
 
 	</script>
+		    	<form id="modalf">
+				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h1 class="modal-title fs-5" id="staticBackdropLabel">결재자 선택(최대 3명)</h1>
+				      </div>
+						<div class="bd-example">
+						    <div class="list-group">
+						    <input type="hidden" id="appAdmin1" name="appAdmin1">
+						    <input type="hidden" id="appAdmin2" name="appAdmin2">
+						    <input type="hidden" id="appAdmin3" name="appAdmin3">
+						    	<c:forEach items="${ulist }" var="u">
+							        <label class="list-group-item">
+							            <input class="form-check-input me-1" name="ckbox" type="checkbox" value="${u.empNo }">
+							            ${u.empRank } ${u.empName }
+							        </label>
+						        </c:forEach>
+						    </div>
+						</div>
+
+				      <div class="modal-footer">
+				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button type="button" id ="btnSave" class="btn btn-primary" onclick="javascript: form.action='./approval/submit'">결재 신청</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+	    	</form>
   </body>
 </html>
 

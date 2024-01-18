@@ -8,13 +8,24 @@
 		insert into forum (emp_no, dept_no, forum_title, forum_text, forum_date, forum_notice, forum_files)
 		values (#{empNo}, #{deptNo}, #{forumTitle}, #{forumText}, now(), #{forumNotice}, #{forumFiles})
 	</insert>
+
+	<update id="forumEdit" parameterType="com.group4.miroffice.forum.ForumDto">
+		update forum 
+		<set>
+			<if test="forumTitle != null">forum_title = #{forumTitle},</if>
+			<if test="forumText != null">forum_text = #{forumText},</if>
+			<if test="forumNotice != null">forum_notice = #{forumNotice},</if>
+			</set>
+		where forum_no = #{forumNo}
+	</update>
+
 	
 	
 	<update id="forumCountup" parameterType="Integer">
 		update forum set forum_count = forum_count+1
 		where forum_no = #{forumNo}
 	</update>
-	
+
 	
 	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
 		select * from forum where dept_no = #{deptno}

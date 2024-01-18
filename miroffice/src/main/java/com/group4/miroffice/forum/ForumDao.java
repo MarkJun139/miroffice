@@ -12,6 +12,8 @@ public interface ForumDao {
 	ForumDto forumOne(int forumno);
 	
 	int forumWrite(ForumDto dto);
+
+	int forumEdit(ForumDto dto);
 	
 	int forumCountup(int forumno);
 }
