@@ -10,6 +10,12 @@
 	</insert>
 	
 	
+	<update id="forumCountup" parameterType="Integer">
+		update forum set forum_count = forum_count+1
+		where forum_no = #{forumNo}
+	</update>
+	
+	
 	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
 		select * from forum where dept_no = #{deptno}
 	</select>

@@ -2,7 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="/ckeditor/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/ckeditor/editor-style.css" type="text/css">
 <html lang="ko">
   <head>
     <meta charset="utf-8">
@@ -56,7 +58,7 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-3 text-start">
-                     		 <h1 class="card-title">전자결재</h1>
+                     		 <h1 class="card-title">게시글</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
@@ -66,27 +68,37 @@
                      	</div>
 <!--  메인 여기부터!!! -->      
 
-<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
+		<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
             
     
          <div class="col-md-6" style = "padding: 5px; border: 1px">
-	        <form name="form" id="form" method="post">
-	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
-	        	<input type="hidden" name="appNo" id="appNo" value="">
-		            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
-			            <div id="toolbar-container"></div>
-				        <div>	
-						<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
-						</div>
-		    	<script src="/ckeditor/ckeditorapprove.js"></script>
-		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
-	   			
+	        <form name="form" id="form" method="post" style="min-width: 1000px;">
 
-				
-				<!-- Modal -->
+                        <p><h3>${list.forumTitle}</h3></p>
+                        <p style="margin-bottom: .1em; text-align: left"><br>작성자 ${list.empRank } ${list.empName }</p>
+                        <p><fmt:formatDate value="${list.forumDate }" pattern="yy.MM.dd HH:mm"/> &nbsp &nbsp 조회수 ${list.forumCount }</p>
+                        
 
+						<textarea id="forumText" name="forumText" value=${list.forumText }</textarea>
+						<script src="${pageContext.request.contextPath }/ckeditor/ckeditorforumone.js"></script>
+						
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
+							<div id="action" style="display: none">
+							<button type="button" id="fedit" class="btn btn-light">수정</button>
+							<button type="button" id="fdelete" class="btn btn-light">삭제</button>
+							</div>
+                    	</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<button type="button" id="fadmindelete" class="btn btn-light">삭제</button>
+                    	</sec:authorize>
+                    	
+                    	<div>
+                    	<c:forEach items="${list }" var="f">
+                    		<textarea id="forumText" name="forumText" value=${list.forumText }</textarea>
+                    	</c:forEach>
+                    	</div>
+                    	
+	        
 	    	</form>
 	    	</div>
 
@@ -188,14 +200,21 @@
       $(".nav-item").find('a').each(function() {
         var burl = $(this).prop('href')
         var burl2 = burl+"#"
-        if(url == burl || url == burl2){
+        if(url.match(burl) || url.match(burl2)){
             console.log(url);
-          console.log($(this).prop('href'))
+            console.log($(this).prop('href'))
             $(this).toggleClass('active', $(this).attr('href'));
         }
     
       })
-    
+      $(document).ready(function(){
+    	  var player = '<sec:authentication property="principal.username"/>';
+    	  
+    	  if(${list.empNo} == player){
+    		  
+    		  document.getElementById("action").style.display = "";
+    	  }
+      })
       
       </script>
 

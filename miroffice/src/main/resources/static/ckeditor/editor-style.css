@@ -4,18 +4,21 @@
 	
 	min-width: 850px;
 	
-	min-height: 500px;	
+	min-height: 50px;
 
 }
-apptext
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
+	border: none;
+	border-top-style: solid;
+	border-top-color: lightblue;
+	}
+forumtext
 .ck-editor__editable p {margin: 0}
 .ck-content { font-size: 13px; color: black; line-height: 0.3em;}
 .ck-toolbar.ck-toolbar_grouping {
-	
+	display: none;
 	width: 850px;
 }
 .ck-toolbar__items {
 	width: 850px;
-	}
-	
-	
+}
