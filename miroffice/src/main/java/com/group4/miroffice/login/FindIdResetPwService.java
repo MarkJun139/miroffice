@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.group4.miroffice.dto.Mail;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-
 @Service
 public class FindIdResetPwService {
 

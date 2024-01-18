@@ -159,11 +159,11 @@
 							name="schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="schedule_type" name="schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
+							<option value="#FFA500">출장</option>
+							<option value="#3CB371">휴가</option>
+							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
-							type="checkbox" id="schedule_allDay" name="schedule_allDay">
+							type="checkbox" id="schedule_allDay" name="schedule_allDay" checked>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -196,9 +196,9 @@
 							name="update_schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="update_schedule_type" name="update_schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
+							<option value="#FFA500">출장</option>
+							<option value="#3CB371">휴가</option>
+							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
 							type="checkbox" id="update_schedule_allDay"
 							name="update_schedule_allDay">
@@ -231,12 +231,6 @@
     </script>
 </body>
 <script>
-day =  $(document).ready(function(){
-    $("input[type='checkbox']").on("click", function(){
-        return $("input:checkbox[id='schedule_allDay']").is(":checked");
-
-    })
-}) 
 	document.addEventListener('DOMContentLoaded', function() {
 
 		var calendarEl = document.getElementById('calendar');
@@ -282,14 +276,15 @@ day =  $(document).ready(function(){
              		$(this).find('.form-control')[0].value = '';
              		$(this).find('.form-control')[1].value = data.startStr;
              		$(this).find('.form-control')[2].value = data.endStr;
-             		$(this).find('.form-control')[3].value = 'red';
+             		$(this).find('.form-control')[3].value = '#FFA500';
                  })
                  insert = 0;
-             
+            	 
                  $("#scheduleInsert").modal("show"); // modal 나타내기      
-                	
+                
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
-                	 
+                	 var tf = $("input:checkbox[id='schedule_allDay']").is(":checked");
+                     // console.log(tf);
                 	 insert++;
                  
                 	 if(insert == 1){	 
@@ -297,7 +292,7 @@ day =  $(document).ready(function(){
                      var title = $("#schedule_title").val();
                      var start_date = $("#schedule_start").val();
                      var end_date = $("#schedule_end").val();
-                     var all_day = day;
+                     var all_day = tf;
                      var color = $("#schedule_type").val();
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
@@ -338,7 +333,7 @@ day =  $(document).ready(function(){
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
-            	 console.log(info.event._def.extendedProps);
+            	 // console.log(info.event._def.extendedProps);
             	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) {           		
               		$(this).find('.form-control')[0].value = info.event._def.title;
                		$(this).find('.form-control')[1].value = info.event.startStr;
@@ -360,7 +355,7 @@ day =  $(document).ready(function(){
                      var start_date = $("#update_schedule_start").val();
                      var end_date = $("#update_schedule_end").val();
                      var all_day = info.event.allDay;
-                     let sche_no = info.event._def.extendedProps.sche_no;
+                     var sche_no = info.event._def.extendedProps.sche_no;
                      var color = $("#update_schedule_type").val();
 
                      console.log(info);

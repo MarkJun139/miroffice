@@ -33,4 +33,8 @@ public class ScheduleService {
 	public List<Map<String, Object>> deptSchedule(int deptNo) {
 		return dao.deptSchedule(deptNo);
 	}
+	
+	public String findEmpName(String sche_no) {
+		return dao.findEmpName(sche_no);
+	}
 }

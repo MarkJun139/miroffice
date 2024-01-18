@@ -76,7 +76,7 @@
                         
                         
                         
-                        <h4 class="logo-title ms-3">Hope UI</h4>
+                        <h4 class="logo-title ms-3">미르 오피스</h4>
                      </a>
                      <h2 class="mb-2">비밀번호 초기화 완료</h2>
                      <form method="post" action="/findpasswordresult">
@@ -84,18 +84,18 @@
                            <div class="col-lg-12">
                               <div class="floating-label form-group">
                                <c:choose>
-                        	<c:when test="${empty email}">
-                        	<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
-							</c:when>
-							<c:otherwise>
-							<p class="cnf-mail mb-1">${name}님, ${email}로 임시 비밀번호가 전송되었습니다.</p>
-							<p class="cnf-mail mb-1">로그인 후 비밀번호 재설정하시기 바랍니다.</p>
-							</c:otherwise>
+                        			<c:when test="${empty password}">
+                        				<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
+									</c:when>
+									<c:otherwise>
+										<p class="cnf-mail mb-1">${name}님, ${email}로 임시 비밀번호가 전송되었습니다.</p>
+										<p class="cnf-mail mb-1">로그인 후 비밀번호 재설정하시기 바랍니다.</p>
+									</c:otherwise>
 								</c:choose>	
                               </div>
                            </div>
                         <div class="d-inline-block w-100">
-                           <a href="/login" class="btn btn-primary mt-3">메인 화면으로</a>
+                           <a href="/login" class="btn btn-primary mt-3">로그인 화면으로</a>
                         </div>
                   </div>
                </div>         
