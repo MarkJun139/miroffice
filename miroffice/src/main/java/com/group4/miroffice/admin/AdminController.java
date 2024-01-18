@@ -153,14 +153,12 @@ public class AdminController {
 	}
 	
 	@PutMapping("/admin/emp/editemp")
-	public String AdminEmpUpdate(@RequestPart("empPhotoFile") MultipartFile file,@RequestParam("empNo") int empNo , Admin admin) throws IOException {
+	public String AdminEmpUpdate(@RequestPart("empPhotoFile") MultipartFile file,@RequestParam("empNo") int empNo,@RequestParam("deptNo") int deptNo , Admin admin) throws IOException {
 		try {
-			
-		
-		// 기존 사진
-		String empPhoto = adminService.getEmpPhoto(empNo);
-		// 사진이 업로드 됐을 때
-		if(!file.isEmpty()) {
+			// 기존 사진
+			String empPhoto = adminService.getEmpPhoto(empNo);
+			// 사진이 업로드 됐을 때
+			if(!file.isEmpty()) {
 			// 기존 사진 삭제
 			Path path = Paths.get("src/main/resources/static/images" + empPhoto);
 			Files.deleteIfExists(path);
@@ -188,16 +186,22 @@ public class AdminController {
 		        Path destination = Paths.get(filePath);
 		        Files.write(destination, file.getBytes());
 		        admin.setEmpPhoto("/emp_photo/" + fileName);
+				}
+				
+			} else { // 사진이 업로드 안됐을 때
+				admin.setEmpPhoto(empPhoto);
 			}
 			
-		} else { // 사진이 업로드 안됐을 때
-			admin.setEmpPhoto(empPhoto);
-		}
-		adminService.empUpdate(admin);
-		System.out.println("사원 정보 수정 : " + admin);
+			
+			adminService.empUpdate(admin);
+			System.out.println("사원 정보 수정 : " + admin);
 		} catch (Exception e) {
+			
 			System.out.println("사원 정보 수정 실패");
 			System.out.println(e.getMessage());
+			System.out.println("바꿀 부서번호 : " + deptNo);
+			System.out.println("바꿀 사원번호 : " + empNo);
+			
 		}
 		
 		
@@ -209,10 +213,14 @@ public class AdminController {
 	public String AdminEmpDelete(@RequestParam("empNo") int empNo) throws IOException {
 		try {
 			
-			adminService.deleteEmp(empNo);
 			String empPhoto = adminService.getEmpPhoto(empNo);
 			Path path = Paths.get("src/main/resources/static/images" + empPhoto);
 			Files.deleteIfExists(path);
+			System.out.println(empNo);
+			System.out.println(empPhoto);
+			System.out.println("사진 삭제");
+			
+			adminService.deleteEmp(empNo);
 			
 			return "redirect:/main/admin/emp/list";
 		} catch (Exception e) {
