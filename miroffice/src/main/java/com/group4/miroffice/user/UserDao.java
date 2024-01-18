@@ -44,21 +44,21 @@ public interface UserDao {
 			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1)")
 	int lateStart(Checkout checkout);
 	
-	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timediff(#{checkEndTime}, check_Start_Time)"
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime})"
 			+ " WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
 	int end(Checkout checkout);
 	
 	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}")
 	CheckDate checkdate(DayCheck daycheck);
 	
 	@Select("select week(check_date) AS weekNumber, sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}"
 			+ " and week(check_date) = #{week} group by weekNumber order by weekNumber")
 	CheckDate weekCheck(DayCheck daycheck);

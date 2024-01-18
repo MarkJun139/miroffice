@@ -32,6 +32,7 @@
 		<tr>
 			<td>출근시간</td>
 			<td>퇴근시간</td>
+			<td>근무시간</td>
 		</tr>
 		<tr>
 			<td>${start}</td>

@@ -13,5 +13,6 @@ public class CheckDate {
 	int checkVacation;
 	int checkLate;
 	int checkAbsenteeism;
+	int checkWorkTime;
 	
 }
