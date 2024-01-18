@@ -134,11 +134,5 @@ public class ForumController {
 		
 		return "forum/edit";
 		
-		
-	@PostMapping("/forum/comment")
-	public ResponseEntity<CommentDto> forumComment() {
-		return ResponseEntity.ok(dto);
 	}
-
-	
 }
