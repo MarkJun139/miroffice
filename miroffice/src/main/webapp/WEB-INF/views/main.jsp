@@ -10,7 +10,7 @@
       <title>미르오피스</title>
       
       <!-- Favicon -->
-      <link rel="shortcut icon" href="/images/favicon.ico" />
+      <link rel="icon" href="/images/icons/logo.png" />
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="/css/core/libs.min.css" />
@@ -174,7 +174,7 @@
             <div class="card" data-aos="fade-up" data-aos-delay="500">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <a href="/main/forum"><h1 class="card-title">부서 공지사항</h1></a>
+                     <a href="/main/forum"><h1 class="card-title">우리부서 게시판</h1></a>
                   </div>
                </div>
                <div class="p-0 card-body">

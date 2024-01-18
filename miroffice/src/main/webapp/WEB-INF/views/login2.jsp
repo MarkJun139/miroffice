@@ -12,7 +12,7 @@
 <title>미르오피스 로그인</title>
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="icon" href="/images/icons/logo.png" />
 
 <!-- Library / Plugin Css Build -->
 <link rel="stylesheet" href="/css/core/libs.min.css" />
@@ -58,8 +58,7 @@
 										<!--logo End--> <!--Logo start-->
 										<div class="logo-main">
 											<div class="logo-normal">
-												<svg class="text-primary icon-30" viewBox="0 0 30 30"
-													fill="none" xmlns="http://www.w3.org/2000/svg">
+												<img src="./images/icons/logo.png" style="width: 50px;">
                                           <rect x="-0.757324"
 														y="19.2427" width="28" height="4" rx="2"
 														transform="rotate(-45 -0.757324 19.2427)"
@@ -156,25 +155,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="sign-bg">
-						<svg width="280" height="230" viewBox="0 0 431 398" fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-                     <g opacity="0.05">
-                     <rect x="-157.085" y="193.773" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF" />
-                     <rect x="7.46875" y="358.327" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(-45 7.46875 358.327)" fill="#3B8AFF" />
-                     <rect x="61.9355" y="138.545" width="310.286"
-								height="77.5714" rx="38.7857"
-								transform="rotate(45 61.9355 138.545)" fill="#3B8AFF" />
-                     <rect x="62.3154" y="-190.173" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF" />
-                     </g>
-                  </svg>
-					</div>
+
 				</div>
 				<div
 					class="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">

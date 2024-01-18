@@ -257,7 +257,7 @@
 	}
 
 	
-	function commentEditWrite() {
+ 	function commentEditWrite() {
 		if(document.getElementById('commentText').value == ''){
 			alert('댓글 내용을 입력하세요');
 		}
@@ -274,13 +274,7 @@
 			})
 			.done(function (result){
 				console.log(result)
-				/* var htmls = $('#comment').html(); */
-	
-				/* $('#comment').html(htmls); */
-				/* $('#comment'.html(location.href)) */
-				/* $('#comment').replaceWith(location.href + ' :: #comment'); */
-				
-				/* $('#comment').children().remove();*/
+
 				$('#commentlist').load(location.href + ' #commentlist');
 			})
 			.fail(function(jqXHR){
@@ -288,9 +282,9 @@
 				console.log(jqXHR)
 			})
 		}
-	}
+	} 
 
-	function commentEdits(no){
+ 	function commentEdits(no){
 		$('#readdiv input').each(function(){
 			if($(this).val() == no){
 				$(this).parent().css("display", "none");
@@ -367,8 +361,6 @@
 	
 
 	
-
-      
       var url= window.location.href;
       $(".nav-item").find('a').each(function() {
         var burl = $(this).prop('href')

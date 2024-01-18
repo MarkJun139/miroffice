@@ -90,7 +90,7 @@ public class LoginController {
 
 		if (password != null) {
 			service.resetPassword(temppw, name, no);
-			service.sendMail(temppw, name, email);
+//			service.sendMail(temppw, name, email);
 		}
 		System.out.println("temppw: " + temppw);
 
