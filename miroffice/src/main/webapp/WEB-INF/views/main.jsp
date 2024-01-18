@@ -438,6 +438,7 @@
             </div>  -->
          </div>
          <script>
+
          window.onload = function() {
              let hour = document.getElementById("hour");
              let minute = document.getElementById("minute");
@@ -460,7 +461,7 @@
                  return num;
              }
          }
-		
+
 		
 		</script> 
          <div class="col-md-12 col-lg-12">
@@ -519,6 +520,8 @@
               </svg>
           </a>
       </div>
+      
+
 
       
 <!-- Footer Section Start -->
@@ -557,5 +560,20 @@
     <!-- App Script -->
     <script src="/js/hope-ui.js" defer></script>
     
+      <script>
+      
+      var url= window.location.href;
+      $(".nav-item").find('a').each(function() {
+        var burl = $(this).prop('href')
+        var burl2 = burl+"#"
+        if(url == burl || url == burl2){
+            console.log(url);
+          console.log($(this).prop('href'))
+            $(this).toggleClass('active', $(this).attr('href'));
+        }
+    
+      })
+      </script>
+      
   </body>
 </html>

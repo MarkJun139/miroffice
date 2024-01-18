@@ -94,6 +94,9 @@
 
      </table>
 
+	<button type="button" onclick="location.href='./forum/write'" id="fwrite" class="btn btn-success">글쓰기</button>
+
+	
   </div>
           </form>
 </div>
@@ -151,7 +154,7 @@
 
       function getApproval(no) {
         $.ajax({
-          type : "POST",	
+          type : "GET",	
           url : "./forum/one/" + no,
           contentType: "application/json; charset=utf-8",
           dataType: "json"
@@ -191,6 +194,7 @@
          });
         });
       
+
       
       var url= window.location.href;
       $(".nav-item").find('a').each(function() {
@@ -203,6 +207,8 @@
         }
     
       })
+      
+      
     
       
       </script>
