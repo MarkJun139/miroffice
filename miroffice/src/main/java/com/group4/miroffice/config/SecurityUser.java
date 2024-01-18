@@ -18,8 +18,6 @@ public class SecurityUser extends User {
 		this.users = users;
 	}
 
-	
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

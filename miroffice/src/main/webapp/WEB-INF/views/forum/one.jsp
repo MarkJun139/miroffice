@@ -92,11 +92,11 @@
 						<button type="button" id="fadmindelete" class="btn btn-light">삭제</button>
                     	</sec:authorize>
                     	
-                    	<div>
+<%--                     	<div>
                     	<c:forEach items="${list }" var="f">
                     		<textarea id="forumText" name="forumText" value=${list.forumText }</textarea>
                     	</c:forEach>
-                    	</div>
+                    	</div> --%>
                     	
 	        
 	    	</form>
