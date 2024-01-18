@@ -11,4 +11,9 @@ public class CommentDto {
 	public int empNo;
 	public String commentText;
 	public Date commentDate;
+	
+	public String empName;
+	public String empRank;
+	public String empPhoto;
+	
 }

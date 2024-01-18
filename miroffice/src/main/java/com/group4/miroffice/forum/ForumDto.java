@@ -14,9 +14,11 @@ public class ForumDto {
 	private String forumText;
 	private Date forumDate;
 	private int forumCount;
-	private boolean forumNotice;
+	private Boolean forumNotice;
 	private String forumFiles;
 	
 	private String empName;
 	private String empRank;
+	private String empPhoto;
+	private int commentCount;
 }

@@ -69,22 +69,24 @@
                      	</div>
 <!--  메인 여기부터!!! -->      
 
-<form name="form" id="form" action="write" method="post">
+<form name="form" id="form" action="../edit" method="post">
 		<input type="hidden" id="empNo" name="empNo" value="${pageContext.request.userPrincipal.name}"/>
-		
+		<input type="hidden" id="forumNo" name="forumNo" value="${list.forumNo }"/>
+		<input type="hidden" id="forumNotice" name="forumNotice" value="${list.forumNotice }"/>
     	<tr> 
     	<h2>
 			<td class="orange">문서명</td>
-			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="font-size: 30"/></td>
+			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="display: inline; font-size: 30" value="${list.forumTitle }"></td>
 			</h2>
-		</tr>
+			<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
+			</tr>
 
     <!-- The toolbar will be rendered in this container. -->
     <div id="toolbar-container"></div>
 
     <!-- This container will become the editable. -->
     <div>	
-		<textarea id="forumText" name="forumText" placeholder="내용을 입력해 주세요"></textarea>
+		<textarea id="forumText" name="forumText" placeholder="내용을 입력해 주세요" value=${list.forumText }</textarea>
 	</div>
     	<script src="/ckeditor/ckeditorforum.js"></script>
 		<!--
@@ -101,7 +103,23 @@
     </form>
     
     <script>
-
+    var checklist; 
+    $(document).ready(function(){
+  	  var x = $('#forumNotice').val()
+  	  if(x == 'true'){
+  	  	$('#ckbox').prop('checked', true);
+  	  }
+  	  
+		  $("input[type='checkbox']").on("click", function(){
+			  if($('#ckbox').is(":checked")==true){
+				checklist = true;  
+			  }
+			  else if($('#ckbox').is(":checked")==false){
+				  checklist = false;
+			  }
+		  })
+    })
+  
 	
 	$(document).on('click', '#btnSave', function(e){
 		e.preventDefault();
@@ -114,6 +132,7 @@
 		}
 		else{
 			<!--e.preventDefault();-->
+			document.getElementById("forumNotice").value = checklist;
 			$("#form").submit();
 		}
 	});
@@ -121,7 +140,7 @@
 		e.preventDefault();	
 		location.href="../approval";
 	});
-	
+
 	
 	</script>
 
@@ -172,30 +191,7 @@
     
     <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
     <script>
-      function getApproval(no) {
-        $.ajax({
-          type : "POST",	
-          url : "./forum/one/" + no,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json"
-        })
-        .done(function (result){
-          console.log(result)
-          document.getElementById("appNo").value = result.appNo
-          document.getElementById("appTitle").value = result.appTitle
-          $("#btnSave").attr("disabled", true)
-          $("#btnEdit").attr("disabled", false)
-          newEditor.setData(result.appText)
-        })
-        .fail(function(jqXHR){
-          console.log("jqXHR 오류래요")
-          console.log(jqXHR)
-        })
-        .always(function(){
-          console.log(no);
-        })
-      }
-    
+
       <!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
       $(function(){
          $('#datatable2').dataTable({

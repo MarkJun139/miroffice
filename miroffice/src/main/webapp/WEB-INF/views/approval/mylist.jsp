@@ -149,22 +149,7 @@
 					console.log(result2.length);
 					let index = 1;
 					let approve = null;
-					result2.forEach(function(string){
-						if(string.empApprove==true)
-							approve = "승인"
-						if(string.empApprove==false)
-							approve = "거절"
-						if(string.empApprove==null)
-							approve = "미승인";
-						if(index == 1)
-							document.getElementById("approve1").value = string.empRank + " " + string.empName + " "+ approve 
-						if(index == 2)
-							document.getElementById("approve2").value = string.empRank + " " + string.empName + " "+ approve
-						if(index == 3)
-							document.getElementById("approve3").value = string.empRank + " " + string.empName + " "+ approve
-						console.log(string.empName)
-						index++
-					})
+
 				})
 				.fail(function(jqXHR){
 					console.log("실패했어!");
