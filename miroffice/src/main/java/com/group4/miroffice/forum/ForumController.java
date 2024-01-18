@@ -89,6 +89,7 @@ public class ForumController {
 		return "redirect:/main/forum";
 	}
 	
+	
 	@PostMapping("/forum/comment")
 	public ResponseEntity<CommentDto> forumComment() {
 		return ResponseEntity.ok(dto);

@@ -1,23 +1,14 @@
 package com.group4.miroffice.login;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
-import com.group4.miroffice.config.SecurityUser;
-import com.group4.miroffice.user.Users;
-
 
 @Controller
 public class LoginController {
@@ -33,9 +24,18 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
+//	@GetMapping("/login")
+//	public String login2() {
+//		return "login2";
+//	}
 
 	@GetMapping("/login")
-	public String index() {
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "exception", required = false) String exception, Model model) {
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
+		System.out.println("error: " + error);
+		System.out.println("exception: " + exception);
 		return "login2";
 	}
 
@@ -99,6 +99,11 @@ public class LoginController {
 		m.addAttribute("email", email);
 		return "login/findpasswordresult";
 
+	}
+
+	@GetMapping("/accessdenied")
+	public String accessDebied() {
+		return "accessDenied";
 	}
 
 }
