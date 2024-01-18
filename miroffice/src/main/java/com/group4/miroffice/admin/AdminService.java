@@ -22,9 +22,11 @@ public class AdminService {
 	@Autowired
 	AdminDao dao;
 	
-	public void addEmp(Admin admin) {
+	public void addEmp(Admin admin) throws InterruptedException {
 		dao.addEmp(admin);
 		dao.addCheckOut(admin);
+		
+		Thread.sleep(3000);
 	}
 	public List<Dept> deptList() {
 		return dao.deptList();

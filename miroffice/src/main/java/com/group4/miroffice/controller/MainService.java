@@ -1,5 +1,6 @@
 package com.group4.miroffice.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,13 @@ public class MainService {
 	
 	public List<ForumDto> getForumList() {
 		return dao.getForumList();
+	}
+	
+	public Date getStartDate(int empNo) {
+		return dao.getStartTime(empNo);
+	}
+	
+	public Date getEndDate(int empNo) {
+		return dao.getEndTime(empNo);
 	}
 }
