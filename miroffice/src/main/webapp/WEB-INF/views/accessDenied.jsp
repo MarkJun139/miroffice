@@ -1,17 +1,32 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>시큐리티 테스트</title>
-</head>
-<head>
-	<title>접근 권한 에러</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
+<title>에러 페이지</title>
+<style type="text/css">
 
+</style>
+<head>
 <body>
-	<h3>죄송합니다. 페이지에 대한 접근 권한이 없네요.^^</h3>
-	<h4>다시 로그인을 원하시면 <a href="/login">여기</a></h4>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<section class="error-page section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3 col-12">
+				<!-- Error Inner -->
+				<div class="error-inner">
+					<h1>404<span>Oop's  sorry we can't find that page!</span></h1>
+					<p>Aenean eget sollicitudin lorem, et pretium felis. Nullam euismod diam libero, sed dapibus leo laoreet ut. Suspendisse potenti. Phasellus urna lacus</p>
+					<form class="search-form">
+						<input placeholder="Search from Here" type="text">
+						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
+					</form>
+				</div>
+				<!--/ End Error Inner -->
+			</div>
+		</div>
+	</div>
+</section>
 </body>
 </html>

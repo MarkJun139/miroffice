@@ -36,17 +36,21 @@ public interface UserDao {
 			+ " emp_email = #{empEmail}, emp_pw = #{empPw} WHERE emp_no = #{empNo}")
 	int infoUpdate(Users user);
 	
-	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time)"
-			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime})")
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time, check_on)"
+			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1)")
 	int start(Checkout checkout);
 	
-	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time, check_late)"
-			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1)")
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time, check_on, check_late)"
+			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1, 1)")
 	int lateStart(Checkout checkout);
 	
-	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime})"
-			+ " WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime},)"
+			+ " check_leave_early = 0 WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
 	int end(Checkout checkout);
+	
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime},)"
+			+ " check_leave_early = 1 WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
+	int earlyEnd(Checkout checkout);
 	
 	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
@@ -70,7 +74,7 @@ public interface UserDao {
 	Users leaderCheck(String empName);
 	
 	@Select("select * from checkout where check_date = #{checkDate} and emp_no = #{empNo}")
-	List<Checkout> checkout(DayCheck dayCheck);
+	Checkout checkout(DayCheck dayCheck);
 	
 //	@Insert("insert into users values (#{id}, #{password}, #{name}, #{role}, 'T')")
 //	int insertUser(Users user);

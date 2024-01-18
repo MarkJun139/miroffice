@@ -153,15 +153,20 @@
 						  </label>
 						</div>
 					  </div>
-					  </div>
-					  <button type="submit" class="col-md-12 btn btn-primary pull-right">사원 정보 수정</button>
-					  </form>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="editEmployee">
+ 						<span class="sr-only">수정하기</span>
+					  </button>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="editEmployeeLoading" disabled>
+					  	<span class="spinner-border spinner-border-sm loadingBtn" role="status" aria-hidden="true"></span>
+ 						<span class="sr-only">수정중...</span>
+					  </button>
 					</div>
                </div>
             </div>
          </div>
       </div>
    </div>
+</div>
 </div>
       </div>
       <div class="btn-download">
@@ -204,6 +209,11 @@
  	    };
  	    reader.readAsDataURL(file);
 	}
+ 	$("#editEmployeeLoading").hide();
+ 	$("#editEmployee").on("click",function(){
+ 		$("#editEmployeeLoading").show();
+		$("#editEmployee").hide();
+ 	})
  	
  	$("#findAddress").click(function(){
 		new daum.Postcode({

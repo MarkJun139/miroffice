@@ -99,6 +99,7 @@
 						<button type="button" id="fadmindelete" class="btn btn-light">삭제</button>
                     	</sec:authorize>
                     	
+
                     	<div style="margin-top: 2em; border-top-style: solid; border-top-color: lightgreen;">
                     	<p style="font-size: 20px; color: black;">댓글</p>
                     	<div id="commentlist">

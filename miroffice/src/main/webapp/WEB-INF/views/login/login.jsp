@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -102,7 +101,7 @@
 
 										<h4 class="logo-title ms-3">미르오피스</h4>
 									</a>
-									<h2 class="mb-2 text-center">로그인</h2>
+									<h2 class="mb-2 text-center">로그인1234</h2>
 
 									<form method="post" action="/login">
 										<div class="row">
@@ -113,9 +112,6 @@
 														id="empno" aria-describedby="number" placeholder=" ">
 												</div>
 											</div>
-								 			<c:if test="${error == true}">
-											<div>${exception }</div>
-											</c:if>
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="emppw" class="form-label">비밀번호</label> <input
@@ -218,5 +214,6 @@
 </body>
 <script>
 	var regex = /^[0-9]*$/;
+
 </script>
 </html>

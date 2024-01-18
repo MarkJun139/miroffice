@@ -20,7 +20,6 @@ public class LoginUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("유저네임"+username);
 		Users user = userDao.findById(Integer.parseInt(username));
 		if (user == null) {
 			throw new UsernameNotFoundException(username + " 사용자 없음");

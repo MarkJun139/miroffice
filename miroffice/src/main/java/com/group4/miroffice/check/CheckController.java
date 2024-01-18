@@ -50,8 +50,16 @@ public class CheckController {
 
 		CheckDate checkdate = service2.checkdate(dayCheck);
 
+		int y = checkdate.getCheckWorkTime();
+
+		int H = (y / 60) / 60;
+
+		int M = ((y / 60) % 60) * 60;
+
+		LocalTime checkTime = LocalTime.of(H, M, 00);
+
 		List<CheckDate> weekCheck = new ArrayList<>();
-		
+
 		List<LocalTime> weekWorkTime = new ArrayList<>();
 
 		for (int i = 1; i < 5; i++) {
@@ -64,34 +72,33 @@ public class CheckController {
 			day.setWeek(i);
 
 			CheckDate day2 = service2.weekCheck(day);
-			
+
 			int u = day2.getCheckWorkTime();
-			
-			int Hour = (u/60)/60;
-			
-			int Minute = ((u/60)%60) * 60;
-			
+
+			int Hour = (u / 60) / 60;
+
+			int Minute = ((u / 60) % 60) * 60;
+
 			LocalTime time = LocalTime.of(Hour, Minute, 00);
-			
-			
+
 			weekWorkTime.add(time);
 			weekCheck.add(day2);
 
 		}
 
 		List<String> searchEmp = service2.searchEmp(users.getDeptNo());
-		
-		List<Checkout> checkout = service2.checkout(dayCheck);
-		
-		LocalTime start = checkout.get(0).getCheckStartTime();
-		LocalTime end = checkout.get(0).getCheckEndTime();
-		
-		
+
+		Checkout checkout = service2.checkout(dayCheck);
+
+		LocalTime start = checkout.getCheckStartTime();
+		LocalTime end = checkout.getCheckEndTime();
+
 		m.addAttribute("start", start);
 		m.addAttribute("end", end);
 		m.addAttribute("searchEmp", searchEmp);
 		m.addAttribute("user", users);
 		m.addAttribute("checkdate", checkdate);
+		m.addAttribute("checkTime", checkTime);
 		m.addAttribute("first", weekCheck.get(0));
 		m.addAttribute("second", weekCheck.get(1));
 		m.addAttribute("third", weekCheck.get(2));
@@ -117,6 +124,13 @@ public class CheckController {
 		String empNo = user.getUsername();
 
 		Users users = service.Profile(empNo);
+		
+		DayCheck dayCheck = new DayCheck();
+
+		dayCheck.setEmpNo(empNo);
+		dayCheck.setCheckDate(currentDate);
+		
+		Checkout check = service2.checkout(dayCheck);
 
 		Checkout checkout = new Checkout();
 
@@ -124,17 +138,19 @@ public class CheckController {
 		checkout.setDeptNo(users.getDeptNo());
 		checkout.setCheckDate(currentDate);
 		checkout.setCheckStartTime(currentTime);
-
-		if (currentTime.isBefore(time)) {
-
-			service2.Start(checkout);
-
-		} else {
-
-			service2.LateStart(checkout);
-
+		
+		if(check.getCheckDate() == null) {
+			
+			if (currentTime.isBefore(time)) {
+				service2.start(checkout);
+			} else {
+				service2.lateStart(checkout);
+			}
+			
 		}
-
+			
+		
+		
 		return "redirect:/main/checkout";
 	}
 
@@ -144,6 +160,8 @@ public class CheckController {
 		LocalDate currentDate = LocalDate.now();
 
 		LocalTime currentTime = LocalTime.now();
+		
+		LocalTime time = LocalTime.of(18, 00, 00);
 
 		String empNo = user.getUsername();
 
@@ -155,8 +173,12 @@ public class CheckController {
 		checkout.setDeptNo(users.getDeptNo());
 		checkout.setCheckDate(currentDate);
 		checkout.setCheckEndTime(currentTime);
-
-		service2.End(checkout);
+		
+		if (currentTime.isBefore(time)) {
+			service2.earlyEnd(checkout);
+		} else {
+			service2.end(checkout);
+		}
 
 		return "redirect:/main/checkout";
 	}
@@ -178,7 +200,17 @@ public class CheckController {
 
 		CheckDate checkdate = service2.checkdate(dayCheck);
 
+		int y = checkdate.getCheckWorkTime();
+
+		int H = (y / 60) / 60;
+
+		int M = ((y / 60) % 60) * 60;
+
+		LocalTime checkTime = LocalTime.of(H, M, 00);
+
 		List<CheckDate> weekCheck = new ArrayList<>();
+		
+		List<LocalTime> weekWorkTime = new ArrayList<>();
 
 		for (int i = 1; i < 5; i++) {
 
@@ -190,6 +222,16 @@ public class CheckController {
 			day.setWeek(i);
 
 			CheckDate day2 = service2.weekCheck(day);
+			
+			int u = day2.getCheckWorkTime();
+
+			int Hour = (u / 60) / 60;
+
+			int Minute = ((u / 60) % 60) * 60;
+
+			LocalTime time = LocalTime.of(Hour, Minute, 00);
+
+			weekWorkTime.add(time);
 
 			weekCheck.add(day2);
 
@@ -200,12 +242,22 @@ public class CheckController {
 		m.addAttribute("searchEmp", searchEmp);
 		m.addAttribute("user", users);
 		m.addAttribute("checkdate", checkdate);
+		m.addAttribute("checkTime", checkTime);
 		m.addAttribute("first", weekCheck.get(0));
 		m.addAttribute("second", weekCheck.get(1));
 		m.addAttribute("third", weekCheck.get(2));
 		m.addAttribute("four", weekCheck.get(3));
+		m.addAttribute("firstTime", weekWorkTime.get(0));
+		m.addAttribute("secondTime", weekWorkTime.get(1));
+		m.addAttribute("thirdTime", weekWorkTime.get(2));
+		m.addAttribute("fourTime", weekWorkTime.get(3));
 
 		return "check/leaderCheck";
+	}
+	
+	@GetMapping("/main/halfoff")
+	public String halfoff() {
+		return "redirect:/main/checkout";
 	}
 
 }

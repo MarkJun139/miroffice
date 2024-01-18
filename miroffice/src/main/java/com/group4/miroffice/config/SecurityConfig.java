@@ -16,43 +16,38 @@ public class SecurityConfig {
 
 	@Autowired
 	private LoginUserDetailsService boardUserDetailsService;
+	
+//	/* 로그인 실패 핸들러 의존성 주입 */
+//	private FailureHandler failureHandler;
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(AbstractHttpConfigurer::disable)
 
+				.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 
-		.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-		
-		.authorizeHttpRequests(auth -> {
-			try {
-				auth
-						.requestMatchers(new AntPathRequestMatcher("/main/admin/**")).hasRole("ADMIN")
-						.requestMatchers(new AntPathRequestMatcher("/main/teamleader/**")).hasRole("TEAMLEADER")
-						.requestMatchers(new AntPathRequestMatcher("/main/**")).authenticated()
-						
-						.anyRequest().permitAll();
-						
-	
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+				.authorizeHttpRequests(auth -> {
+					try {
+						auth.requestMatchers(new AntPathRequestMatcher("/main/admin/**")).hasRole("ADMIN")
+								.requestMatchers(new AntPathRequestMatcher("/main/teamleader/**")).hasRole("TEAMLEADER")
+								.requestMatchers(new AntPathRequestMatcher("/main/**")).authenticated()
 
-		).formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/main", true)
-		).logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.invalidateHttpSession(true).logoutSuccessUrl("/main"))
- 		.exceptionHandling((exception)-> exception.accessDeniedPage("/accessDenied"));
+								.anyRequest().permitAll();
 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
-		http.rememberMe() // rememberMe(아이디 저장) 기능
-			.key("key")
-			.rememberMeParameter("remember-me")
-			.tokenValiditySeconds(86400)
-			.alwaysRemember(false)
-			.userDetailsService(boardUserDetailsService);
+				).formLogin((formLogin) -> formLogin.loginPage("/login")
+													 .defaultSuccessUrl("/main", true)
+													 .failureHandler(failhandler()))
+				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+						.invalidateHttpSession(true).logoutSuccessUrl("/main"))
+				.exceptionHandling((exception) -> exception.accessDeniedPage("/accessdenied"));
+
+		http.userDetailsService(boardUserDetailsService);
 
 		return http.build();
 
@@ -62,4 +57,10 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
+	
+	@Bean
+	public FailureHandler failhandler() {
+		return new FailureHandler();
+	}
+
 }

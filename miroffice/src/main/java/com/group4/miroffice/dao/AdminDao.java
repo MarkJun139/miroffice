@@ -47,13 +47,17 @@ public interface AdminDao {
 	@Select("select * from employee where emp_no = #{empNo}")
 	Admin empInfo(int empNo);
 	
-	@Update("UPDATE employee SET emp_name = #{empName}, emp_hiredate = #{empHiredate}, "
+	@Update("UPDATE employee SET dept_no = #{deptNo}, emp_name = #{empName}, emp_hiredate = #{empHiredate}, "
 			+ "emp_job = #{empJob}, emp_rank = #{empRank}, emp_phone = #{empPhone}, emp_sal = #{empSal}, emp_address = #{empAddress}, "
 			+ "emp_address2 = #{empAddress2}, emp_email = #{empEmail}, emp_photo = #{empPhoto}, emp_birth = #{empBirth}, emp_role = #{empRole} "
 			+ " WHERE emp_no = #{empNo}")
 	int empUpdate(Admin admin);
 	
+	@Update("UPDATE checkout set dept_no = #{deptNo} where emp_no = #{empNo}")
+	int checkDeptUpdate(Admin admin);
 	
+	@Update("UPDATE schedule set dept_no = #{deptNo} where emp_no = #{empNo}")
+	int scheDeptUpdate(Admin admin);
 	
 	@Update("update department set dept_name = #{deptName} where dept_no = #{deptNo}")
 	int updateDept(Dept dept);

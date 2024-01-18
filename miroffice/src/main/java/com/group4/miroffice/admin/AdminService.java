@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group4.miroffice.dao.AdminDao;
@@ -46,9 +47,16 @@ public class AdminService {
 	public Admin empInfo(int empNo) {
 		return dao.empInfo(empNo);
 	}
-	public int empUpdate(Admin admin) {
-		return dao.empUpdate(admin);
+	
+	public void empUpdate(Admin admin) throws InterruptedException {
+		
+		dao.empUpdate(admin);
+		dao.checkDeptUpdate(admin);
+		dao.scheDeptUpdate(admin);
+		
+		Thread.sleep(3000);
 	}
+	
 	public int deleteDept(int deptNo) {
 		return dao.deleteDept(deptNo);
 	}

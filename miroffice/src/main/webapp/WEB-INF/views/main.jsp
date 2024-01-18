@@ -248,7 +248,7 @@
                   </div>
                </div>
                <div class="p-0 card-body">
-                  <div class="mt-4 table-responsive">
+                  <div class="mt-3 table-responsive">
                      <table id="basic-table" class="table mb-0 table-hover" role="grid">
                         <thead>
                            <tr>
@@ -348,6 +348,7 @@
 	                   	<p class="h4">${nowDate}</p>
 	                   	<p class="col-12" id="nowClock" style="font-size:15px" >
 	                   		<span>현재시간</span>
+	                   		<span id="ampm"></span>
 	                   		<span id="hour"></span>시
 	                   		<span id="minute"></span>분
 	                   		<span id="second"></span>초
@@ -366,13 +367,13 @@
 				        	<c:when test="${startTime.year == 70 }">
 				        		<p class="card-text">출근시간 미등록</p>
 				        		<div class="grid-cols d-grid gap-card">
-				                   <a href="" class="p-2 btn btn-info text-uppercase">출근 등록</a>
+				                   <a href="/main/start" class="p-2 btn btn-info text-uppercase">출근 등록</a>
 				                </div>
 				        	</c:when>
 				        	<c:when test="${empty startTime.year}">
 				        		<p class="card-text">출근시간 미등록</p>
 				        		<div class="grid-cols d-grid gap-card">
-				                   <a href="" class="p-2 btn btn-info text-uppercase">출근 등록</a>
+				                   <a href="/main/start" class="p-2 btn btn-info text-uppercase">출근 등록</a>
 				                </div>
 				        	</c:when>
 				        	<c:when test="${startTime.year != 70 }">
@@ -440,27 +441,37 @@
          <script>
 
          window.onload = function() {
-             let hour = document.getElementById("hour");
-             let minute = document.getElementById("minute");
-             let second = document.getElementById("second");
+        	    let hour = document.getElementById("hour");
+        	    let minute = document.getElementById("minute");
+        	    let second = document.getElementById("second");
+        	    let ampm = document.getElementById("ampm");
 
-             getClock();
-             setInterval(getClock, 1000);
+        	    getClock();
+        	    setInterval(getClock, 1000);
 
-             function getClock() {
-                 const date = new Date();
-                 hour.innerText = addZero(date.getHours());
-                 minute.innerText = addZero(date.getMinutes());
-                 second.innerText = addZero(date.getSeconds());
-             }
+        	    function getClock() {
+        	        const date = new Date();
+        	        let hours = date.getHours();
+        	        let pm = false;
 
-             function addZero(num) {
-            	 if(num < 10){
-            		 return "0" + num;
-            	 }
-                 return num;
-             }
-         }
+        	        if (hours > 12) {
+        	            hours -= 12;
+        	            pm = true;
+        	        }
+
+        	        hour.innerText = addZero(hours);
+        	        minute.innerText = addZero(date.getMinutes());
+        	        second.innerText = addZero(date.getSeconds());
+        	        ampm.innerText = pm ? "오전" : "오후";
+        	    }
+
+        	    function addZero(num) {
+        	        if (num < 10) {
+        	            return "0" + num;
+        	        }
+        	        return num;
+        	    }
+        	}
 
 		
 		</script> 

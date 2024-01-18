@@ -122,6 +122,7 @@ public class ForumController {
 		return "redirect:/main/forum";
 	}
 	
+
 	@PostMapping("/forum/edit/{no}")
 	public String forumEdit(@PathVariable(name="no") int no, Model m) {
 		
@@ -134,11 +135,10 @@ public class ForumController {
 		return "forum/edit";
 		
 		
+	@PostMapping("/forum/comment")
+	public ResponseEntity<CommentDto> forumComment() {
+		return ResponseEntity.ok(dto);
 	}
-//	@PostMapping("/forum/comment")
-//	public ResponseEntity<CommentDto> forumComment() {
-//		return ResponseEntity.ok(dto);
-//	}
 
 	
 }

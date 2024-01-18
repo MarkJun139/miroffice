@@ -119,7 +119,7 @@
 	});
 	$(document).on('click', '#btnList', function(e){
 		e.preventDefault();	
-		location.href="../approval";
+		location.href="../forum";
 	});
 	
 	
