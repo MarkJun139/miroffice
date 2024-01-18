@@ -2,12 +2,12 @@ package com.group4.miroffice.user;
 
 import java.util.Date;
 
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import com.group4.miroffice.dto.Role;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+//import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data

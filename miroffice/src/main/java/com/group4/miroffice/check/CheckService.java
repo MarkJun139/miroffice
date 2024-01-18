@@ -17,16 +17,20 @@ public class CheckService {
 	@Autowired
 	private UserDao userDao;
 	
-	public int Start(Checkout chekout) {
+	public int start(Checkout chekout) {
 		return userDao.start(chekout);
 	}
 	
-	public int LateStart(Checkout checkout) {
+	public int lateStart(Checkout checkout) {
 		return userDao.lateStart(checkout);
 	}
 	
-	public int End(Checkout checkout) {
+	public int end(Checkout checkout) {
 		return userDao.end(checkout);
+	}
+	
+	public int earlyEnd(Checkout checkout) {
+		return userDao.earlyEnd(checkout);
 	}
 	
 	public CheckDate checkdate(DayCheck daycheck) {
@@ -45,7 +49,7 @@ public class CheckService {
 		return userDao.leaderCheck(empName);
 	}
 	
-	public List<Checkout> checkout(DayCheck daycheck) {
+	public Checkout checkout(DayCheck daycheck) {
 		return userDao.checkout(daycheck);
 	}
 	
