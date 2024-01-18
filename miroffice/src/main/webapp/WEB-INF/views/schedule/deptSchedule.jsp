@@ -4,9 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-	crossorigin="anonymous"></script>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -140,44 +137,48 @@
 
 	<!-- App Script -->
 	<script src="/js/hope-ui.js" defer></script>
-		<!-- 일정 추가 modal -->
+	<!-- 일정 추가 modal -->
 	<form id="modalf" name="modalf" onsubmit="return false">
-	<div class="modal fade" id="scheduleInsert" tabindex="-1" role="dialog"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">일정 입력</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label> <input
-							type="text" class="form-control" id="schedule_title"
-							name="schedule_title"> <label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
-							class="form-control" id="schedule_start" name="schedule_start">
-						<label for="taskId" class="col-form-label">종료 날짜</label> <input
-							type="date" class="form-control" id="schedule_end"
-							name="schedule_end"> <label for="taskId"
-							class="col-form-label">일정 종류</label> <select class="form-control"
-							id="schedule_type" name="schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
-						</select> <label for="taskId" class="col-form-label">종일</label> <input
-							type="checkbox" id="schedule_allDay" name="schedule_allDay" checked>
+		<div class="modal fade" id="scheduleInsert" tabindex="-1"
+			role="dialog" aria-labelledby="staticBackdropLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">일정 입력</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="taskId" class="col-form-label">일정 제목</label> <input
+								type="text" class="form-control" id="schedule_title"
+								name="schedule_title"> <label for="taskId"
+								class="col-form-label">시작 날짜</label> <input type="date"
+								class="form-control" id="schedule_start" name="schedule_start">
+							<label for="taskId" class="col-form-label">종료 날짜</label> <input
+								type="date" class="form-control" id="schedule_end"
+								name="schedule_end"> <label for="taskId"
+								class="col-form-label">일정 종류</label> <select
+								class="form-control" id="schedule_type" name="schedule_type">
+								<option value="#FFA500">출장</option>
+								<option value="#3CB371">휴가</option>
+								<option value="#87CEFA">기타</option>
+							</select> <label for="taskId" class="col-form-label">종일</label> <input
+								type="checkbox" id="schedule_allDay" name="schedule_allDay"
+								checked>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</form>
-	
+
 	<!-- 일정 수정, 삭제 modal -->
 	<div class="modal fade" id="updateAndDeleteModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -191,6 +192,9 @@
 						<label for="taskId" class="col-form-label">일정 제목</label> <input
 							type="text" class="form-control" id="update_schedule_title"
 							name="update_schedule_title"> <label for="taskId"
+							class="col-form-label">부서원</label> <input type="text"
+							class="form-control" id="update_schedule_people"
+							name="update_schedule_title" readonly><label for="taskId"
 							class="col-form-label">시작 날짜</label> <input type="date"
 							class="form-control" id="update_schedule_start"
 							name="update_schedule_start"> <label for="taskId"
@@ -199,9 +203,9 @@
 							name="update_schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="update_schedule_type" name="update_schedule_type">
-							<option value="red">출장</option>
-							<option value="green">휴가</option>
-							<option value="blue">기타</option>
+							<option value="#FFA500">출장</option>
+							<option value="#3CB371">휴가</option>
+							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
 							type="checkbox" id="update_schedule_allDay"
 							name="update_schedule_allDay">
@@ -217,7 +221,7 @@
 			</div>
 		</div>
 	</div>
-			<!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
+	<!-- sidebar 버튼 클릭 시 sidebar 활성화 -->
 	<script>
 	var url= window.location.href;
 	$(".nav-item").find('a').each(function() {
@@ -231,7 +235,7 @@
 
 	})
 	
-    </script>		
+    </script>
 </body>
 <script>
 const checkbox = document.getElementById('schedule_allDay');
@@ -283,8 +287,11 @@ const checkbox = document.getElementById('schedule_allDay');
              		$(this).find('.form-control')[2].value = data.endStr;
              		$(this).find('.form-control')[3].value = 'red';
                  })
+                 
                  insert = 0;
+             
                  $("#scheduleInsert").modal("show"); // modal 나타내기
+                 
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
              
                  	insert++;
@@ -335,12 +342,26 @@ const checkbox = document.getElementById('schedule_allDay');
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
+            	 var sche_no = info.event._def.extendedProps.sche_no;
+             	up = 0;
+             	del = 0;
+              	 $(function selectName(){
+              		 $.ajax({
+              			 cache:"false",
+              			 url: "/main/schedule/selectname",
+              			 method: "post",
+              			 dataType: "text",
+              			data : {"scheNo" : sche_no}
+                     	})
+              	})
+              	console.log(info.event._def.extendedProps)
             	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) {
              		// 기본값 설정           		
              		$(this).find('.form-control')[0].value = info.event._def.title;
-              		$(this).find('.form-control')[1].value = info.event.startStr;
-              		$(this).find('.form-control')[2].value = info.event.endStr;
-              		$(this).find('.form-control')[3].value = info.event.backgroundColor;
+             		$(this).find('.form-control')[1].value = info.event._def.extendedProps.emp_name;
+              		$(this).find('.form-control')[2].value = info.event.startStr;
+              		$(this).find('.form-control')[3].value = info.event.endStr;
+              		$(this).find('.form-control')[4].value = info.event.backgroundColor;
                		if(info.event.allDay == true){
               			$('#update_schedule_allDay').prop("checked", true)
                   }
@@ -349,16 +370,18 @@ const checkbox = document.getElementById('schedule_allDay');
 				
                  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
                 	 // console.log(info);
-                     if(confirm("일정을 변경하시겠습니까?")){
-                     }
+                	 up++;
+                	 if(up == 1){
+                     confirm("일정을 변경하시겠습니까?")
+                     
                      
                      var title = $("#update_schedule_title").val();
                      var start_date = $("#update_schedule_start").val();
                      var end_date = $("#update_schedule_end").val();
                      var all_day = info.event.allDay;
-                     let sche_no = info.event._def.extendedProps.sche_no;
+                     var sche_no = info.event._def.extendedProps.sche_no;
                      var color = $("#update_schedule_type").val();
-                     
+                     var emp_no = info.event._def.extendedProps.emp_no;
                      $(function updateData() {
                          $.ajax({
                         	 cache:"false",
@@ -370,6 +393,7 @@ const checkbox = document.getElementById('schedule_allDay');
                             	 	"end": end_date,
                             	 	"allDay" : all_day,
                             	 	"scheNo" : sche_no,
+                            	 	"empNo" : emp_no,
                             	 	"color" : color},
                          })
                              .done(function (result) {
@@ -383,17 +407,16 @@ const checkbox = document.getElementById('schedule_allDay');
                               location.reload();
                          })
                     })
+                	 }
                  });
                  
                   $("#deleteSchedule").on("click",function(){  // modal의 삭제 버튼 클릭 시
                 	 // console.log(info);
-                     if(confirm("일정을 삭제하시겠습니까?")){
-                     }
-                     var events = new Array();
-                 	 var obj = new Object();
-                 	 obj.title = info.event._def.title;
-                  	 obj.start = info.event._instance.range.start;
-                  	 events.push(obj);
+                	  del++;
+                     if(del == 1){
+                	  confirm("일정을 삭제하시겠습니까?")
+                     var sche_no = info.event._def.extendedProps.sche_no;
+                     var emp_no = info.event._def.extendedProps.emp_no;
 
                   	 $(function deleteData(){
                   		 $.ajax({
@@ -401,7 +424,8 @@ const checkbox = document.getElementById('schedule_allDay');
                   			 url: "/main/schedule/delete",
                   			 method: "delete",
                   			 dataType: "text",
-                  			 data : {"title" : obj.title, "start" : obj.start}
+                  			data : {"scheNo" : sche_no,
+                  					"empNo" : emp_no}
                          	})
                              .done(function (result) {
                              alert("일정을 삭제하였습니다.");
@@ -414,6 +438,7 @@ const checkbox = document.getElementById('schedule_allDay');
                               location.reload();
                          	})
                   	})
+                     }
                  })
              },
 			  events : ${deptschedule}, // DB에 저장되어 있는 일정 불러오기

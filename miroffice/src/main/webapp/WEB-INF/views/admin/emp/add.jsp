@@ -154,7 +154,13 @@
 						</div>
 					  </div>
 					  </div>
-					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="addEmployee">사원 등록</button>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="addEmployee">
+ 						<span class="sr-only">등록하기</span>
+					  </button>
+					  <button type="submit" class="col-md-12 btn btn-primary pull-right" id="addEmployeeLoading" disabled>
+					  	<span class="spinner-border spinner-border-sm loadingBtn" role="status" aria-hidden="true"></span>
+ 						<span class="sr-only">등록중...</span>
+					  </button>
 					  </form>
 					</div>
                </div>
@@ -206,8 +212,8 @@
  	    reader.readAsDataURL(file);
 	}
  	$(function(){
-
- 		$("#addEmployee").click(function(e){
+		$("#addEmployeeLoading").hide();
+ 		$("#addEmployee").click(function(e){	
  			const name = $("#name").val();
  			const email = $("#email").val();
  			const birth = $("#birth").val();
@@ -222,18 +228,16 @@
  			
  			const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
  			
- 			
  			if(!name || !email || !birth || !phone || !dept || !address || !address2 || !sal || !hiredate || !job || !rank){
  				console.log(dept + name + email + birth + phone + address + address2 + sal + hiredate + job + rank)
  				alert("누락된 항목이 있습니다.");
  				e.preventDefault();
  			} else if(reg.test(name) || reg.test(job) || reg.test(rank) || reg.test(phone) || reg.test(dept)){
- 				
 				alert("특수문자를 제거해주세요");
 				e.preventDefault();
- 			
  			} else {
- 				alert("사원등록 성공");	
+ 				$("#addEmployeeLoading").show();
+ 				$("#addEmployee").hide();
  			}
  		})
  		$("#findAddress").click(function(){

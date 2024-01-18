@@ -1,5 +1,6 @@
 package com.group4.miroffice.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,18 @@ public class MainController {
 		List<ForumDto> forumList = mainService.getForumList();
 		//
 		
+		// 출근 시간 출력
+		Date startTime = mainService.getStartDate(empno);
+		// 퇴근 시간 출력
+		Date endTime = mainService.getEndDate(empno);
 		
 		
 		m.addAttribute("projectList", projectList);
 		m.addAttribute("scheduleList",scheduleList);
 		m.addAttribute("forumList", forumList);
+		m.addAttribute("startTime",startTime);
+		m.addAttribute("endTime",endTime);
+		System.out.println(startTime);
 		
 		System.out.println("main 요청입니다.");
 		return "main";

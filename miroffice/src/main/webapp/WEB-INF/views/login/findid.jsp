@@ -109,7 +109,7 @@
 												type="text" class="form-control" id="name" name="empName"
 												aria-describedby="email" placeholder=" "> <label
 												for="birth" class="form-label">전화번호</label> <input
-												type="text" class="form-control" id="phone" name="empPhone"
+												type="number" class="form-control" id="phone" name="empPhone"
 												aria-describedby="email" placeholder="'-'제외">
 										</div>
 									</div>
