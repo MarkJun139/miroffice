@@ -104,6 +104,17 @@ public class ForumController {
 		return "redirect:/main/forum";
 	}
 
+
+
+	@PostMapping("/forum/delete/{no}")
+	public String forumDelete(@PathVariable(name="no") int no, Model m) {
+		
+		service.forumDelete(no);
+		
+		
+		return "redirect:/main/forum";
+		
+	}
 	
 	
 	@PostMapping("/forum/edit")
@@ -112,7 +123,7 @@ public class ForumController {
 
 		user.getDeptNo();
 		dto.setDeptNo(user.getDeptNo());
-		System.out.println(dto);
+		System.out.println("정체가뭐니"+dto);
 		
 		System.out.println("시발"+ dto.getForumNotice());
 

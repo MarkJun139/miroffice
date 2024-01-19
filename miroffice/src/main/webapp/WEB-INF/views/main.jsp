@@ -193,18 +193,17 @@
                         	<c:if test="${empty forumList}">
                         		<tr>
                         			<td colspan="6" class="text-center">
-                        				<h3>등록된 공지사항이 없습니다</h3>
+                        				<h3>등록된 게시물이 없습니다</h3>
                         			</td>
                         		</tr>
                         	</c:if>
                         	<c:forEach items="${forumList}" var="forum" >
 	                           <tr>
-	                              <td class="col-md-6 align-items-center ">
-	                              	 ${forum.forumTitle}&nbsp;
+	                              <td class="col-md-6 align-items-center "><a href="/main/forum/${forum.forumNo }">
+	                              	 ${forum.forumTitle}&nbsp;</a>
 	                              	 <c:if test="${forum.forumNotice == true}">
 	                              	 	<span class="badge badge-info" style="background-color:var(--bs-info)" >중요</span>
 	                              	 </c:if>
-	                              	 
 	                              </td>
 	                              <td class="col-md-2 align-items-center ">
 	                              	 <fmt:formatDate var="forumDate" pattern="yyyy-MM-dd" value="${forum.forumDate}"/>

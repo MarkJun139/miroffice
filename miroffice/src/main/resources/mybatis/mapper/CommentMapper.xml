@@ -9,6 +9,10 @@
 		values (#{forumNo}, #{empNo}, #{commentText}, now())
 	</insert>
 	
+	<update id="commentEdit" parameterType="com.group4.miroffice.forum.CommentDto">
+		update comment set comment_text = #{commentText} where comment_no = #{commentNo}
+	</update>
+	
 	<delete id="commentDelete" parameterType="int">
 		delete from comment where comment_no = #{commentno}
 	</delete>
