@@ -14,7 +14,13 @@
 	}
 forumtext
 .ck-editor__editable p {margin: 0}
-.ck-content { font-size: 13px; color: black; line-height: 0.3em;}
+.ck-content { 
+	font-size: 13px; 
+	color: black;
+	line-height: normal;
+	word-break: normal;
+	word-wrap: break-word;
+}
 .ck-toolbar.ck-toolbar_grouping {
 	display: none;
 	width: 850px;

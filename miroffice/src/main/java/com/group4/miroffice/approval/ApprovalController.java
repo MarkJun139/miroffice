@@ -46,6 +46,7 @@ public class ApprovalController {
 	public String approval(Model m, @AuthenticationPrincipal SecurityUser userLog, @RequestParam(value="status", defaultValue="1") String status) {
 		int st = Integer.parseInt(status);
 		System.out.println(st);
+		Users dto = userLog.getUsers();
 		if(st == 1) {
 			List<ApprovalDto> al = service.approvalList(99);
 			
@@ -55,7 +56,6 @@ public class ApprovalController {
 				String uName = user.getEmpName();
 				res.setEmpName(uName);
 			}
-			Users dto = userLog.getUsers();
 			List<Users> ul = us.findMyDeptEmp(dto.getDeptNo());
 			
 			Iterator<Users> it = ul.iterator();
@@ -73,9 +73,8 @@ public class ApprovalController {
 			return "approval/list";
 		}
 		if(st == 2) {
-			Users dto = userLog.getUsers();
 			
-			List<ApprovalDto> al = service.approval(dto.getEmpNo());
+			List<ApprovalDto> al = service.approvalList2(dto.getEmpNo());
 			
 			for(ApprovalDto res: al){
 				System.out.println(res.getEmpNo());
@@ -86,11 +85,45 @@ public class ApprovalController {
 				
 			System.out.println("lis"+al);
 			
+			String title = "내 문서";
+			m.addAttribute("title", title);
 			m.addAttribute("list", al);
+			return "approval/mylist";
 			
 		}
-		
-		return "approval/mylist";
+		if(st == 3 || st == 4 || st == 5) {
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("empno", dto.getEmpNo());
+			String title = "내 문서";
+			if(st == 3) {
+				map.put("appapprovefinal", null);
+				title = "결재대기 문서";
+			}
+			if(st == 4) {
+				map.put("appapprovefinal", true);
+				title = "결재완료 문서";
+			}
+			if(st == 5) {
+				map.put("appapprovefinal", false);
+				title = "반려된 문서";
+			}
+			
+			List<ApprovalDto> al = service.approvalList3(map);
+			for(ApprovalDto res: al){
+				System.out.println(res.getEmpNo());
+				Users user = us.findById(res.getEmpNo());
+				String uName = user.getEmpName();
+				res.setEmpName(uName);
+			}
+			System.out.println("lis3" + al);
+			m.addAttribute("list", al);
+			m.addAttribute("title", title);
+			return "approval/mylist";
+			
+		}
+		return "";
+
 
 	}
 //	
@@ -186,6 +219,18 @@ public class ApprovalController {
 	@PostMapping("/approval/one/{no}")
 	public ResponseEntity<ApprovalDto> ApprovalListOne(@PathVariable(name="no") int no) {
 		ApprovalDto al = service.approvalListOne(no);
+		
+		Users u1 = us.findById(al.getAppAdmin1());
+		al.setAppAppr1(u1.getEmpName() + " " + u1.getEmpRank());
+		if(al.getAppAdmin2() != null) {
+			Users u2 = us.findById(al.getAppAdmin2());
+			al.setAppAppr2(u2.getEmpName() + " " + u2.getEmpRank());
+		}
+		if(al.getAppAdmin3() != null) {
+			Users u3 = us.findById(al.getAppAdmin3());
+			al.setAppAppr3(u3.getEmpName() + " " + u3.getEmpRank());
+		}
+		
 		
 		System.out.println("에이피"+al);
 		

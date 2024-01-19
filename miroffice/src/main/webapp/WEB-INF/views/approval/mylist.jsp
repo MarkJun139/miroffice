@@ -1,31 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix ="sec" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="/ckeditor/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-<!-- ckeditor -->
 <link rel="stylesheet" href="/ckeditor/content-styles.css" type="text/css">
 
 
 <html lang="ko">
   <head>
-  	<style>
-	.ck-editor__editable {
-	    min-height: 300px; }
-	.ck-editor__editable p {margin: 0}
-	.ck-content { font-size: 13px; }
-	</style>
-	
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스</title>
 
       <!-- Favicon -->
-      <link rel="shortcut icon" href="/images/favicon.ico" />
+      <link rel="shortcut icon" href="/images/icons/logo.png" />
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="/css/core/libs.min.css" />
+      
+      <link rel="stylesheet" href="/css/mylist.css" />
+      
+      <link rel="stylesheet" type="text/css" href="/css/core/usercs.css"/>
       
       <!-- Aos Animation Css -->
       <link rel="stylesheet" href="/vendor/aos/dist/aos.css" />
@@ -49,16 +45,12 @@
   </head>
 
 <body class="  ">
-    <!-- loader Start -->
-    <div id="loading">
-      <div class="loader simple-loader">
-          <div class="loader-body"></div>
-      </div>    </div>
-    <!-- loader END -->
+
+
+
     <%@include file="../sidebar.jsp" %>
    
  
-      
         <main class="main-content">
         
       <div class="position-relative iq-banner">
@@ -69,37 +61,85 @@
       </div>
 
 <div class="conatiner-fluid content-inner mt-n5 py-0">
-   <!--  메인 여기부터!!! -->     
-<div class="card-body" style="border: 1px; float:left; margin-right:20px;">
-            <p>나의</p>
+
+            <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="100" style="overflow-x: auto">
+                           <div class="flex-wrap card-header d-flex justify-content-between">
+                  <div class="header-title col-12">
+                  <div class="col-12 row text-center align-items-center">
+                              	 	<div class="col-3 text-start" id="coldoc">
+                     		 <h1 class="card-title">${title	 }</h1>
+                     	</div>
+                     	<div class="col-3 text-start">
+                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	</div>
+                     	</div>
+                     	</div>
+                     	</div>
+                     	
+                     	
+                     	
+<div class="p-2 card-body" style="border: 1px; margin-right:20px;">
+            <div style="float: left;">
             <div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
                   <thead>
                      <tr>
                         <th>결재양식</th>
-                        <th>결재양식</th>
-                        <th>결재양식</th>
+                        <th>날짜</th>
                      </tr>
                   </thead>
                   <tbody>
                   <c:forEach items="${list }" var="f">
                      <tr>
-                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a></td>
-                        <td>${f.empName }</td>
+                        <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a>
+                        <br>작성자 ${f.empName }</td>
                         <td><fmt:formatDate value="${f.appDate }" dateStyle="short"/></td>
                      </tr> 
                      </c:forEach>
+                     </tbody>
                </table>
             </div>
-         </div>
-         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+         	</div>
+         <div class="col-md-8" style = "padding: 5px; border: 1px; float:left;">
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
-	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
-	            <input type="text" id="approve1" style="font-size: 10pt" readonly>
-	            <input type="text" id="approve2" style="font-size: 10pt" readonly>
-	            <input type="text" id="approve3" style="font-size: 10pt" readonly>
+	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt; display: inline; float: left;">
+	            <table id="appro" style="padding-left: 50px; float: left; position: relative;">
+	            	<tr>
+		            	<th colspan="3">
+		            	<div>결재 현황</div>
+		            	</th>
+		            	<th>
+		            	최종승인
+		            	</th>
+	            	</tr>
+	            	<tr>
+			            <td><div id="approve1">
+			            
+			            </div></td>
+			            <td><div id="approve2">
+			            
+			            </div></td>
+			            <td><div id="approve3">
+			            
+			            </div></td>
+			            <td rowspan="2"><div id="approvefinal">	
+			            </div></td>
+						</tr>
+						<tr>
+			            <td><div id="approve11">
+			            
+			            </div></td>
+			            <td><div id="approve22">
+			            
+			            </div></td>
+			            <td><div id="approve33">
+			            
+			            </div></td>
+			            </tr>
+	            	</tbody>
+		            </table>
 	            <div id="toolbar-container"></div>
 		        <div>	
 				<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
@@ -107,13 +147,16 @@
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
 		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<button type="button" id="btnList">취소</button>
+	   			
 	   			
 
 
 
 	    	</form>
     	</div>
+    	</div>
+   		</div>
+	</div>
     	<script>
 		function getApproval(no) {
 			new Promise( (succ, fail )=> {
@@ -130,6 +173,62 @@
 					$("#btnSave").attr("disabled", true)
 					$("#btnEdit").attr("disabled", false)
 					newEditor.setData(result.appText)
+					
+					if(result.appApprove1 == null){
+						var appr1 = "대기";
+					}
+					else if(result.appApprove1 == false){
+						var appr1 = "반려";
+					}
+					else if(result.appApprove1 == true){
+						var appr1 = "승인";
+					}
+					if(result.appApprove2 == null){
+						var appr2 = "대기";
+					}
+					else if(result.appApprove2 == false){
+						var appr2 = "반려";
+					}
+					else if(result.appApprove2 == true){
+						var appr2 = "승인";
+					}
+					if(result.appApprove3 == null){
+						var appr3 = "대기";
+					}
+					else if(result.appApprove3 == false){
+						var appr3 = "반려";
+					}
+					else if(result.appApprove3 == true){
+						var appr3 = "승인";
+					}
+					document.getElementById("approve1").innerHTML = result.appAppr1
+					document.getElementById("approve11").innerHTML = appr1
+					if(result.appAdmin2 != null){
+						document.getElementById("approve2").innerHTML = result.appAppr2
+						document.getElementById("approve22").innerHTML = appr2
+					}
+					else{
+						document.getElementById("approve2").innerHTML = "없음"
+						document.getElementById("approve22").innerHTML = ""
+					}
+					if(result.appAdmin3 != null){
+						document.getElementById("approve3").innerHTML = result.appAppr3
+						document.getElementById("approve33").innerHTML = appr3
+					}
+					else{
+						document.getElementById("approve3").innerHTML = "없음"
+						document.getElementById("approve33").innerHTML = ""
+					}
+					if(result.appApprovefinal == null){
+						document.getElementById("approvefinal").innerHTML = "대기"
+					}
+					else if(result.appApprovefinal == true){
+						document.getElementById("approvefinal").innerHTML = "승인"
+					}
+					else if(result.appApprovefinal == false){
+						document.getElementById("approvefinal").innerHTML = "반려"
+					}
+				
 					succ(result);
 				})
 				.fail(function(jqXHR){
@@ -158,9 +257,10 @@
 		}
 
 
+
 </script>
 	<!-- 메인 여기까지 -->
-</div>
+
 
      
 <!-- Footer Section Start -->

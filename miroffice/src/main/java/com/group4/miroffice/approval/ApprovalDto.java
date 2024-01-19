@@ -25,6 +25,9 @@ public class ApprovalDto {
 	private Boolean appApprovefinal;
 	
 	private String empName;
+	private String appAppr1;
+	private String appAppr2;
+	private String appAppr3;
 
 
 
