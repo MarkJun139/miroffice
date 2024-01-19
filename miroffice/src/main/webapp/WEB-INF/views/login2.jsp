@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,8 +32,8 @@
 
 <!-- RTL Css -->
 <link rel="stylesheet" href="/css/rtl.min.css" />
-
-
+<!-- 커스텀 css -->
+<link href="/css/loginerror.css" rel="stylesheet" type="text/css">
 </head>
 <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section"
 	data-bs-offset="0" tabindex="0">
@@ -59,21 +59,17 @@
 										<div class="logo-main">
 											<div class="logo-normal">
 												<img src="./images/icons/logo.png" style="width: 50px;">
-                                          <rect x="-0.757324"
-														y="19.2427" width="28" height="4" rx="2"
-														transform="rotate(-45 -0.757324 19.2427)"
-														fill="currentColor" />
-                                          <rect x="7.72803" y="27.728"
-														width="28" height="4" rx="2"
-														transform="rotate(-45 7.72803 27.728)" fill="currentColor" />
-                                          <rect x="10.5366" y="16.3945"
-														width="16" height="4" rx="2"
-														transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
-                                          <rect x="10.5562"
-														y="-0.556152" width="28" height="4" rx="2"
-														transform="rotate(45 10.5562 -0.556152)"
-														fill="currentColor" />
-                                      </svg>
+												<rect x="-0.757324" y="19.2427" width="28" height="4" rx="2"
+													transform="rotate(-45 -0.757324 19.2427)"
+													fill="currentColor" />
+												<rect x="7.72803" y="27.728" width="28" height="4" rx="2"
+													transform="rotate(-45 7.72803 27.728)" fill="currentColor" />
+												<rect x="10.5366" y="16.3945" width="16" height="4" rx="2"
+													transform="rotate(45 10.5366 16.3945)" fill="currentColor" />
+												<rect x="10.5562" y="-0.556152" width="28" height="4" rx="2"
+													transform="rotate(45 10.5562 -0.556152)"
+													fill="currentColor" />
+												</svg>
 											</div>
 											<div class="logo-mini">
 												<svg class="text-primary icon-30" viewBox="0 0 30 30"
@@ -109,17 +105,16 @@
 												<div class="form-group">
 													<label for="empno" class="form-label">사원번호</label> <input
 														type="text" class="form-control" name="username"
-														id="empno" aria-describedby="number" placeholder=" ">
+														id="empno" aria-describedby="number" placeholder=" "
+														required>
 												</div>
 											</div>
-								 			<c:if test="${error == true}">
-											<div>${exception }</div>
-											</c:if>
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label for="emppw" class="form-label">비밀번호</label> <input
 														type="password" class="form-control" name="password"
-														id="emppw" aria-describedby="password" placeholder=" ">
+														id="emppw" aria-describedby="password" placeholder=" "
+														required>
 												</div>
 											</div>
 											<div class="col-lg-12 d-flex justify-content-between">
@@ -142,6 +137,9 @@
 										</div>
 									</form>
 									<form>
+										<c:if test="${error == true}">
+											<div id="error">${exception}</div>
+										</c:if>
 										<p class="mt-3 text-center">
 											사원번호를 잊으셨나요? <a href="/findid" class="text-underline">사원번호
 												찾기</a>
@@ -197,7 +195,4 @@
 	<script src="/js/hope-ui.js" defer></script>
 
 </body>
-<script>
-	var regex = /^[0-9]*$/;
-</script>
 </html>
