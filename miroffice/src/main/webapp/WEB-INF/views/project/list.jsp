@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <html lang="ko">
+<sec:authentication property= "principal.users.empName" var="empName"/>
   <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -87,7 +88,7 @@
                      		 <h1 class="card-title">프로젝트 관리</h1>
                      	</div>
                      	<div class="col-3 text-start">
-                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	
                      	</div>
                      	<c:if test="${role == '[ROLE_TEAMLEADER]'}" >
 	                     	<div class="col-6 text-end">
@@ -97,7 +98,10 @@
                      </div>                          
                   </div>
                </div>
-               <div class="p-0 card-body">
+               <div class="card-body">
+               	  <div class="col-12 d-flex">
+                  		<input type="text" class="form-control searchInput" id="searchInput" placeholder="프로젝트 제목을 입력하세요">
+                  </div>
                   <div class="mt-4 table-responsive">
                      <table id="basic-table" class="table mb-0 table-hover" role="grid">
                         <thead>
@@ -126,16 +130,14 @@
                         	<c:forEach items="${projectList}" var="project" >
 	                           <tr>
 	                              <td class="col-md-4" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
-	                              <a href="project/view/${project.projectno}">
-	                                 <div class="d-flex align-items-center">
-	                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
-	                                    <h6>${project.projecttitle}&nbsp; 
-	                                    	
-	                                    </h6>
-	                                 </div>
-	                              </a>
+		                              
+		                              <div class="d-flex align-items-center">
+		                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
+		                                    <h6 class="projectTitleSearch">${project.projecttitle}</h6>
+		                              </div>
+		                              
 	                              </td>
-	                              <td class="align-items-center text-center">
+	                              <td class="align-items-center text-center" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 	                              	<c:choose>
                                     	<c:when test="${project.projectpercent == 100}"> 
                                     		<span class="badge badge-secondary" style="background-color:var(--bs-success)" >완료</span>
@@ -148,13 +150,13 @@
                                     	</c:when>
                                    	</c:choose>
 	                              </td>
-	                              <td class="col-md-1">
+	                              <td class="col-md-1" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 	                                 ${project.projectstart}
 	                              </td>
-	                              <td class="col-md-1">
+	                              <td class="col-md-1" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 									 ${project.projectend}
 								  </td>
-								  <td>
+								  <td style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 								  	<c:choose>
 								  		<c:when test="${project.projectdiffdate >= 1}">
 								  			${project.projectdiffdate} 일
@@ -167,10 +169,10 @@
 								  		</c:otherwise>
 								  	</c:choose>
 								  </td>
-								  <td class="col-md-1 align-items-center">
+								  <td class="col-md-1 align-items-center" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 	                           	     ${project.empname }
 	                           	  </td>
-	                              <td class="col-md-3">
+	                              <td class="col-md-3" style="cursor:pointer" onClick="location.href='project/view/${project.projectno}'">
 	                                 <h6>${project.projectpercent} %</h6>
 	                                 <div class="shadow-none progress bg-soft-primary w-100" style="height: 4px">
 	                                 	<c:if test="${project.projectpercent < 100}">
@@ -181,11 +183,17 @@
 	                                 	</c:if>
 	                                 </div>
 	                              </td>
+	                              
 	                              <c:choose>
 	                              	<c:when test="${role == '[ROLE_TEAMLEADER]'}">
-	                              		<td class="col-md-1">
-			                              	<button type="button" class="btn btn-primary project_popup" data-bs-toggle="modal" data-bs-target="#exampleModal" project="${project.projectno}" percent="${project.projectpercent}" title="${project.projecttitle}">진행률 수정</button>
-			                            </td>
+	                              		<c:if test="${empName == project.empname}">
+		                              		<td class="col-md-1">
+				                              	<button type="button" class="btn btn-primary project_popup" data-bs-toggle="modal" data-bs-target="#exampleModal" project="${project.projectno}" percent="${project.projectpercent}" title="${project.projecttitle}">진행률 수정</button>
+				                            </td>
+			                            </c:if>
+			                            <c:if test="${empName != project.empname}">
+			                            	<td></td>
+			                            </c:if>
 	                              	</c:when>
 	                              	<c:when test="${project.projectpercent == 100}">
 	                              		
@@ -236,6 +244,19 @@
 				$("#percentRange").text(value);
 				
 			})
+			$(".searchInput").keyup(function(){
+			    console.log("프로젝트 검색확인");
+			    
+			    var searchName = $(this).val().trim().toLowerCase();
+			    
+			    $("#basic-table > tbody > tr").hide();
+
+			    $("#basic-table > tbody > tr").filter(function() {
+			    	
+			        return $(this).find('.projectTitleSearch').text().toLowerCase().includes(searchName);
+			        
+			    }).show();
+			});
 		})
 	  </script>
 
