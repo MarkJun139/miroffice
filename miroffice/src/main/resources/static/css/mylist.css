@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+
+#appro > thead > tr > th{
+	border: 1px dashed black;
+}
+#appro > tbody > tr > td{
+	border: 1px dashed black;
+}

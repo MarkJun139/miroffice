@@ -322,7 +322,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="../dashboard/app/user-list.html">
+                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=3">
                                     <i class="icon">
                                         <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                                             <g>
@@ -332,6 +332,32 @@
                                     </i>
                                     <i class="sidenav-mini-icon"> U </i>
                                     <span class="item-name">결제대기 문서</span>
+                                </a>
+                            </li>
+                 				<li class="nav-item">
+                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=4">
+                                    <i class="icon">
+                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                            <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon"> U </i>
+                                    <span class="item-name">결재완료 문서</span>
+                                </a>
+                            </li>
+                           	<li class="nav-item">
+                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=5">
+                                    <i class="icon">
+                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                            <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon"> U </i>
+                                    <span class="item-name">반려된 문서</span>
                                 </a>
                             </li>
                         </ul>

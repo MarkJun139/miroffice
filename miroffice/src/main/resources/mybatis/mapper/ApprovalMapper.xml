@@ -39,13 +39,24 @@
 		where app_no = #{appNo}
 	</update>
 	
-	<select id="approval" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
-		select * from approval where emp_no = #{empno} and app_admin1 is not null
-	</select>
-	
 	<select id="approvalList" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
 		select * from approval where dept_no = #{deptno}
 	</select>
+	
+	<select id="approvalList2" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where emp_no = #{empno} and app_admin1 is not null
+	</select>
+	
+	<select id="approvalList3" parameterType="Map" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where emp_no = #{empno} and app_approvefinal
+		<choose>
+			<when test="appapprovefinal == null">is null</when>
+			<when test="appapprovefinal == true">= true</when>
+			<when test="appapprovefinal == false">= false</when>
+		</choose>
+	</select>
+	
+	
 	
 	<select id="approvalListOne" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
 		select * from approval where app_no = #{appno}
