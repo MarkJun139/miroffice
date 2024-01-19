@@ -11,9 +11,9 @@
 <body>
 	<h1>근태 확인</h1>
 	
-	<h2>부서원 근태 관리</h2>
-	
 	<sec:authorize access="hasRole('ROLE_TEAMLEADER')">
+		<h2>부서원 검색</h2>
+		
 		<form action="/main/checkout/teamleader">
 			<select name="empName" id="empName">
 				<c:forEach var="empName" items="${searchEmp}">
@@ -21,6 +21,21 @@
 				</c:forEach>
 			</select>
 			<input type="submit" value="검색">
+		</form>
+		
+		<h2>부서원 근태 관리</h2>
+		
+		<form>
+		<select name="empName" id="empName">
+				<c:forEach var="empName" items="${searchEmp}">
+					<option value="${empName}">${empName}</option>
+				</c:forEach>
+		</select>
+		<input name="checkDate" type="date">
+		<button type="submit" onclick="javascript: form.action = '/main/halfoff'">반차</button>
+		<button type="submit" onclick="javascript: form.action = '/main/dayoff'">연차</button>
+		<button type="submit" onclick="javascript: form.action = '/main/vacation'">휴가</button>
+		<button type="submit" onclick="javascript: form.action = '/main/absenteeism'">결근</button>
 		</form>
 	</sec:authorize>
 	
@@ -32,7 +47,6 @@
 		<tr>
 			<td>출근시간</td>
 			<td>퇴근시간</td>
-			<td>근무시간</td>
 		</tr>
 		<tr>
 			<td>${start}</td>

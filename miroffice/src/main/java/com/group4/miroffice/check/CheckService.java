@@ -53,5 +53,28 @@ public class CheckService {
 		return userDao.checkout(daycheck);
 	}
 	
+	public int startUpdate(Checkout checkout) {
+		return userDao.startUpdate(checkout);
+	}
+	
+	public int halfoff(DayCheck dayCheck) {
+		return userDao.halfoff(dayCheck);
+	}
+	
+	public int halfoffUpdate(DayCheck dayCheck) {
+		return userDao.halfoffUpdate(dayCheck);
+	}
+	
+	public int dayoff(DayCheck dayCheck) {
+		return userDao.dayoff(dayCheck);
+	}
+	
+	public int absenteeism(DayCheck dayCheck) {
+		return userDao.absenteeism(dayCheck);
+	}
+	
+	public int vacation(DayCheck dayCheck) {
+		return userDao.vacation(dayCheck);
+	}
 	
 }
