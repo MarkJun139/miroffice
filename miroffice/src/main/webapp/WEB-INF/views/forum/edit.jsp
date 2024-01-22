@@ -103,8 +103,9 @@
     </form>
     
     <script>
-	var checklist
-  
+
+    var checklist; 
+
 	
 	$(document).on('click', '#btnSave', function(e){
 		e.preventDefault();
@@ -143,6 +144,24 @@
       })
       
 	
+    $(document).ready(function(){
+    	  var x = $('#forumNotice').val()
+    	  checklist = x
+    	  if(x == 'true'){
+    	  	$('#ckbox').prop('checked', true);
+    	  }
+    	  
+  		  $("input[type='checkbox']").on("click", function(){
+  			  if($('#ckbox').is(":checked")==true){
+  				checklist = true;  
+  			  }
+  			  else if($('#ckbox').is(":checked")==false){
+  				  checklist = false;
+  			  }
+  		  })
+      })
+    
+      
 	</script>
 
 
