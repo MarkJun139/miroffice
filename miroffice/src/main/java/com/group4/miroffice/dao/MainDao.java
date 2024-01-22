@@ -12,7 +12,7 @@ import com.group4.miroffice.forum.ForumDto;
 @Mapper
 public interface MainDao {
 
-	@Select("select sche_no, emp_no, sche_start_date, sche_end_date, sche_title, sche_allday, color from schedule where emp_no = #{empNo} order by sche_start_date asc limit 10 ")
+	@Select("select sche_no, emp_no, sche_start_date, sche_end_date, sche_title, sche_allday from schedule where emp_no = #{empNo} limit 10 ")
 	List<Schedule> getScheduleList(int empNo);
 	
 	@Select("select dept_no from employee where emp_no = #{empNo}")
