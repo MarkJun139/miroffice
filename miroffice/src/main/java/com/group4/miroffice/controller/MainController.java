@@ -1,5 +1,6 @@
 package com.group4.miroffice.controller;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.util.HtmlUtils;
 
+import com.group4.miroffice.dto.Checkout;
 import com.group4.miroffice.dto.Project;
 import com.group4.miroffice.dto.Schedule;
 import com.group4.miroffice.forum.ForumDto;
@@ -49,18 +51,43 @@ public class MainController {
 		List<ForumDto> forumList = mainService.getForumList(deptNo);
 		//
 		
-		// 출근 시간 출력
-		Date startTime = mainService.getStartDate(empno);
-		// 퇴근 시간 출력
-		Date endTime = mainService.getEndDate(empno);
+		
+		try {
+		    // 출근 시간 출력
+			LocalTime getStartTime = mainService.getStartDate(empno);
+			LocalTime getEndTime = mainService.getEndDate(empno);
+			
+			if(getStartTime != null && getEndTime != null) {
+				int y = mainService.getWorkDate(empno);
+				if (y > 60) {
+					int H = (y / 60) / 60;
+					int M = (y - (H * 60 * 60)) / 60;
+					LocalTime checkTime = LocalTime.of(H, M, 00);
+					m.addAttribute("checkTime", checkTime);
+				} else {
+					LocalTime checkTime2 = LocalTime.of(0, 0, 0);
+					m.addAttribute("checkTime", checkTime2);
+				}
+			}
+			
+		    m.addAttribute("startTime", getStartTime);
+		    m.addAttribute("endTime", getEndTime);
+		    
+		    
+		    
+		} catch (Exception e) {
+		    System.out.println("에러 발생: " + e.getMessage());
+		    e.printStackTrace(); // 스택 트레이스 출력
+		    System.out.println("출석체크 에러");
+		}
 		
 		
 		m.addAttribute("projectList", projectList);
 		m.addAttribute("scheduleList",scheduleList);
 		m.addAttribute("forumList", forumList);
-		m.addAttribute("startTime",startTime);
-		m.addAttribute("endTime",endTime);
-		System.out.println(startTime);
+		
+		
+		// System.out.println(startTime);
 		
 		System.out.println("main 요청입니다.");
 		return "main";
