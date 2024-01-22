@@ -13,8 +13,8 @@ import org.apache.ibatis.annotations.Update;
 public interface ScheduleDao {
 	
 	// 개인 일정
-	@Select("select sche_no, sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
-			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color,"
+	@Select("select sche_no, sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d %T') as start, "
+			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d %T') as end, sche_allday as allDay, color,"
 			+ " emp_no, dept_no from schedule where emp_no = #{empNo}")
 	List<Map<String, Object>> mainSchedule(int empNo);
 
@@ -25,7 +25,7 @@ public interface ScheduleDao {
 	int insertSchedule(Map<String, Object> newSchedule);
 
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end}, sche_title = #{title},"
-			+ " color = #{color} where sche_no = #{scheNo}")
+			+ " color = #{color}, sche_allday = #{allDay} where sche_no = #{scheNo}")
 	int updateSchedule(Map<String, Object> updateSchedule);
 	
 	
@@ -34,8 +34,8 @@ public interface ScheduleDao {
 	
 	
 	// 부서별 일정
-	@Select("select emp_name, sche_no, sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d') as start, "
-			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d') as end, sche_allday as allDay, color,"
+	@Select("select emp_name, sche_no, sche_title as title, DATE_FORMAT(sche_start_date, '%Y-%m-%d %T') as start, "
+			+ "DATE_FORMAT(sche_end_date, '%Y-%m-%d %T') as end, sche_allday as allDay, color,"
 			+ " emp_no, dept_no from schedule natural join employee where dept_no = #{deptNo}")
 	List<Map<String, Object>> deptSchedule(int deptNo);
 	
