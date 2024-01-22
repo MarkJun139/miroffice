@@ -339,5 +339,5 @@ public class CheckController {
 
 		return "redirect:/main/checkout";
 	}
-
+	
 }

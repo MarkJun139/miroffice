@@ -33,7 +33,7 @@ public interface UserDao {
 	
 	@Update("UPDATE employee SET emp_photo = #{empPhoto}, emp_name = #{empName}, emp_phone = #{empPhone},"
 			+ " emp_address = #{empAddress}, emp_address2 = #{empAddress2},"
-			+ " emp_email = #{empEmail}, emp_pw = #{empPw} WHERE emp_no = #{empNo}")
+			+ " emp_email = #{empEmail} WHERE emp_no = #{empNo}")
 	int infoUpdate(Users user);
 	
 	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_start_time, check_on)"
@@ -93,6 +93,9 @@ public interface UserDao {
 	
 	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_vacation) VALUES (#{empNo}, #{deptNo}, #{checkDate}, 1)")
 	int vacation(DayCheck dayCheck);
+	
+	@Update("UPDATE employee SET emp_pw = #{empPw} WHERE emp_no = #{empNo}")
+	int pwdUpdate(Users users);
 	
 //	@Insert("insert into users values (#{id}, #{password}, #{name}, #{role}, 'T')")
 //	int insertUser(Users user);
