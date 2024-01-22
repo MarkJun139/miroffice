@@ -32,6 +32,7 @@ public class MainController {
 	@GetMapping("/main")
 	public String main(Model m, Authentication authentication) {
 		int empno = Integer.parseInt(authentication.getName());
+		int deptNo = mainService.getDeptNo(empno);
 		
 		// 프로젝트 목록 
 		List<Project> projectList = projectService.projectList(empno);
@@ -45,7 +46,7 @@ public class MainController {
 			Schedule.setScheTitle(HtmlUtils.htmlEscape(Schedule.getScheTitle()));
 		});
 		// 게시판 목록
-		List<ForumDto> forumList = mainService.getForumList();
+		List<ForumDto> forumList = mainService.getForumList(deptNo);
 		//
 		
 		// 출근 시간 출력

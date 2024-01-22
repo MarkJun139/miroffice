@@ -162,8 +162,8 @@
 	    	</form>
 	    	<form method="post" name="form2" id="form2">
 	    	<div>
-	    	<b style="padding-left: 5px; color: black;">${list.empName } ${list.empRank }</b>
-	    	<input type="hidden" id="empNo" name="empNo" value="${list.empNo }">
+	    	<b style="padding-left: 5px; color: black;"><sec:authentication property = "principal.users.empName"/> <sec:authentication property = "principal.users.empRank"/></b>
+	    	<input type="hidden" id="empNo" name="empNo" value="${userName }">
 	    	<input type="hidden" id="forumNo" name="forumNo" value="${list.forumNo }">
 	    	<textarea id="commentText" name="commentText" placeholder="댓글을 입력하세요!" style="width: 1000px; height: 100px;"></textarea>
 	    	<button type="button" id="cwrite" class="btn btn-success" onclick="return commentWrite()">댓글쓰기</button>
@@ -284,29 +284,8 @@
 		}
 	} 
 
- 	function commentEdits(no){
-		$('#readdiv input').each(function(){
-			if($(this).val() == no){
-				$(this).parent().css("display", "none");
-				$('#editdiv input').each(function(){
-					if($(this).val() == no){
-						$(this).parent().css("display", "");
-						
-						
-						$('#canceldiv input').each(function(){
-							if($(this).val() == no){
-								#(this).parent().css("display", "")
-							}
-						})
-						
-						
-					}
-				})
-			}
-		})
 
-		
-	}
+	
 	
 	function commentDelete(commentno) {
 		var no = commentno;
@@ -380,6 +359,7 @@
     		  document.getElementById("action").style.display = "";
     	  }
       })
+      
       
       </script>
 

@@ -1,15 +1,10 @@
 package com.group4.miroffice.approval;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import com.group4.miroffice.config.SecurityUser;
-import com.group4.miroffice.user.Users;
 
 @Service
 public class ApprovalService {
@@ -24,8 +19,12 @@ public class ApprovalService {
 		return dao.approvalList(deptno);
 	}
 	
-	public List<ApprovalDto> approval(int empno) {
-		return dao.approval(empno);
+	public List<ApprovalDto> approvalList2(int empno) {
+		return dao.approvalList2(empno);
+	}
+	
+	public List<ApprovalDto> approvalList3(Map<String, Object> map) {
+		return dao.approvalList3(map);
 	}
 	
 	public ApprovalDto approvalListOne(int appno){

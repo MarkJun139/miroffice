@@ -1,35 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../logo.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>비밀번호 찾기</title>
-      
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="../images/favicon.ico" />
-      
-      <!-- Library / Plugin Css Build -->
-      <link rel="stylesheet" href="../css/core/libs.min.css" />
-      
-      
-      <!-- Hope Ui Design System Css -->
-      <link rel="stylesheet" href="../css/hope-ui.min.css?v=2.0.0" />
-      
-      <!-- Custom Css -->
-      <link rel="stylesheet" href="../css/custom.min.css?v=2.0.0" />
-      
-      <!-- Dark Css -->
-      <link rel="stylesheet" href="../css/dark.min.css"/>
-      
-      <!-- Customizer Css -->
-      <link rel="stylesheet" href="../css/customizer.min.css" />
-      
-      <!-- RTL Css -->
-      <link rel="stylesheet" href="../css/rtl.min.css"/>
-      
-      
+      <title>임시 비밀번호 발급</title>
   </head>
   <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
     <!-- loader Start -->
@@ -78,8 +55,8 @@
                         
                         <h4 class="logo-title ms-3">미르 오피스</h4>
                      </a>
-                     <h2 class="mb-2">비밀번호 초기화 완료</h2>
-                     <form method="post" action="/findpasswordresult">
+                     <h2 class="mb-2">임시 비밀번호 발급</h2>
+                     <!-- <form method="post" action="/findpasswordresult"> -->
                         <div class="row">
                            <div class="col-lg-12">
                               <div class="floating-label form-group">

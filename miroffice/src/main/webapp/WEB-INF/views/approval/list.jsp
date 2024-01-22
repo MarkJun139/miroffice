@@ -9,15 +9,12 @@
 
 <html lang="ko">
   <head>
-
-
-	
-    <meta charset="utf-8">
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스</title>
       
       <!-- Favicon -->
-      <link rel="shortcut icon" href="/images/favicon.ico" />
+      <link rel="shortcut icon" href="/images/icons/logo.png" />
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="/css/core/libs.min.css" />
@@ -69,7 +66,7 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-3 text-start">
-                     		 <h1 class="card-title">전자결재</h1>
+                     		 <h1 class="card-title">문서 양식</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>

@@ -6,9 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.group4.miroffice.user.Users;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -53,14 +58,30 @@ public class LoginController {
 	}
 
 	@PostMapping("/findidresult")
-	public String findIdResult(@RequestParam(value = "empName") String name,
-			@RequestParam(value = "empPhone") String phone, Model m) {
+	public String findIdResult(@Valid Users user, BindingResult bresult, Model m) {
+		String view = "login/findidresult";
+		String nameError = "";
+		String phoneError = "";
 
-		String result = service.findId(name, phone);
+		if (bresult.getFieldError("empName") != null) {
+			nameError = bresult.getFieldError("empName").getDefaultMessage();
+			view = "login/findid";
+		}
 
+		if (bresult.getFieldError("empPhone") != null) {
+			phoneError = bresult.getFieldError("empPhone").getDefaultMessage();
+			view = "login/findid";
+		}
+		System.out.println("nameError: " + nameError);
+		System.out.println("phoneError: " + phoneError);
+		m.addAttribute("nameError", nameError);
+		m.addAttribute("phoneError", phoneError);
+		m.addAttribute("insertName", user.getEmpName());
+		m.addAttribute("insertPhone", user.getEmpPhone());
+		Users result = service.findId(user);
 		m.addAttribute("findid", result);
 		System.out.println(result);
-		return "login/findidresult";
+		return view;
 	}
 
 	@GetMapping("/findpassword")
@@ -83,23 +104,80 @@ public class LoginController {
 	}
 
 	@PostMapping("/findpasswordresult")
-	public String findIdResult(@RequestParam(value = "empNo") String no, @RequestParam(value = "empName") String name,
-			@RequestParam(value = "empEmail") String email, Model m) throws Exception {
-		String password = service.findPassword(name, no, email);
-		String temppw = getTempPassword();
+	public String resetPwResult(@Valid Users user, BindingResult bresult, Model m) throws Exception {
+		String view = "login/findpasswordresult";
+		String password = service.findPassword(user);
+		String empName = user.getEmpName();
+		String empEmail = user.getEmpEmail();
+		String noError = "";
+		String nameError = "";
+		String emailError = "";
+		int empNo = user.getEmpNo();
 
 		if (password != null) {
-			service.resetPassword(temppw, name, no);
-//			service.sendMail(temppw, name, email);
+			String temppw = getTempPassword();
+			System.out.println("temppw: " + temppw);
+			service.resetPassword(temppw, empName, empNo);
+			service.sendMail(temppw, empName, empEmail);
 		}
-		System.out.println("temppw: " + temppw);
+
+		if (bresult.getFieldError("empNo") != null) {
+			noError = bresult.getFieldError("empNo").getDefaultMessage();
+			view = "login/findpassword";
+		}
+
+		if (bresult.getFieldError("empName") != null) {
+			nameError = bresult.getFieldError("empName").getDefaultMessage();
+			view = "login/findpassword";
+		}
+
+		if (bresult.getFieldError("empEmail") != null) {
+			emailError = bresult.getFieldError("empEmail").getDefaultMessage();
+			view = "login/findpassword";
+		}
+
+		System.out.println("noError: " + noError);
+		System.out.println("nameError: " + nameError);
+		System.out.println("emailError: " + emailError);
 
 		m.addAttribute("password", password);
-		m.addAttribute("name", name);
-		m.addAttribute("email", email);
-		return "login/findpasswordresult";
+
+		m.addAttribute("noError", noError);
+		m.addAttribute("nameError", nameError);
+		m.addAttribute("emailError", emailError);
+		m.addAttribute("name", user.getEmpName());
+		m.addAttribute("email", user.getEmpEmail());
+		return view;
 
 	}
+
+//	@PostMapping("/findpasswordresult")
+//	public String findIdResult(@Valid @RequestParam(value = "empNo") String no, BindingResult noResult,
+//			@RequestParam(value = "empName") String name, @RequestParam(value = "empEmail") String email, Model m)
+//			throws Exception {
+//		String view = "login/findpasswordresult";
+//		String password = service.findPassword(name, no, email);
+//		String temppw = getTempPassword();
+//		String noError = "";
+//
+//		if (password != null) {
+//			service.resetPassword(temppw, name, no);
+//			service.sendMail(temppw, name, email);
+//		}
+//
+//		if (noResult.getFieldError("empNo") != null) {
+//			noError = noResult.getFieldError("empNo").getDefaultMessage();
+//			view = "login/findpassword";
+//		}
+//
+//		System.out.println("temppw: " + temppw);
+//		m.addAttribute("noError", noError);
+//		m.addAttribute("password", password);
+//		m.addAttribute("name", name);
+//		m.addAttribute("email", email);
+//		return view;
+//
+//	}
 
 	@GetMapping("/accessdenied")
 	public String accessDebied() {
