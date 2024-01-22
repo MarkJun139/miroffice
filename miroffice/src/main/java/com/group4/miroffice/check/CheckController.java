@@ -3,7 +3,6 @@ package com.group4.miroffice.check;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group4.miroffice.dto.CheckDate;
+import com.group4.miroffice.dto.CheckVacation;
 import com.group4.miroffice.dto.Checkout;
 import com.group4.miroffice.dto.DayCheck;
 import com.group4.miroffice.info.InfoService;
@@ -50,13 +51,18 @@ public class CheckController {
 
 		CheckDate checkdate = service2.checkdate(dayCheck);
 
-		int y = checkdate.getCheckWorkTime();
-
-		int H = (y / 60) / 60;
-
-		int M = ((y / 60) % 60) * 60;
-
-		LocalTime checkTime = LocalTime.of(H, M, 00);
+		if (checkdate != null) {
+			int y = checkdate.getCheckWorkTime();
+			if (y > 60) {
+				int H = (y / 60) / 60;
+				int M = (y - (H * 60 * 60)) / 60;
+				LocalTime checkTime = LocalTime.of(H, M, 00);
+				m.addAttribute("checkTime", checkTime);
+			} else {
+				LocalTime checkTime2 = LocalTime.of(0, 0, 0);
+				m.addAttribute("checkTime", checkTime2);
+			}
+		}
 
 		List<CheckDate> weekCheck = new ArrayList<>();
 
@@ -73,15 +79,23 @@ public class CheckController {
 
 			CheckDate day2 = service2.weekCheck(day);
 
-			int u = day2.getCheckWorkTime();
+			if (day2 != null) {
+				int u = day2.getCheckWorkTime();
+				if (u > 60) {
+					int Hour = (u / 60) / 60;
+					int Minute = (u - (Hour * 60 * 60)) / 60;
+					LocalTime time = LocalTime.of(Hour, Minute, 00);
+					weekWorkTime.add(time);
+				} else {
+					LocalTime time3 = LocalTime.of(0, 0, 0);
+					m.addAttribute("checkTime", time3);
+					weekWorkTime.add(time3);
+				}
+			} else {
+				LocalTime time2 = LocalTime.of(0, 0, 0);
+				weekWorkTime.add(time2);
+			}
 
-			int Hour = (u / 60) / 60;
-
-			int Minute = ((u / 60) % 60) * 60;
-
-			LocalTime time = LocalTime.of(Hour, Minute, 00);
-
-			weekWorkTime.add(time);
 			weekCheck.add(day2);
 
 		}
@@ -90,15 +104,16 @@ public class CheckController {
 
 		Checkout checkout = service2.checkout(dayCheck);
 
-		LocalTime start = checkout.getCheckStartTime();
-		LocalTime end = checkout.getCheckEndTime();
+		if (checkout != null) {
+			LocalTime start = checkout.getCheckStartTime();
+			LocalTime end = checkout.getCheckEndTime();
+			m.addAttribute("start", start);
+			m.addAttribute("end", end);
+		}
 
-		m.addAttribute("start", start);
-		m.addAttribute("end", end);
 		m.addAttribute("searchEmp", searchEmp);
 		m.addAttribute("user", users);
 		m.addAttribute("checkdate", checkdate);
-		m.addAttribute("checkTime", checkTime);
 		m.addAttribute("first", weekCheck.get(0));
 		m.addAttribute("second", weekCheck.get(1));
 		m.addAttribute("third", weekCheck.get(2));
@@ -124,12 +139,12 @@ public class CheckController {
 		String empNo = user.getUsername();
 
 		Users users = service.Profile(empNo);
-		
+
 		DayCheck dayCheck = new DayCheck();
 
 		dayCheck.setEmpNo(empNo);
 		dayCheck.setCheckDate(currentDate);
-		
+
 		Checkout check = service2.checkout(dayCheck);
 
 		Checkout checkout = new Checkout();
@@ -138,19 +153,19 @@ public class CheckController {
 		checkout.setDeptNo(users.getDeptNo());
 		checkout.setCheckDate(currentDate);
 		checkout.setCheckStartTime(currentTime);
-		
-		if(check.getCheckDate() == null) {
-			
+
+		if (check == null) {
 			if (currentTime.isBefore(time)) {
 				service2.start(checkout);
 			} else {
 				service2.lateStart(checkout);
 			}
-			
+		} else {
+			if (check.getCheckHalfoff() == 1) {
+				service2.startUpdate(checkout);
+			}
 		}
-			
-		
-		
+
 		return "redirect:/main/checkout";
 	}
 
@@ -160,7 +175,7 @@ public class CheckController {
 		LocalDate currentDate = LocalDate.now();
 
 		LocalTime currentTime = LocalTime.now();
-		
+
 		LocalTime time = LocalTime.of(18, 00, 00);
 
 		String empNo = user.getUsername();
@@ -173,7 +188,7 @@ public class CheckController {
 		checkout.setDeptNo(users.getDeptNo());
 		checkout.setCheckDate(currentDate);
 		checkout.setCheckEndTime(currentTime);
-		
+
 		if (currentTime.isBefore(time)) {
 			service2.earlyEnd(checkout);
 		} else {
@@ -209,7 +224,7 @@ public class CheckController {
 		LocalTime checkTime = LocalTime.of(H, M, 00);
 
 		List<CheckDate> weekCheck = new ArrayList<>();
-		
+
 		List<LocalTime> weekWorkTime = new ArrayList<>();
 
 		for (int i = 1; i < 5; i++) {
@@ -222,7 +237,7 @@ public class CheckController {
 			day.setWeek(i);
 
 			CheckDate day2 = service2.weekCheck(day);
-			
+
 			int u = day2.getCheckWorkTime();
 
 			int Hour = (u / 60) / 60;
@@ -254,9 +269,74 @@ public class CheckController {
 
 		return "check/leaderCheck";
 	}
+
+	@GetMapping("halfoff")
+	public String halfoff(@ModelAttribute("checkVacation") CheckVacation checkvacation) {
+
+		Users users = service2.leaderCheck(checkvacation.getEmpName());
+
+		DayCheck dayCheck = new DayCheck();
+
+		dayCheck.setEmpNo(Integer.toString(users.getEmpNo()));
+		dayCheck.setDeptNo(users.getDeptNo());
+		dayCheck.setCheckDate(checkvacation.getCheckDate());
+
+		Checkout check = service2.checkout(dayCheck);
+
+		if (check == null) {
+			service2.halfoff(dayCheck);
+		} else {
+			service2.halfoffUpdate(dayCheck);
+		}
+
+		return "redirect:/main/checkout";
+	}
+
+	@GetMapping("dayoff")
+	public String dayoff(@ModelAttribute("checkVacation") CheckVacation checkvacation) {
+
+		Users users = service2.leaderCheck(checkvacation.getEmpName());
+
+		DayCheck dayCheck = new DayCheck();
+
+		dayCheck.setEmpNo(Integer.toString(users.getEmpNo()));
+		dayCheck.setDeptNo(users.getDeptNo());
+		dayCheck.setCheckDate(checkvacation.getCheckDate());
+
+		service2.dayoff(dayCheck);
+
+		return "redirect:/main/checkout";
+	}
+
+	@GetMapping("absenteeism")
+	public String absenteeism(@ModelAttribute("checkVacation") CheckVacation checkvacation) {
+
+		Users users = service2.leaderCheck(checkvacation.getEmpName());
+
+		DayCheck dayCheck = new DayCheck();
+
+		dayCheck.setEmpNo(Integer.toString(users.getEmpNo()));
+		dayCheck.setDeptNo(users.getDeptNo());
+		dayCheck.setCheckDate(checkvacation.getCheckDate());
+
+		service2.absenteeism(dayCheck);
+
+		return "redirect:/main/checkout";
+	}
 	
-	@GetMapping("/main/halfoff")
-	public String halfoff() {
+	@GetMapping("vacation")
+	public String vacation(@ModelAttribute("checkVacation") CheckVacation checkvacation) {
+
+		Users users = service2.leaderCheck(checkvacation.getEmpName());
+
+		DayCheck dayCheck = new DayCheck();
+
+		dayCheck.setEmpNo(Integer.toString(users.getEmpNo()));
+		dayCheck.setDeptNo(users.getDeptNo());
+		dayCheck.setCheckDate(checkvacation.getCheckDate());
+
+		service2.vacation(dayCheck);
+
 		return "redirect:/main/checkout";
 	}
 

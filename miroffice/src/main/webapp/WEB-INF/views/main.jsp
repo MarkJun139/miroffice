@@ -174,7 +174,7 @@
             <div class="card" data-aos="fade-up" data-aos-delay="500">
                <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <a href="/main/forum"><h1 class="card-title">우리부서 게시판</h1></a>
+                     <a href="/main/forum"><h1 class="card-title">부서 게시판</h1></a>
                   </div>
                </div>
                <div class="p-0 card-body">
@@ -198,12 +198,14 @@
                         		</tr>
                         	</c:if>
                         	<c:forEach items="${forumList}" var="forum" >
+
 	                           <tr>
 	                              <td class="col-md-6 align-items-center "><a href="/main/forum/${forum.forumNo }">
 	                              	 ${forum.forumTitle}&nbsp;</a>
 	                              	 <c:if test="${forum.forumNotice == true}">
 	                              	 	<span class="badge badge-info" style="background-color:var(--bs-info)" >중요</span>
 	                              	 </c:if>
+
 	                              </td>
 	                              <td class="col-md-2 align-items-center ">
 	                              	 <fmt:formatDate var="forumDate" pattern="yyyy-MM-dd" value="${forum.forumDate}"/>
@@ -269,12 +271,11 @@
                         		</tr>
                         	</c:if>
                         	<c:forEach items="${projectList}" var="project" >
-	                           <tr>
+	                           <tr onClick="location.href='/main/project/view/${project.projectno}'" style="cursor:pointer">
 	                              <td class="col-md-1">
 	                                 <div class="d-flex align-items-center">
-	                                    <!-- <img class="rounded bg-soft-primary img-fluid avatar-40 me-3" src="/images/shapes/01.png" alt="profile"> -->
 	                                    <h6>${project.projecttitle}</h6>
-	                                 </div>
+	                                 </div> 
 	                              </td>
 	                              <td>
 	                              	<c:choose>
@@ -398,13 +399,13 @@
 				        	<c:when test="${endTime.year == 70 }">
 				        		<p class="card-text">미등록</p>
 				        		<div class="grid-cols d-grid gap-card">
-				                	<button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
+				                	<a href="/main/end" class="p-2 btn btn-primary text-uppercase">퇴근 등록</a>
 				                </div>
 				        	</c:when>
 				        	<c:when test="${empty endTime.year}">
 				        		<p class="card-text">퇴근시간 미등록</p>
 				        		<div class="grid-cols d-grid gap-card">
-				                	<button class="p-2 btn btn-primary text-uppercase">퇴근 등록</button>
+				                	<a href="/main/end" class="p-2 btn btn-primary text-uppercase">퇴근 등록</a>
 				                </div>
 				        	</c:when>
 				        	<c:when test="${endTime.year != 70 }">
@@ -490,31 +491,23 @@
                		</div>
                	 </c:if>
                   <c:forEach items="${scheduleList}" var="sche">
-	                  <div class="card rounded-0 shadow-lg " style="border-left: 5px solid ${sche.color};">
-	                  	<div class="card-body">
-		                     <h4 class="mb-2 card-title">${sche.scheTitle}</h4>
-		                     <p class="card-text">${sche.scheCategory}</p>
-		                     <div class="row  justify-content-around">
-		                     	<div class="col-md-auto">
-		                     		<p>
-		                     			<fmt:formatDate pattern = "yyyy-MM-dd E" value="${sche.scheStartDate}"/>
-		                     		</p>
-		                     	</div>
-		                     	<div class="col-md-auto">
-		                     		<p>
-		                     			~
-		                     		</p>
-		                     	</div>
-		                     	<div class="col-md-auto">
-		                     		<p class="text-right">
-		                     			<fmt:formatDate pattern = "yyyy-MM-dd E" value="${sche.scheEndDate}"/>
-		                     		</p>
-		                     	</div>
-		                     
-		                      </div>
-	                     </div>
-	                  </div>
-                  </c:forEach>
+					   <div class="card rounded-0 shadow-lg" style="border-left: 5px solid ${sche.color};">
+					      <div class="card-body">
+					         <h4 class="mb-2 card-title">${sche.scheTitle}</h4>
+					         <p class="card-text">${sche.scheCategory}</p>
+					         <div class="row justify-content-around">
+					            <div class="col-md-auto">
+					               <p>
+					                  <fmt:formatDate pattern="yyyy-MM-dd E" value="${sche.scheStartDate}" />
+					                  <c:if test="${sche.scheStartDate ne sche.scheEndDate}">
+					                     - <fmt:formatDate pattern="yyyy-MM-dd E" value="${sche.scheEndDate}" />
+					                  </c:if>
+					               </p>
+					            </div>
+					         </div>
+					      </div>
+					   </div>
+					</c:forEach>
                </div>
             </div>
          </div>

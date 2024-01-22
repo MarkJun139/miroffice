@@ -89,8 +89,12 @@
                      </div>                          
                   </div>
                </div>
-               <div class="p-0 card-body">
+               <div class="card-body">
+               	  <div class="col-12 d-flex">
+                  		<input type="text" class="form-control searchInput" id="searchInput" placeholder="이름를 입력하세요">
+                  </div>
                   <div class="mt-4 table-responsive">
+                  	
                      <table id="basic-table" class="table mb-0 table-striped" role="grid">
                         <thead>
                            <tr>
@@ -119,7 +123,7 @@
 	                              <td class="col-md-1">
 	                                 ${emp.empNo}
 	                              </td>
-	                              <td class="col-md-1">
+	                              <td class="col-md-1 empNameVal">
 									 ${emp.empName}
 								  </td>
 	                              <td class="col-md-2">
@@ -243,6 +247,23 @@
 				})
 				e.preventDefault();
 			})
+			
+			$(".searchInput").keyup(function(){
+			    console.log("검색확인");
+			    
+			    var searchName = $(this).val().trim().toLowerCase();
+			    
+			    $("#basic-table > tbody > tr").hide();
+
+			    $("#basic-table > tbody > tr").filter(function() {
+			    	
+			        return $(this).find('.empNameVal').text().toLowerCase().includes(searchName);
+			        
+			    }).show();
+			});
+			
+			
+			
 		})
 	  </script>
 

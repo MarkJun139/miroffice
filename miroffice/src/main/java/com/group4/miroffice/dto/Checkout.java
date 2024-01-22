@@ -14,13 +14,13 @@ public class Checkout {
 	private LocalDate checkDate;
 	private LocalTime checkStartTime;
 	private LocalTime checkEndTime;
-	private LocalTime checkWorkTime;
-	private boolean checkOn;
-	private boolean checkLeaveEarly;
-	private boolean checkHalfoff;
-	private boolean checkDayoff;
-	private boolean checkVacation;
-	private boolean checkLate;
-	private boolean checkAbsenteeism;
+	private int checkWorkTime;
+	private int checkOn;
+	private int checkLeaveEarly;
+	private int checkHalfoff;
+	private int checkDayoff;
+	private int checkVacation;
+	private int checkLate;
+	private int checkAbsenteeism;
 	
 }
