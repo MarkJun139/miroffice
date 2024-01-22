@@ -29,4 +29,8 @@ public class ForumService {
 	public int forumCountup(int forumno) {
 		return dao.forumCountup(forumno);
 	}
+	
+	public int forumDelete(int forumno) {
+		return dao.forumDelete(forumno);
+	}
 }

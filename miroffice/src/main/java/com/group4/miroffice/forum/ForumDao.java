@@ -15,5 +15,7 @@ public interface ForumDao {
 
 	int forumEdit(ForumDto dto);
 	
+	int forumDelete(int forumno);
+	
 	int forumCountup(int forumno);
 }

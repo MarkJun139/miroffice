@@ -47,6 +47,19 @@ public class CommentController {
 		m.addAttribute("clist", dtolist);
 		return new ResponseEntity<>("Success", HttpStatus.OK);
 	}
+	
+	@PostMapping("/comment/edit")
+	public ResponseEntity<?> commentEdit(Model m, @RequestBody CommentDto dto, RedirectAttributes rttr, HttpServletRequest req) throws Exception {
+		
+		cservice.commentEdit(dto);
+		System.out.println("디티오" +dto);
+	
+		List<CommentDto> dtolist = cservice.commentList(dto.getForumNo());
+	
+		m.addAttribute("clist", dtolist);
+		return new ResponseEntity<>("Success", HttpStatus.OK);
+	}
+	
 	@PostMapping("/comment/delete")
 	public ResponseEntity<?> commentDelete(Model m, @RequestParam(value="id") int id, @RequestParam(value="fid") int fid, RedirectAttributes rttr, HttpServletRequest req) throws Exception {
 		
