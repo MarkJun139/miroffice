@@ -44,25 +44,25 @@ public interface UserDao {
 			+ " VALUES (#{empNo}, #{deptNo}, #{checkDate}, #{checkStartTime}, 1, 1)")
 	int lateStart(Checkout checkout);
 	
-	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime},)"
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, check_end_time),"
 			+ " check_leave_early = 0 WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
 	int end(Checkout checkout);
 	
-	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, #{checkEndTime},)"
+	@Update("UPDATE checkout SET check_end_time = #{checkEndTime}, check_work_time = timestampdiff(second ,check_start_time, check_end_time),"
 			+ " check_leave_early = 1 WHERE dept_no = #{deptNo} AND check_date = #{checkDate}")
 	int earlyEnd(Checkout checkout);
 	
 	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) as checkWorkTime from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}")
 	CheckDate checkdate(DayCheck daycheck);
 	
 	@Select("select week(check_date) AS weekNumber, sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) as checkWorkTime from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}"
 			+ " and week(check_date) = #{week} group by weekNumber order by weekNumber")
 	CheckDate weekCheck(DayCheck daycheck);
@@ -75,6 +75,24 @@ public interface UserDao {
 	
 	@Select("select * from checkout where check_date = #{checkDate} and emp_no = #{empNo}")
 	Checkout checkout(DayCheck dayCheck);
+	
+	@Update("UPDATE checkout SET check_start_time = #{checkStartTime} check_on = 1 WHERE emp_no = #{empNo} AND check_date = #{checkDate}")
+	int startUpdate(Checkout checkout);
+	
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_halfoff) VALUES (#{empNo}, #{deptNo}, #{checkDate}, 1)")
+	int halfoff(DayCheck dayCheck);
+	
+	@Update("UPDATE checkout SET check_halfoff = 1 WHERE emp_no = #{empNo} AND check_date = #{checkDate}")
+	int halfoffUpdate(DayCheck dayCheck);
+	
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_dayoff) VALUES (#{empNo}, #{deptNo}, #{checkDate}, 1)")
+	int dayoff(DayCheck dayCheck);
+	
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_absenteeism) VALUES (#{empNo}, #{deptNo}, #{checkDate}, 1)")
+	int absenteeism(DayCheck dayCheck);
+	
+	@Insert("INSERT INTO checkout(emp_no, dept_no, check_date, check_vacation) VALUES (#{empNo}, #{deptNo}, #{checkDate}, 1)")
+	int vacation(DayCheck dayCheck);
 	
 //	@Insert("insert into users values (#{id}, #{password}, #{name}, #{role}, 'T')")
 //	int insertUser(Users user);

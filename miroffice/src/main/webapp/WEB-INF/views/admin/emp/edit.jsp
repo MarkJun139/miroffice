@@ -81,11 +81,11 @@
                  	 	<input type="hidden" name="empNo" value="${emp.empNo}">
 					    <div class="form-group col-md-4">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름" value="${emp.empName}" readonly>
+					      <input type="text" class="form-control" id="name" name="empName" placeholder="이름" value="${emp.empName}" readonly  disabled>
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="birth">생년월일</label>
-					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일" value="${emp.empBirth}" readonly>
+					      <input type="date" class="form-control" id="birth" name="empBirth" placeholder="생년월일" value="${emp.empBirth}" readonly  disabled>
 					    </div>
 					    <div class="form-group col-md-4">
 					      <label for="dept">부서</label>
@@ -99,39 +99,35 @@
 					  <div class="row">
 					    <div class="form-group col-md-4">
 					      <label for="phoneNumber">전화번호</label>
-					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외" value="${emp.empPhone}" readonly>
+					      <input type="tel" class="form-control" id="phoneNumber" name="empPhone" placeholder="- 제외" value="${emp.empPhone}" readonly  disabled>
 					    </div>
 					    <div class="form-group col-md-8">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com" value="${emp.empEmail }" readonly>
+					      <input type="email" class="form-control" id="email" name="empEmail" placeholder="example@example.com" value="${emp.empEmail }" readonly  disabled>
 					    </div>
 					  </div>
 					  <div class="row">
-					  	<div class="form-group col-md-5">
+					  	<div class="form-group col-md-6">
 						    <label for="Address">주소</label>
-						    <input type="text" class="form-control" id="address" name="empAddress" placeholder="주소" readonly value="${emp.empAddress}">
+						    <input type="text" class="form-control" id="address" name="empAddress" placeholder="주소" readonly value="${emp.empAddress}" disabled>
 						</div>
-						<div class="form-group col-md-5">
+						<div class="form-group col-md-6">
 						    <label for="Address2">상세주소</label>
-						    <input type="text" class="form-control" id="address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}">
-					    </div>
-					    <div class="form-group col-md-2">
-					    	<label>&nbsp;</label>
-						    <a href="#" class="col-md-12 btn btn-primary pull-right" id="findAddress">주소 찾기</a>
+						    <input type="text" class="form-control" id="address2" name="empAddress2" placeholder="상세주소" value="${emp.empAddress2}" disabled>
 					    </div>
 					  </div>
 					  <div class="row">
 					    <div class="form-group col-md-3">
 					      <label for="sal">연봉(단위 만)</label>
-					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}" min="0">
+					      <input type="number" class="form-control" id="sal" name="empSal" placeholder="연봉" value="${emp.empSal}" min="0" disabled>
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="hireDate">입사일</label>
-					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일" value="${emp.empHiredate}" readonly>
+					      <input type="date" class="form-control" id="hireDate" name="empHiredate" placeholder="입사일" value="${emp.empHiredate}" readonly disabled>
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empJob">직군</label>
-					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군" value="${emp.empJob}" readonly>
+					      <input type="text" class="form-control" id="empJob" name="empJob" placeholder="직군" value="${emp.empJob}" readonly disabled>
 					    </div>
 					    <div class="form-group col-md-3">
 					      <label for="empRank">직급</label>
@@ -141,13 +137,13 @@
 					  <div class="form-group">
 					  	권한 부여
 					    <div class="form-check">
-						  <input class="form-check-input" type="radio" name="empRole" id="user" value="ROLE_USER" <c:if test="${emp.empRole == 'ROLE_USER'}"> checked </c:if> />
+						  <input class="form-check-input" disabled type="radio" name="empRole" id="user" value="ROLE_USER" <c:if test="${emp.empRole == 'ROLE_USER'}"> checked </c:if> />
 						  <label class="form-check-label" for="user">
 						    사원
 						  </label>
 						</div>
 						<div class="form-check">
-						  <input class="form-check-input" type="radio" name="empRole" id="teamleader" value="ROLE_TEAMLEADER" <c:if test="${emp.empRole == 'ROLE_TEAMLEADER'}"> checked </c:if> />
+						  <input class="form-check-input" disabled type="radio" name="empRole" id="teamleader" value="ROLE_TEAMLEADER" <c:if test="${emp.empRole == 'ROLE_TEAMLEADER'}"> checked </c:if> />
 						  <label class="form-check-label" for="teamleader">
 						    팀장
 						  </label>
