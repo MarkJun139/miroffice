@@ -62,19 +62,23 @@ public class ScheduleController {
 
 	@PatchMapping("update")
 	@ResponseBody
-	public String updateSchedule(@RequestParam(value = "title", defaultValue = "default") String title,
+	public String updateSchedule(@AuthenticationPrincipal SecurityUser user,
+			@RequestParam(value = "title", defaultValue = "default") String title,
 			@RequestParam(value = "start", defaultValue = "default") String start,
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
 			@RequestParam(value = "color", defaultValue = "default") String color,
 			@RequestParam(value = "scheNo", defaultValue = "default") String scheNo) {
 		Map<String, Object> upSchedule = new HashMap<>();
+		Users dto = user.getUsers();
 		upSchedule.put("title", title);
 		upSchedule.put("start", start);
 		upSchedule.put("end", end);
 		upSchedule.put("color", color);
 		upSchedule.put("scheNo", scheNo);
 		upSchedule.put("allDay", allDay);
+		upSchedule.put("deptNo", dto.getDeptNo());
+		upSchedule.put("empNo", dto.getEmpNo());
 		System.out.println("update: " + upSchedule);
 
 		service.updateSchedule(upSchedule);

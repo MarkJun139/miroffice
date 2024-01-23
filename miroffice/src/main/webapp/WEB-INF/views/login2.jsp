@@ -193,6 +193,5 @@
 
 	<!-- App Script -->
 	<script src="/js/hope-ui.js" defer></script>
-
 </body>
 </html>

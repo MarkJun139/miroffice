@@ -17,7 +17,7 @@ public interface MainDao {
 	List<Schedule> getScheduleList(int empNo);
 	
 	@Select("select forum_no, emp_no, dept_no, forum_title, forum_text, forum_date, forum_count, forum_notice, forum_files, emp_name from forum natural join employee order by forum_date desc limit 10")
-	List<ForumDto> getForumList(int deptNo);
+	List<ForumDto> getForumList();
 
 	@Select("select dept_no from employee where emp_no = #{empNo}")
 	int getDeptNo(int empNo);

@@ -106,14 +106,14 @@ public class LoginController {
 	@PostMapping("/findpasswordresult")
 	public String resetPwResult(@Valid Users user, BindingResult bresult, Model m) throws Exception {
 		String view = "login/findpasswordresult";
-		String password = service.findPassword(user);
 		String empName = user.getEmpName();
 		String empEmail = user.getEmpEmail();
 		String noError = "";
 		String nameError = "";
 		String emailError = "";
-		int empNo = user.getEmpNo();
-
+		String empNo = user.getEmpNo() + "";
+		
+		String password = service.findPassword(empName, empNo, empEmail);
 		if (password != null) {
 			String temppw = getTempPassword();
 			System.out.println("temppw: " + temppw);
@@ -152,26 +152,19 @@ public class LoginController {
 	}
 
 //	@PostMapping("/findpasswordresult")
-//	public String findIdResult(@Valid @RequestParam(value = "empNo") String no, BindingResult noResult,
+//	public String findIdResult(@RequestParam(value = "empNo") String no,
 //			@RequestParam(value = "empName") String name, @RequestParam(value = "empEmail") String email, Model m)
 //			throws Exception {
 //		String view = "login/findpasswordresult";
 //		String password = service.findPassword(name, no, email);
 //		String temppw = getTempPassword();
-//		String noError = "";
 //
 //		if (password != null) {
 //			service.resetPassword(temppw, name, no);
 //			service.sendMail(temppw, name, email);
 //		}
 //
-//		if (noResult.getFieldError("empNo") != null) {
-//			noError = noResult.getFieldError("empNo").getDefaultMessage();
-//			view = "login/findpassword";
-//		}
-//
 //		System.out.println("temppw: " + temppw);
-//		m.addAttribute("noError", noError);
 //		m.addAttribute("password", password);
 //		m.addAttribute("name", name);
 //		m.addAttribute("email", email);
