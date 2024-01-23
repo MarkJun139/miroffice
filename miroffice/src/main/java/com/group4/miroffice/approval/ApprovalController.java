@@ -286,7 +286,7 @@ public class ApprovalController {
 		System.out.println("lis"+al);
 		m.addAttribute("list", al);
 		
-		return "admin/approval/list";
+		return "approval/listadmin";
 	}
 	
 	@PostMapping("/approval/one/{no}")
