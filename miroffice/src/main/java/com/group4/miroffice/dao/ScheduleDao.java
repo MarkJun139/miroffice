@@ -25,7 +25,7 @@ public interface ScheduleDao {
 	int insertSchedule(Map<String, Object> newSchedule);
 
 	@Update("update schedule set sche_start_date = #{start}, sche_end_date = #{end}, sche_title = #{title},"
-			+ " color = #{color}, sche_allday = #{allDay} where sche_no = #{scheNo}")
+			+ " color = #{color}, sche_allday = #{allDay} where sche_no = #{scheNo} and dept_no = #{deptNo} and emp_no = #{empNo}")
 	int updateSchedule(Map<String, Object> updateSchedule);
 	
 	

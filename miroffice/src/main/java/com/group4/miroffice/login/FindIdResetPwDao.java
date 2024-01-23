@@ -15,8 +15,8 @@ public interface FindIdResetPwDao {
 
 	@Select("select emp_pw from employee where emp_name = #{empName} and emp_no = #{empNo} and "
 			+ "emp_email = #{empEmail}")
-	String findPassword(Users user);
+	String findPassword(@Param("empName") String name, @Param("empNo") String no, @Param("empEmail") String email);
 
 	@Update("update employee set emp_pw = #{empPw} where emp_name = #{empName} and emp_no = #{empNo}")
-	int resetPassword(@Param("empPw") String password, @Param("empName") String name, @Param("empNo") int no);
+	int resetPassword(@Param("empPw") String password, @Param("empName") String name, @Param("empNo") String no);
 }

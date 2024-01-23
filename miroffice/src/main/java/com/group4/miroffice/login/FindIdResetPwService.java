@@ -23,11 +23,11 @@ public class FindIdResetPwService {
 		return dao.findId(user);
 	}
 
-	public String findPassword(Users user) {
-		return dao.findPassword(user);
+	public String findPassword(String name, String no, String email) {
+		return dao.findPassword(name, no, email);
 	}
 
-	public int resetPassword(String password, String name, int no) {
+	public int resetPassword(String password, String name, String no) {
 		return dao.resetPassword(password, name, no);
 	}
 

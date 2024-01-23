@@ -7,7 +7,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>사번 찾기 결과</title>
-<%@include file="../logo.jsp" %>
+<%@include file="../logo.jsp"%>
 </head>
 <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section"
 	data-bs-offset="0" tabindex="0">
@@ -44,15 +44,23 @@
 							<c:choose>
 								<c:when test="${empty findid}">
 									<p class="cnf-mail mb-1">존재하지 않는 사원입니다.</p>
+									<div class="d-inline-block w-100">
+										<a href="/login" class="btn btn-primary mt-3">로그인 화면으로</a>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<p class="cnf-mail mb-1">[${findid.empName}]사원님의 사원번호는
 										[${findid.empNo}]입니다.</p>
+									<div class="d-inline-block w-100">
+										<a href="/login" class="btn btn-primary mt-3">로그인 화면으로</a>
+									</div>
+									<div class="d-inline-block w-100">
+										<a href="/findpassword" class="btn btn-primary mt-3">비밀번호
+											찾기</a>
+									</div>
 								</c:otherwise>
 							</c:choose>
-							<div class="d-inline-block w-100">
-								<a href="/login" class="btn btn-primary mt-3">로그인 화면으로</a>
-							</div>
+
 						</div>
 					</div>
 				</div>
