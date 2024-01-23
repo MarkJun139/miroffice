@@ -37,5 +37,9 @@ public class InfoService {
 	public Dept Dept(int deptNo){
 		return userDao.dept(deptNo);
 	}
+	
+	public int PwdUpdate(Users user) {
+		return userDao.pwdUpdate(user);
+	}
 
 }
