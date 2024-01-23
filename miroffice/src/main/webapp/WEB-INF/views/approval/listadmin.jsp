@@ -9,15 +9,17 @@
 
 <html lang="ko">
   <head>
-      <meta charset="utf-8">
+    <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>미르오피스</title>
-      
+
       <!-- Favicon -->
       <link rel="shortcut icon" href="/images/icons/logo.png" />
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="/css/core/libs.min.css" />
+      
+      <link rel="stylesheet" href="/css/mylist.css" />
       
       <link rel="stylesheet" type="text/css" href="/css/core/usercs.css"/>
       
@@ -43,30 +45,29 @@
   </head>
 
 <body class="  ">
-    <!-- loader Start -->
 
-    <!-- loader END -->
+
+
     <%@include file="../sidebar.jsp" %>
    
-
-      <main class="main-content">
-
+ 
+        <main class="main-content">
         
       <div class="position-relative iq-banner">
         <!--Nav Start-->
         
             <%@include file="../header.jsp" %>
-               <!--  메인 여기부터!!! -->      
         <!--Nav End -->
       </div>
-      <div class="conatiner-fluid content-inner mt-n5 py-0">
+
+<div class="conatiner-fluid content-inner mt-n5 py-0">
 
             <div class="overflow-hidden card" data-aos="fade-up" data-aos-delay="100" style="overflow-x: auto">
                            <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
-                              	 	<div class="col-3 text-start">
-                     		 <h1 class="card-title">문서 양식</h1>
+                              	 	<div class="col-3 text-start" id="coldoc">
+                     		 <h1 class="card-title">${title	 }</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
@@ -76,13 +77,11 @@
                      	</div>
                      	
                      	
-
-         
+                     	
 <div class="p-2 card-body" style="border: 1px; margin-right:20px;">
-         <div style="float: left;">
-            <div class="table-responsive">
+            <div style="float: left;">
+			<div class="table-responsive">
                <table id="datatable" class="table table-striped" data-toggle="data-table">
-		
                   <thead>
                      <tr>
                         <th>결재양식</th>
@@ -95,48 +94,35 @@
                         <td><a href="#" onclick="return getApproval(${f.appNo});">${f.appTitle}</a>
                         <br>작성자 ${f.empName }</td>
                         <td><fmt:formatDate value="${f.appDate }" dateStyle="short"/></td>
-                     </tr>
+                     </tr> 
                      </c:forEach>
-                  </tbody>
                </table>
             </div>
-            </div>
-         
-         <div class="col-md-6" style = "padding: 5px; border: 1px; float:left;">
-	        <form name="form" id="form" method="post" action="./approval/submit">
+         </div>
+         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
-		            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt;">
-			            <div id="toolbar-container"></div>
-				        <div>	
-						<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
-						</div>
+	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" style="font-size: 16pt;">
+	            <div id="toolbar-container"></div>
+		        <div>	
+				<textarea id="appText" name="appText" placeholder="내용을 입력해 주세요"></textarea>
+				</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    				<input type="hidden" id="appAdmin1" name="appAdmin1">
-						    <input type="hidden" id="appAdmin2" name="appAdmin2">
-						    <input type="hidden" id="appAdmin3" name="appAdmin3">
-						    
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
-	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
-	   			
-
-				
-				<!-- Modal -->
-
+		    	<button type="button" id="btnSave" onclick="javascript: form.action='approval/write'">추가</button>
+		    	<button type="button" id="btnEdit" onclick="javascript: form.action='approval/edit'" disabled>수정</button>
+	   			<button type="button" id="btnList">취소</button>
 	    	</form>
-	    	
-
-	</div>
-	</div>
-	</div>
-	</div>
+    	</div>
+    	</div>
+    	</div>
+    	</div>
     	<script>
-
 		function getApproval(no) {
 			$.ajax({
-				type : "POST",	
-				url : "./approval/one/" + no,
+				type : "POST",
+				url : "../admin/approval/one/" + no,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			})
@@ -156,83 +142,42 @@
 				console.log(no);
 			})
 		}
-
-		$(document).on('click', '#btnEdit', function(e){
-			
+		$(document).on('click', '#btnSave', function(e){
 			e.preventDefault();
-			if(newEditor.getData() == ''){
+			
+			if(document.getElementById('appTitle').value == ''){
+				alert('제목을 입력하세요');
+			}
+			else if(newEditor.getData() == ''){
 				alert('내용을 입력하세요');
 			}
 			else{
-				$('#modal1').modal("show");
+				<!--e.preventDefault();-->
+				$("#form").submit();
 			}
 		});
-		$(document).on('click', '#btnSave', function(e){
+		$(document).on('click', '#btnEdit', function(e){
 			e.preventDefault();
-			var array = new Array();
-			$('input:checkbox[name=ckbox]:checked').each(function(){
-				array.push(this.value);
-				
-			});
-			$("#appAdmin1").val(array[0])
-			$("#appAdmin2").val(array[1])
-			$("#appAdmin3").val(array[2])
 			
-			
-			$("#form").submit();
+			if(document.getElementById('appTitle').value == ''){
+				alert('제목을 입력하세요');
+			}
+			else if(newEditor.getData() == ''){
+				alert('내용을 입력하세요');
+			}
+			else{
+				<!--e.preventDefault();-->
+				$("#form").submit();
+			}
 		});
-		$(document).on('click', '#btnClose', function(e){
-			e.preventDefault();
-			$('#modal1').modal("hide");
-			document.forms['modalf'].reset();
+		$(document).on('click', '#btnList', function(e){
+			e.preventDefault();	
+			location.href="../approval";
 		});
-
-		$(document).ready(function(){
-			$("input[type='checkbox']").on("click", function(){
-				let count = $("input:checked[type='checkbox']").length;
-				if(count == 0){
-					$("#btnSave").attr("disabled", true)
-				}
-				else if(count > 0){
-					$("#btnSave").attr("disabled", false)
-				}
-				else if(count > 3){
-					this.checked=false;
-					$("#btnSave").attr("disabled", false)
-					alert("결재자는 3명까지만 선택할 수 있습니다.");
-				}
-			})
-		})
 </script>
-		    	<form id="modalf" method="post">
-				<div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h1 class="modal-title fs-5" id="staticBackdropLabel">결재자 선택(최대 3명)</h1>
-				      </div>
-						<div class="bd-example">
-						    <div class="list-group">
 
-						    	<c:forEach items="${ulist }" var="u">
-							        <label class="list-group-item">
-							            <input class="form-check-input me-1" name="ckbox" type="checkbox" value="${u.empNo }">
-							            ${u.empRank } ${u.empName }
-							        </label>
-						        </c:forEach>
-						    </div>
-						</div>
 
-				      <div class="modal-footer">
-				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" id ="btnSave" class="btn btn-primary">결재 신청</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-	    	</form>
-
-      <!-- 메인 여기까지 -->
+     
 <!-- Footer Section Start -->
       <%@include file = "../footer.jsp" %>
       <!-- Footer Section End -->    </main>
@@ -272,8 +217,6 @@
     <!-- App Script -->
     <script src="/js/hope-ui.js" defer></script>
     
-
-    
         
     <script>
 	var url= window.location.href;
@@ -288,11 +231,9 @@
 
 	})
 
-
-
-
 	</script>
-
+	
+	
   </body>
 </html>
 

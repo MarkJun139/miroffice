@@ -90,7 +90,7 @@
 							<h3>${list.forumTitle}</h3>
 							</p>
 							<div>
-								<image src="/images${list.empPhoto }" alt="User-Profile"
+								<image src="/images${list.empPhoto }.jpg" alt="User-Profile"
 									class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
 									style="object-fit:cover"> <b
 									style="color: black; position: relative; bottom: 10px; display: inline;">
@@ -134,7 +134,7 @@
 										<div id="comment"
 											style="border-bottom-style: solid; border-bottom-color: lightgray; border-bottom-width: .1px">
 
-											<image src="/images${f.empPhoto }" alt="User-Profile"
+											<image src="/images${f.empPhoto }.jpg" alt="User-Profile"
 												class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
 												style="object-fit:cover"> <b
 												style="padding-left: 5px; color: black;">${f.empName }
