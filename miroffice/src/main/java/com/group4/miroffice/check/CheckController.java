@@ -215,13 +215,18 @@ public class CheckController {
 
 		CheckDate checkdate = service2.checkdate(dayCheck);
 
-		int y = checkdate.getCheckWorkTime();
-
-		int H = (y / 60) / 60;
-
-		int M = ((y / 60) % 60) * 60;
-
-		LocalTime checkTime = LocalTime.of(H, M, 00);
+		if (checkdate != null) {
+			int y = checkdate.getCheckWorkTime();
+			if (y > 60) {
+				int H = (y / 60) / 60;
+				int M = (y - (H * 60 * 60)) / 60;
+				LocalTime checkTime = LocalTime.of(H, M, 00);
+				m.addAttribute("checkTime", checkTime);
+			} else {
+				LocalTime checkTime2 = LocalTime.of(0, 0, 0);
+				m.addAttribute("checkTime", checkTime2);
+			}
+		}
 
 		List<CheckDate> weekCheck = new ArrayList<>();
 
@@ -238,15 +243,22 @@ public class CheckController {
 
 			CheckDate day2 = service2.weekCheck(day);
 
-			int u = day2.getCheckWorkTime();
-
-			int Hour = (u / 60) / 60;
-
-			int Minute = ((u / 60) % 60) * 60;
-
-			LocalTime time = LocalTime.of(Hour, Minute, 00);
-
-			weekWorkTime.add(time);
+			if (day2 != null) {
+				int u = day2.getCheckWorkTime();
+				if (u > 60) {
+					int Hour = (u / 60) / 60;
+					int Minute = (u - (Hour * 60 * 60)) / 60;
+					LocalTime time = LocalTime.of(Hour, Minute, 00);
+					weekWorkTime.add(time);
+				} else {
+					LocalTime time3 = LocalTime.of(0, 0, 0);
+					m.addAttribute("checkTime", time3);
+					weekWorkTime.add(time3);
+				}
+			} else {
+				LocalTime time2 = LocalTime.of(0, 0, 0);
+				weekWorkTime.add(time2);
+			}
 
 			weekCheck.add(day2);
 
@@ -254,10 +266,18 @@ public class CheckController {
 
 		List<String> searchEmp = service2.searchEmp(users.getDeptNo());
 
+		Checkout checkout = service2.checkout(dayCheck);
+
+		if (checkout != null) {
+			LocalTime start = checkout.getCheckStartTime();
+			LocalTime end = checkout.getCheckEndTime();
+			m.addAttribute("start", start);
+			m.addAttribute("end", end);
+		}
+
 		m.addAttribute("searchEmp", searchEmp);
 		m.addAttribute("user", users);
 		m.addAttribute("checkdate", checkdate);
-		m.addAttribute("checkTime", checkTime);
 		m.addAttribute("first", weekCheck.get(0));
 		m.addAttribute("second", weekCheck.get(1));
 		m.addAttribute("third", weekCheck.get(2));

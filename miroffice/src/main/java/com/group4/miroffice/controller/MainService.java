@@ -23,7 +23,7 @@ public class MainService {
 	}
 	
 	public List<ForumDto> getForumList(int deptNo) {
-		return dao.getForumList();
+		return dao.getForumList(deptNo);
 	}
 	public Integer getDeptNo(int empNo) {
 		return dao.getDeptNo(empNo);
