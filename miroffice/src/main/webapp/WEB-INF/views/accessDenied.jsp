@@ -1,32 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@include file="./logo.jsp"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-<title>에러 페이지</title>
-<style type="text/css">
-
-</style>
+<title>접근 제한</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <head>
 <body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<section class="error-page section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 offset-lg-3 col-12">
-				<!-- Error Inner -->
-				<div class="error-inner">
-					<h1>404<span>Oop's  sorry we can't find that page!</span></h1>
-					<p>Aenean eget sollicitudin lorem, et pretium felis. Nullam euismod diam libero, sed dapibus leo laoreet ut. Suspendisse potenti. Phasellus urna lacus</p>
-					<form class="search-form">
-						<input placeholder="Search from Here" type="text">
-						<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-					</form>
-				</div>
-				<!--/ End Error Inner -->
-			</div>
+	<div class="d-flex align-items-center justify-content-center vh-100">
+		<div class="text-center">
+			<h1 class="display-1 fw-bold text-primary ">404</h1>
+			<p class="fs-3">접근 권한이 없습니다.</p>
+			<a href="/" class="btn btn-primary">메인으로</a>
 		</div>
 	</div>
-</section>
+</body>
 </body>
 </html>

@@ -28,7 +28,7 @@
                 </svg>
                 </i>
             </div>
-            <div class="input-group search-input">
+            <!-- <div class="input-group search-input">
               <span class="input-group-text" id="search-input">
                 <svg class="icon-18" width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
@@ -36,13 +36,14 @@
                 </svg>
               </span>
               <input type="search" class="form-control" placeholder="Search...">
-            </div> 
+            </div>  -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
               
                 <li class="nav-item dropdown">
                   <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
+                    <!-- <img src="/images/emp_photo/2401001.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover"> -->
+                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
                     <div class="caption ms-3 d-none d-md-block" style="width: 130px;">
                         <h5 class="mb-0 caption-title">
                         <sec:authentication property= "principal.users.empName"/>

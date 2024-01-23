@@ -16,9 +16,6 @@ public class SecurityConfig {
 
 	@Autowired
 	private LoginUserDetailsService boardUserDetailsService;
-	
-//	/* 로그인 실패 핸들러 의존성 주입 */
-//	private FailureHandler failureHandler;
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

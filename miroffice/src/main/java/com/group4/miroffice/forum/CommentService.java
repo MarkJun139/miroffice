@@ -25,4 +25,8 @@ public class CommentService {
 	public int commentDelete(int commentno) {
 		return dao.commentDelete(commentno);
 	}
+	
+	public int commentEdit(CommentDto dto) {
+		return dao.commentEdit(dto);
+	}
 }

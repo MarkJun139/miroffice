@@ -47,9 +47,9 @@ public interface AdminDao {
 	@Select("select * from employee where emp_no = #{empNo}")
 	Admin empInfo(int empNo);
 	
-	@Update("UPDATE employee SET dept_no = #{deptNo}, emp_name = #{empName}, emp_hiredate = #{empHiredate}, "
-			+ "emp_job = #{empJob}, emp_rank = #{empRank}, emp_phone = #{empPhone}, emp_sal = #{empSal}, emp_address = #{empAddress}, "
-			+ "emp_address2 = #{empAddress2}, emp_email = #{empEmail}, emp_photo = #{empPhoto}, emp_birth = #{empBirth}, emp_role = #{empRole} "
+	@Update("UPDATE employee SET dept_no = #{deptNo},"
+			+ "emp_rank = #{empRank}, "
+			+ "emp_photo = #{empPhoto}"
 			+ " WHERE emp_no = #{empNo}")
 	int empUpdate(Admin admin);
 	

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../logo.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,30 +8,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>아이디 찾기</title>
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="../images/favicon.ico" />
-
-<!-- Library / Plugin Css Build -->
-<link rel="stylesheet" href="../css/core/libs.min.css" />
-
-
-<!-- Hope Ui Design System Css -->
-<link rel="stylesheet" href="../css/hope-ui.min.css?v=2.0.0" />
-
-<!-- Custom Css -->
-<link rel="stylesheet" href="../css/custom.min.css?v=2.0.0" />
-
-<!-- Dark Css -->
-<link rel="stylesheet" href="../css/dark.min.css" />
-
-<!-- Customizer Css -->
-<link rel="stylesheet" href="../css/customizer.min.css" />
-
-<!-- RTL Css -->
-<link rel="stylesheet" href="../css/rtl.min.css" />
-
-
 </head>
 <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section"
 	data-bs-offset="0" tabindex="0">
@@ -58,8 +36,7 @@
 								<!--logo End--> <!--Logo start-->
 								<div class="logo-main">
 									<div class="logo-normal">
-										<svg class="text-primary icon-30" viewBox="0 0 30 30"
-											fill="none" xmlns="http://www.w3.org/2000/svg">
+										<img src="./images/icons/logo.png" style="width: 50px;">
                                     <rect x="-0.757324" y="19.2427"
 												width="28" height="4" rx="2"
 												transform="rotate(-45 -0.757324 19.2427)"
@@ -107,35 +84,23 @@
 										<div class="floating-label form-group">
 											<label for="name" class="form-label">이름</label> <input
 												type="text" class="form-control" id="name" name="empName"
-												aria-describedby="email" placeholder=" "> <label
-												for="birth" class="form-label">전화번호</label> <input
-												type="number" class="form-control" id="phone" name="empPhone"
-												aria-describedby="email" placeholder="'-'제외">
+												aria-describedby="email" placeholder=" " value="${insertName }">
+											<c:if test="${nameError != null}">
+												<div class="error">${nameError}</div>
+											</c:if>
+											<label for="birth" class="form-label">전화번호</label> <input
+												type="text" class="form-control" id="phone"
+												name="empPhone" aria-describedby="email" placeholder=" "
+												value="${insertPhone}">
+											<c:if test="${phoneError != null}">
+												<div class="error">${phoneError}</div>
+											</c:if>
 										</div>
 									</div>
 								</div>
 								<button type="submit" class="btn btn-primary" id="findidbutton">찾기</button>
 							</form>
 						</div>
-					</div>
-					<div class="sign-bg sign-bg-right">
-						<svg width="280" height="230" viewBox="0 0 431 398" fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-                     <g opacity="0.05">
-                     <rect x="-157.085" y="193.773" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF" />
-                     <rect x="7.46875" y="358.327" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(-45 7.46875 358.327)" fill="#3B8AFF" />
-                     <rect x="61.9355" y="138.545" width="310.286"
-								height="77.5714" rx="38.7857"
-								transform="rotate(45 61.9355 138.545)" fill="#3B8AFF" />
-                     <rect x="62.3154" y="-190.173" width="543"
-								height="77.5714" rx="38.7857"
-								transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF" />
-                     </g>
-                  </svg>
 					</div>
 				</div>
 			</div>
@@ -173,18 +138,4 @@
 	<script src="../js/hope-ui.js" defer></script>
 
 </body>
-</body>
-<script>
-$('#findidbutton').click(function(){
-    if($('#name').val() == ''){
-    	  alert("이름을 입력하세요.");
-          return false;
-      }
-    if($('#phone').val() == ''){
-    	alert("전화번호를 입력하세요.");
-          return false;
-      }
-    return true;
-});
-</script>
 </html>

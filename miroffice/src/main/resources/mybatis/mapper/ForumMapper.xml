@@ -26,9 +26,12 @@
 		where forum_no = #{forumNo}
 	</update>
 
+	<delete id="forumDelete" parameterType="Integer">
+		delete from forum where forum_no = #{forumno}
+	</delete>
 	
 	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
-		select * from forum where dept_no = #{deptno}
+		select * from forum where dept_no = #{deptno} order by forum_date desc 
 	</select>
 	
 	

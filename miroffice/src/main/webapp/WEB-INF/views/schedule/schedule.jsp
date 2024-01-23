@@ -4,9 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-	crossorigin="anonymous"></script>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -45,7 +42,9 @@
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 <!-- jquery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
 <!-- 부트 스트랩 CDN -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -140,40 +139,43 @@
 	<!-- App Script -->
 	<script src="/js/hope-ui.js" defer></script>
 	<!-- 일정 추가 modal -->
-	<div class="modal fade" id="scheduleInsert" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">일정 입력</h5>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="taskId" class="col-form-label">일정 제목</label> <input
-							type="text" class="form-control" id="schedule_title"
-							name="schedule_title"> <label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
-							class="form-control" id="schedule_start" name="schedule_start">
-						<label for="taskId" class="col-form-label">종료 날짜</label> <input
-							type="date" class="form-control" id="schedule_end"
-							name="schedule_end"> <label for="taskId"
-							class="col-form-label">일정 종류</label> <select class="form-control"
-							id="schedule_type" name="schedule_type">
-							<option value="#FFA500">출장</option>
-							<option value="#3CB371">휴가</option>
-							<option value="#87CEFA">기타</option>
-						</select> <label for="taskId" class="col-form-label">종일</label> <input
-							type="checkbox" id="schedule_allDay" name="schedule_allDay" checked>
+	<form id="modalf" name="modalf" onsubmit="return false">
+		<div class="modal fade" id="scheduleInsert" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">일정 입력</h5>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="taskId" class="col-form-label">일정 제목</label> <input
+								type="text" class="form-control" id="schedule_title"
+								name="schedule_title"> <label for="taskId"
+								class="col-form-label">시작 날짜</label> <input type="datetime-local"
+								class="form-control" id="schedule_start" name="schedule_start">
+							<label for="taskId" class="col-form-label">종료 날짜</label> <input
+								type="datetime-local" class="form-control" id="schedule_end"
+								name="schedule_end"> <label for="taskId"
+								class="col-form-label">일정 종류</label> <select
+								class="form-control" id="schedule_type" name="schedule_type">
+								<option value="#FFA500">출장</option>
+								<option value="#3CB371">휴가</option>
+								<option value="#87CEFA">기타</option>
+							</select> <label for="taskId" class="col-form-label">종일</label> <input
+								type="checkbox" id="schedule_allDay" name="schedule_allDay"
+								checked>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 
 	<!-- 일정 수정, 삭제 modal -->
 	<div class="modal fade" id="updateAndDeleteModal" tabindex="-1"
@@ -188,15 +190,15 @@
 						<label for="taskId" class="col-form-label">일정 제목</label> <input
 							type="text" class="form-control" id="update_schedule_title"
 							name="update_schedule_title"> <label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
+							class="col-form-label">시작 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_start"
 							name="update_schedule_start"> <label for="taskId"
-							class="col-form-label">종료 날짜</label> <input type="date"
+							class="col-form-label">종료 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_end"
 							name="update_schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
 							id="update_schedule_type" name="update_schedule_type">
-							<option value="#FFA500">출장</option>
+							<option value="#FFA500" selected="selected">출장</option>
 							<option value="#3CB371">휴가</option>
 							<option value="#87CEFA">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
@@ -255,8 +257,8 @@
 			selectable : true, // 달력 일자 드래그 설정가능
 			nowIndicator : true, // 현재 시간 마크
 			dayMaxEvents : true, // 이벤트가 오버되면 + 몇 개식으로 표현
-			droppable: true, // 일정 드래그 앤 드롭
-			editable: true, // droppable 작동 하기 위해 필요
+			// droppable: true, // 일정 드래그 앤 드롭
+			// editable: true, // droppable 작동 하기 위해 필요
 			customButtons: {
 				dept: {
 			      text: '부서',
@@ -270,29 +272,33 @@
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-             select: function (data) { // 일정 추가
-            	 $('#scheduleInsert').on('shown.bs.modal', function (e) {
-            		// 기본값 설정
+             select: function (info) { // 일정 추가
+            	 $(this).on('hidden.bs.modal', function (e) { // 값 저장하지 않고 모달 창 껐다 켰을 때 초기화
+                     document.forms['modalf'].reset();
+                 })
+                 
+                 let startDate = new Date(info.start - (info.start.getTimezoneOffset() * 60000));
+               	 let endDate = new Date(info.end - (info.end.getTimezoneOffset() * 60000)); 
+                 
+            	 $('#scheduleInsert').on('shown.bs.modal', function (e) { // 기본값 설정
              		$(this).find('.form-control')[0].value = '';
-             		$(this).find('.form-control')[1].value = data.startStr;
-             		$(this).find('.form-control')[2].value = data.endStr;
+             		$(this).find('.form-control')[1].value = startDate.toISOString().slice(0, 19);
+             		$(this).find('.form-control')[2].value = endDate.toISOString().slice(0, 19);
              		$(this).find('.form-control')[3].value = '#FFA500';
                  })
+                 
                  insert = 0;
             	 
                  $("#scheduleInsert").modal("show"); // modal 나타내기      
                 
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
-                	 var tf = $("input:checkbox[id='schedule_allDay']").is(":checked");
-                     // console.log(tf);
                 	 insert++;
                  
                 	 if(insert == 1){	 
-                	 var day = $('#update_schedule_allDay').is(":checked");
                      var title = $("#schedule_title").val();
                      var start_date = $("#schedule_start").val();
                      var end_date = $("#schedule_end").val();
-                     var all_day = tf;
+                     var all_day = $('#schedule_allDay').is(":checked");
                      var color = $("#schedule_type").val();
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
@@ -333,11 +339,13 @@
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
-            	 // console.log(info.event._def.extendedProps);
-            	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) {           		
+                 let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
+            	 let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));
+            	 
+            	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) { // 기본값 설정
               		$(this).find('.form-control')[0].value = info.event._def.title;
-               		$(this).find('.form-control')[1].value = info.event.startStr;
-               		$(this).find('.form-control')[2].value = info.event.endStr;
+               		$(this).find('.form-control')[1].value = updateDeleteStartDate.toISOString().slice(0, 19);
+               		$(this).find('.form-control')[2].value = updateDeleteEndDate.toISOString().slice(0, 19);
                		$(this).find('.form-control')[3].value = info.event.backgroundColor;
                 		if(info.event.allDay == true){
                			$('#update_schedule_allDay').prop("checked", true)
@@ -354,7 +362,7 @@
                      var title = $("#update_schedule_title").val();
                      var start_date = $("#update_schedule_start").val();
                      var end_date = $("#update_schedule_end").val();
-                     var all_day = info.event.allDay;
+                     var all_day = $("#update_schedule_allDay").is(":checked");
                      var sche_no = info.event._def.extendedProps.sche_no;
                      var color = $("#update_schedule_type").val();
 

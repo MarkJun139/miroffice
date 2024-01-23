@@ -71,7 +71,7 @@
                  	 	<div class="card-body">
 	                 	 	<h5 class="card-title text-center">사진 등록</h5>
 	                 	 	<label for="preview">
-	                 	 		<img class="card-img-top img-fluid" width="170px" height="200px" style="object-fit:cover" src="https://blog.kakaocdn.net/dn/bftRiB/btqAjaghSBk/5CcN9W5qyCU8HLylVYcXb1/img.png" alt="미리보기" id="previewImage">
+	                 	 		<img class="card-img-top" src="/images${emp.empPhoto}" width="170px" height="200px" style="object-fit:cover" alt="미리보기" id="previewImage">
 	                 	 	</label>
 	               			<input type="file" class="form-control" id="empPhotoFile" name="empPhotoFile" onchange="handleFileSelect()">
                			</div>
