@@ -27,7 +27,7 @@ public class AdminService {
 		dao.addEmp(admin);
 		dao.addCheckOut(admin);
 		
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 	public List<Dept> deptList() {
 		return dao.deptList();
@@ -54,7 +54,7 @@ public class AdminService {
 		dao.checkDeptUpdate(admin);
 		dao.scheDeptUpdate(admin);
 		
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 	
 	public int deleteDept(int deptNo) {

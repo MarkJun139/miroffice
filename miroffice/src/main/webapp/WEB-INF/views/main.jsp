@@ -377,66 +377,85 @@
 	              <div class="col-6">
 				    <div class="card">
 				      <div class="card-body text-center">
-				        <h3 class="card-title">출근시간</h3>
-				        <c:choose>
-				        	<c:when test="${startTime.year == 70 }">
-				        		<p class="card-text">출근시간 미등록</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                   <a href="/main/start" class="p-2 btn btn-info text-uppercase">출근 등록</a>
-				                </div>
-				        	</c:when>
-				        	<c:when test="${empty startTime.year}">
-				        		<p class="card-text">출근시간 미등록</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                   <a href="/main/start" class="p-2 btn btn-info text-uppercase">출근 등록</a>
-				                </div>
-				        	</c:when>
-				        	<c:when test="${startTime.year != 70 }">
-				        		<p class="card-text">
-				        			<fmt:formatDate pattern = "HH시 mm분 ss초" value="${startTime}"/>
-				        		</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                   <button class="p-2 btn btn-info text-uppercase" disabled>출근 등록</button>
-				                </div>
-				        	</c:when>
-				        	
-				        </c:choose>
-				        
-		                 
+				        <h4 class="card-title h2">출근시간</h4>
+				        	<c:choose>
+				        		<c:when test="${empty startTime}">
+				        			<p class="card-text">출근시간 미등록</p>
+					        		<div class="grid-cols d-grid gap-card">
+					                   <button class="p-2 btn btn-info text-uppercase" onclick="checkTest(event,'출근')">출근 등록
+					                   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+									    <span class="visually-hidden">New alerts</span>
+									  </span>
+									  </button>
+					                </div>
+				        		</c:when>
+				        		<c:when test="${not empty startTime}">
+				        			<p class="card-text">
+				        				${startTime }
+					        		</p>
+					        		<p></p>
+					        		<div class="grid-cols d-grid gap-card">
+					                   <button class="p-2 btn btn-success text-uppercase" disabled>출근 등록 완료</button>
+					                </div>
+				        		</c:when>
+				        	</c:choose>
 				      </div>
 				    </div> 
 				  </div>
 				  <div class="col-6">
 				    <div class="card">
-				      <div class="card-body text-center">
-				        <h3 class="card-title">퇴근시간</h3>
+				      <div class="card-body text-center"> 
+				        <h4 class="card-title h2">퇴근시간</h4>
 				        <c:choose>
-				        	<c:when test="${endTime.year == 70 }">
-				        		<p class="card-text">미등록</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                	<a href="/main/end" class="p-2 btn btn-primary text-uppercase">퇴근 등록</a>
-				                </div>
-				        	</c:when>
-				        	<c:when test="${empty endTime.year}">
-				        		<p class="card-text">퇴근시간 미등록</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                	<a href="/main/end" class="p-2 btn btn-primary text-uppercase">퇴근 등록</a>
-				                </div>
-				        	</c:when>
-				        	<c:when test="${endTime.year != 70 }">
-				        		<p class="card-text">
-				        			<fmt:formatDate pattern = "HH시 mm분 ss초" value="${endTime}"/>
-				        		</p>
-				        		<div class="grid-cols d-grid gap-card">
-				                	<button class="p-2 btn btn-primary text-uppercase" disabled>퇴근 등록</button>
-				                </div>
-				        	</c:when>
-				        </c:choose>
-				        
+				        		<c:when test="${empty startTime}">
+				        			<p class="card-text">출근시간 미등록</p>
+					        		<div class="grid-cols d-grid gap-card">
+					                   <button class="p-2 btn btn-primary text-uppercase" onClick="notStart();">퇴근 등록
+					                   <c:if test="${not empty startTime}">
+					                   	  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+										    <span class="visually-hidden">New alerts</span>
+										  </span>
+					                   </c:if>
+					                   </button>
+					                </div>
+				        		</c:when>
+				        		<c:when test="${empty endTime}">
+				        			<p class="card-text">출근시간 미등록</p>
+					        		<div class="grid-cols d-grid gap-card">
+					                   <button class="p-2 btn btn-primary text-uppercase" onclick="checkTest(event,'퇴근')">퇴근 등록
+					                   <c:if test="${not empty startTime}">
+					                   	  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+										    <span class="visually-hidden">New alerts</span>
+										  </span>
+					                   </c:if>
+					                   </button>
+					                </div>
+				        		</c:when>
+				        		<c:when test="${not empty endTime}">
+				        			<p class="card-text">
+				        				${endTime}
+					        		</p>
+					        		<p></p>
+					        		<div class="grid-cols d-grid gap-card">
+					                   <button class="p-2 btn btn-success text-uppercase" disabled>퇴근 등록 완료</button>
+					                </div>
+				        		</c:when>
+				        	</c:choose>
 				      </div>
 				    </div>
 				  </div>
-               </div>
+				  <c:if test="${not empty checkTime  }">
+				   <div class="col-12 text-center">
+				  	<div class="card">
+		                <div class="card-body">
+		                    <h4 class="card-title h2">금일 근무시간</h4>
+		                    <p class="card-text" style="font-size: 24px; font-weight: bold;">
+		                    	${checkTime}
+		                    </p>
+		                </div>
+		            </div>
+	               </div>
+	               </c:if>
                </div>
             </div>
             <!-- <div class="card" data-aos="fade-up" data-aos-delay="500">
@@ -488,7 +507,29 @@
 									   return num;
 								   }
 							   }
-				   
+				   				function notStart(){
+				   					alert("출근 등록을 먼저 해주세요");
+				   				}
+				   				function checkTest(e,a) {
+				   					const today = new Date();
+				   				    const year = today.getFullYear();
+				   				    const month = today.getMonth() + 1;
+				   				    const day = today.getDate();
+				   				    
+				   				    const conf = year + "년" + (month < 10 ? '0' + month : month) +"월"+ (day < 10 ? '0' + day : day) + "일";
+				   				    
+				   					const check = confirm("오늘은 " + conf + " 입니다. "+a+" 등록을 하시겠습니까?"); 
+				   					if(check) {
+				   						alert(conf + a + " 등록 성공");
+				   						if(a == "출근"){
+				   							location.href="/main/start";	
+				   						} else {
+				   							location.href="/main/end";
+				   						}
+				   					} else {
+				   						e.preventdefault();
+				   					}
+				   				}
 						   
 						   </script> 
 							<div class="col-md-12 col-lg-12">
@@ -507,7 +548,7 @@
 										  </div>
 									   </c:if>
 									 <c:forEach items="${scheduleList}" var="sche">
-										  <div class="card rounded-0 shadow-lg" style="border-left: 5px solid ${sche.color};">
+										  <div class="card rounded-0 shadow-lg" style="border-left: 5px solid ${sche.color}">
 											 <div class="card-body">
 												<h4 class="mb-2 card-title">${sche.scheTitle}</h4>
 												<p class="card-text">${sche.scheCategory}</p>
