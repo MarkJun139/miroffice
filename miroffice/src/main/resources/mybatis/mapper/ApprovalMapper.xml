@@ -18,6 +18,27 @@
 		#{appAdmin2}, #{appAdmin3}, #{appApprove1}, #{appApprove2}, #{appApprove3}, #{appApprovefinal})
 	</insert>
 	
+	<update id="approvalApprove1" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval
+		<set>
+			<if test="appAdmin1 != null">app_approve1 = true,</if>
+			<if test="appAdmin2 != null">app_approve2 = true,</if>
+			<if test="appAdmin3 != null">app_approve3 = true,</if>
+		</set>
+		where app_no = #{appNo}
+	</update>
+	
+		
+	<update id="approvalApprovef" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval set app_approvefinal = true
+		<where>
+			<if test="appAdmin1 != null">app_approve1 is true</if>
+			<if test="appAdmin2 != null">and app_approve2 is true</if>
+			<if test="appAdmin3 != null">and app_approve3 is true</if>
+		</where>
+	</update>
+	
+	
 	<update id="adminApprovalEdit" parameterType="com.group4.miroffice.approval.ApprovalDto">
 		update approval
 		<set>
@@ -56,6 +77,15 @@
 		</choose>
 	</select>
 	
+	<select id="approvalList4" parameterType="Map" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where (${ad1} = #{empno} and ${ap1} is null) or (${ad2} = #{empno} and ${ap2} is null) or (${ad3} = #{empno} and ${ap3} is null);
+	</select>
+
+	<select id="approvalList5" parameterType="Map" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where (${ad1} = #{empno} and ${ap1} is true) or (${ad2} = #{empno} and ${ap2} is true) or (${ad3} = #{empno} and ${ap3} is true);
+	</select>
+	
+		
 	
 	
 	<select id="approvalListOne" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">

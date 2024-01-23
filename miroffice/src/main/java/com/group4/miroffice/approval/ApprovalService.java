@@ -15,6 +15,14 @@ public class ApprovalService {
 		return dao.approvalSubmit(dto);
 	}
 	
+	public int approvalApprove1(ApprovalDto dto) {
+		return dao.approvalApprove1(dto);
+	}
+
+	public int approvalApprovef(ApprovalDto dto) {
+		return dao.approvalApprovef(dto);
+	}
+	
 	public List<ApprovalDto> approvalList(int deptno) {
 		return dao.approvalList(deptno);
 	}
@@ -26,6 +34,15 @@ public class ApprovalService {
 	public List<ApprovalDto> approvalList3(Map<String, Object> map) {
 		return dao.approvalList3(map);
 	}
+	
+	public List<ApprovalDto> approvalList4(Map<String, Object> map) {
+		return dao.approvalList4(map);
+	}
+
+	public List<ApprovalDto> approvalList5(Map<String, Object> map) {
+		return dao.approvalList5(map);
+	}
+
 	
 	public ApprovalDto approvalListOne(int appno){
 		return dao.approvalListOne(appno);
