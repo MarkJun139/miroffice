@@ -65,7 +65,8 @@
 .name {
 	width: 200px;
 	font-size: 25px;
-	margin-left: 10px;
+	margin-left: 420px;
+	margin-top: -40px;
 	border: 2px solid;
 	text-align: center;
 	color: black;
@@ -74,7 +75,8 @@
 .department {
 	width: 200px;
 	font-size: 25px;
-	margin-left: 10px;
+	margin-left: 850px;
+	margin-top: -40px;
 	border: 2px solid;
 	text-align: center;
 	color: black;
@@ -83,15 +85,16 @@
 .rank {
 	width: 200px;
 	font-size: 25px;
-	margin-left: 10px;
+	margin-left: 1220px;
+	margin-top: -40;
 	border: 2px solid;
 	text-align: center;
 	color: black;
 }
 
 .address {
-	margin-top: 95px;
-	margin-left: 10px;
+	margin-top: -37px;
+	margin-left: 420px;
 	border: 2px solid;
 	font-size: 25px;
 	width: 1000px;
@@ -100,8 +103,9 @@
 }
 
 .email {
-	margin-top: 90px;
-	margin-left: 10px;
+	margin-top: -37px;
+	margin-left: 420px;
+	margin-bottom: 100px;
 	border: 2px solid;
 	font-size: 25px;
 	width: 1000px;
@@ -121,6 +125,9 @@
     width: 100px;
     border-radius: 10px;
   }
+.image {
+	margin: 50px;
+}
 </style>
 
 <script>
@@ -164,24 +171,19 @@
 				</div>
 				<!--  메인 여기부터!!! -->
 
-				<div class="employee-container">
-					<div class="image">${user.empPhoto}</div>
-					<div clas="info">
-					<h3>이름 :</h3>
-					<h3 style="margin-top: 100px">주소 :</h3>
-					<h3 style="margin-top: 100px">이메일 :</h3>
-					</div>
-					<div clas="info">
+					<img class="image" src="${image}" alt="Employ Photo">
+					<h3 style="margin-left: 320px; margin-top: -350px;">이름 :</h3>
 					<div class="name">${user.empName}</div>
-					<div class="address">${user.empAddress}</div>
-					<div class="email">${user.empEmail}</div>
-					</div>
-					<h3 style="margin-left: -650px">부서명 :</h3>
+					<h3 style="margin-left: 720px; margin-top: -35px;">부서명 :</h3>
 					<div class="department">${dept.deptName}</div>
-					<h3 style="margin-left: 55px">직책 :</h3>
-					<div class="rank">${user.empRank}</div>	
-					<button class="edit-button" onclick="passwordCheck()">수정</button>			
-				</div>
+					<h3 style="margin-left: 1120px; margin-top: -35px;">직책 :</h3>
+					<div class="rank">${user.empRank}</div>
+					<h3 style="margin-top: 100px; margin-left: 320px">주소 :</h3>
+					<div class="address">${user.empAddress}</div>
+					<h3 style="margin-top: 100px; margin-left: 305px">이메일 :</h3>
+					<div class="email">${user.empEmail}</div>
+					<button class="edit-button" onclick="passwordCheck()">수정</button>
+					
 
 				<!-- 메인 여기까지 -->
 			</div>

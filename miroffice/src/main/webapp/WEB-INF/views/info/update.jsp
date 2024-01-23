@@ -199,7 +199,7 @@
 				<div class="form-container">
 				<form method="post">
 					<input type="hidden" value="${user.empNo}" name="empNo">
-					<input class="image" value="${user.empPhoto}" name="empPhoto">
+					<img class="image" src="${image}" name="empPhoto">
 					<h3 style="margin-top: -350px; margin-left: 300px;">이름 :</h3>
 					<input class="name" value="${user.empName}" name="empName">
 					<h3 style="margin-left: 850px; margin-top: -40px">전화번호 :</h3>

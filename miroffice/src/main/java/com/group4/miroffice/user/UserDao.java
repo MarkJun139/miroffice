@@ -31,7 +31,7 @@ public interface UserDao {
 	@Select("select * from department where dept_no = #{deptNo}")
 	Dept dept(int deptNo);
 	
-	@Update("UPDATE employee SET emp_photo = #{empPhoto}, emp_name = #{empName}, emp_phone = #{empPhone},"
+	@Update("UPDATE employee SET emp_name = #{empName}, emp_phone = #{empPhone},"
 			+ " emp_address = #{empAddress}, emp_address2 = #{empAddress2},"
 			+ " emp_email = #{empEmail} WHERE emp_no = #{empNo}")
 	int infoUpdate(Users user);
