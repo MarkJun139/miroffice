@@ -154,10 +154,11 @@
 							<label for="taskId" class="col-form-label">일정 제목</label> <input
 								type="text" class="form-control" id="schedule_title"
 								name="schedule_title"> <label for="taskId"
-								class="col-form-label">시작 날짜</label> <input type="date"
-								class="form-control" id="schedule_start" name="schedule_start">
-							<label for="taskId" class="col-form-label">종료 날짜</label> <input
-								type="date" class="form-control" id="schedule_end"
+								class="col-form-label">시작 날짜</label> <input
+								type="datetime-local" class="form-control" id="schedule_start"
+								name="schedule_start"> <label for="taskId"
+								class="col-form-label">종료 날짜</label> <input
+								type="datetime-local" class="form-control" id="schedule_end"
 								name="schedule_end"> <label for="taskId"
 								class="col-form-label">일정 종류</label> <select
 								class="form-control" id="schedule_type" name="schedule_type">
@@ -185,7 +186,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">일정 수정, 삭제</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">일정 수정 / 삭제</h5>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
@@ -195,10 +196,10 @@
 							class="col-form-label">부서원</label> <input type="text"
 							class="form-control" id="update_schedule_people"
 							name="update_schedule_title" readonly><label for="taskId"
-							class="col-form-label">시작 날짜</label> <input type="date"
+							class="col-form-label">시작 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_start"
 							name="update_schedule_start"> <label for="taskId"
-							class="col-form-label">종료 날짜</label> <input type="date"
+							class="col-form-label">종료 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_end"
 							name="update_schedule_end"> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
@@ -235,9 +236,7 @@
 
 	})
 	
-    </script>
-</body>
-<script>
+
 const checkbox = document.getElementById('schedule_allDay');
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
@@ -262,8 +261,8 @@ const checkbox = document.getElementById('schedule_allDay');
 			selectable : true, // 달력 일자 드래그 설정가능
 			nowIndicator : true, // 현재 시간 마크
 			dayMaxEvents : true, // 이벤트가 오버되면 + 몇 개식으로 표현
-			droppable: true, // 일정 드래그 앤 드롭
-			editable: true, // droppable 작동 하기 위해 필요
+			// droppable: true, // 일정 드래그 앤 드롭
+			// editable: true, // droppable 작동 하기 위해 필요
 			customButtons: {
 				person: {
 			      text: '개인',
@@ -277,15 +276,19 @@ const checkbox = document.getElementById('schedule_allDay');
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-             select: function (data) { // 일정 추가
+             select: function (info) { // 일정 추가
             	 $('#scheduleInsert').on('hidden.bs.modal', function (e) { // 값 저장하지 않고 모달 창 껐다 켰을 때 초기화
                      document.forms['modalf'].reset();
                  })
+                 
+                 let startDate = new Date(info.start - (info.start.getTimezoneOffset() * 60000));
+            	 let endDate = new Date(info.end - (info.end.getTimezoneOffset() * 60000)); 
+                 
             	 $('#scheduleInsert').on('shown.bs.modal', function (e) { // 일정 기본값 설정
              		$(this).find('.form-control')[0].value = '';
-             		$(this).find('.form-control')[1].value = data.startStr;
-             		$(this).find('.form-control')[2].value = data.endStr;
-             		$(this).find('.form-control')[3].value = 'red';
+             		$(this).find('.form-control')[1].value = startDate.toISOString().slice(0, 19);
+             		$(this).find('.form-control')[2].value = endDate.toISOString().slice(0, 19);
+             		$(this).find('.form-control')[3].value = '#FFA500';
                  })
                  
                  insert = 0;
@@ -293,21 +296,21 @@ const checkbox = document.getElementById('schedule_allDay');
                  $("#scheduleInsert").modal("show"); // modal 나타내기
                  
                  $("#insertSchedule").on("click",function(){  // modal의 추가 버튼 클릭 시
-             
+                	var allDayTrueFalse = $("input:checkbox[id='schedule_allDay']").is(":checked");
                  	insert++;
                 	 
                  	if(insert == 1) {
                      var title = $("#schedule_title").val();
                      var start_date = $("#schedule_start").val();
                      var end_date = $("#schedule_end").val();
-                     var all_day = $("#schedule_allDay").val();
+                     var all_day = $('#update_schedule_allDay').is(":checked");
                      var color = $("#schedule_type").val();
   
                      calendar.addEvent({ // fullcalendar에 이벤트 추가
                     	 title : title,
                     	 start : start_date,
                     	 end : end_date,
-                    	 allDay : all_day,
+                    	 allDay : allDayTrueFalse,
                     	 color : color,
                      })
 
@@ -321,7 +324,7 @@ const checkbox = document.getElementById('schedule_allDay');
                         	 "title": title,
                         	 "start": start_date,
                         	 "end": end_date,
-                        	 "allDay": all_day,
+                        	 "allDay": allDayTrueFalse,
                         	 "color" : color
                         	 }
                      	})
@@ -342,9 +345,16 @@ const checkbox = document.getElementById('schedule_allDay');
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
-            	 var sche_no = info.event._def.extendedProps.sche_no;
+                let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
+           	 	let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));
+           	 	
              	up = 0;
+             	
              	del = 0;
+           	 	
+             	// 사원 이름 가져오기
+            	var sche_no = info.event._def.extendedProps.sche_no;
+	
               	 $(function selectName(){
               		 $.ajax({
               			 cache:"false",
@@ -354,13 +364,13 @@ const checkbox = document.getElementById('schedule_allDay');
               			data : {"scheNo" : sche_no}
                      	})
               	})
-              	console.log(info.event._def.extendedProps)
+              	
             	 $('#updateAndDeleteModal').on('shown.bs.modal', function (e) {
              		// 기본값 설정           		
              		$(this).find('.form-control')[0].value = info.event._def.title;
              		$(this).find('.form-control')[1].value = info.event._def.extendedProps.emp_name;
-              		$(this).find('.form-control')[2].value = info.event.startStr;
-              		$(this).find('.form-control')[3].value = info.event.endStr;
+              		$(this).find('.form-control')[2].value = updateDeleteStartDate.toISOString().slice(0, 19);
+              		$(this).find('.form-control')[3].value = updateDeleteEndDate.toISOString().slice(0, 19);
               		$(this).find('.form-control')[4].value = info.event.backgroundColor;
                		if(info.event.allDay == true){
               			$('#update_schedule_allDay').prop("checked", true)
@@ -369,7 +379,7 @@ const checkbox = document.getElementById('schedule_allDay');
                  $("#updateAndDeleteModal").modal("show"); // modal 나타내기
 				
                  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
-                	 // console.log(info);
+                	 console.log(updateDeleteAllDayTrueFalse);
                 	 up++;
                 	 if(up == 1){
                      confirm("일정을 변경하시겠습니까?")
@@ -378,10 +388,12 @@ const checkbox = document.getElementById('schedule_allDay');
                      var title = $("#update_schedule_title").val();
                      var start_date = $("#update_schedule_start").val();
                      var end_date = $("#update_schedule_end").val();
-                     var all_day = info.event.allDay;
+                     var all_day = $("#update_schedule_allDay").is(":checked");
                      var sche_no = info.event._def.extendedProps.sche_no;
                      var color = $("#update_schedule_type").val();
                      var emp_no = info.event._def.extendedProps.emp_no;
+                     
+                     console.log(start_date);
                      $(function updateData() {
                          $.ajax({
                         	 cache:"false",

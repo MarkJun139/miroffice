@@ -41,7 +41,7 @@ public class ScheduleController {
 	@PostMapping("/insert")
 	@ResponseBody
 	public String newSchedule(@AuthenticationPrincipal SecurityUser user,
-			@RequestParam(value = "title", defaultValue = "default") String title,
+			@RequestParam(value = "title", defaultValue = "일정") String title,
 			@RequestParam(value = "start", defaultValue = "default") String start,
 			@RequestParam(value = "end", defaultValue = "default") String end,
 			@RequestParam(value = "allDay", defaultValue = "true") boolean allDay,
