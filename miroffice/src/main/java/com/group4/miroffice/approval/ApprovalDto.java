@@ -28,6 +28,7 @@ public class ApprovalDto {
 	private String appAppr1;
 	private String appAppr2;
 	private String appAppr3;
+	private String option;
 
 
 

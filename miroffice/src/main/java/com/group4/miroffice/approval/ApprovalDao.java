@@ -24,9 +24,13 @@ public interface ApprovalDao {
 	int approvalSubmit(ApprovalDto dto);
 	
 	int approvalApprove1(ApprovalDto dto);
+	
+	int approvalNo(ApprovalDto dto);
 
 	
 	int approvalApprovef(ApprovalDto dto);
+	
+	int approvalApprovefail(ApprovalDto dto);
 	
 	int adminApprovalWrite(ApprovalDto dto);
 	
