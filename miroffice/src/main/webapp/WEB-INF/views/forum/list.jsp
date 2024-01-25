@@ -70,15 +70,16 @@
             
     
     <form name="form" id="form" method="post">
-  <div class="table-responsive" style="width: 1200px;">
-     <table id="datatable2" class="table table-striped" data-toggle="data-table" style="width: 100%;">
+  <div class="mt-4 table-responsive" style="width: 1000px;">
+		<table id="basic-table" class="table mb-0 table-hover" role="grid" style="width: 1000px;">
 	        
         <thead>
            <tr>
+        
               <th>제목</th>
-              <th>작성자</th>
-              <th>조회수</th>
-              <th>작성날짜</th>
+              <th style="width: 10%">작성자</th>
+              <th style="width: 1%">조회수</th>
+              <th style="width: 5%">작성날짜</th>
            </tr>
         </thead>
         <tbody>

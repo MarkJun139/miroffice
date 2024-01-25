@@ -78,7 +78,10 @@
 			<td class="orange">문서명</td>
 			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="display: inline; font-size: 30" value="${list.forumTitle }"></td>
 			</h2>
-			<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
+			<sec:authentication property = "principal.users.empRole" var="role"/>
+	            <c:if test="${role == 'ROLE_TEAMLEADER'}">
+				<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
+			</c:if>
 			</tr>
 
     <!-- The toolbar will be rendered in this container. -->
@@ -144,22 +147,7 @@
       })
       
 	
-    $(document).ready(function(){
-    	  var x = $('#forumNotice').val()
-    	  checklist = x
-    	  if(x == 'true'){
-    	  	$('#ckbox').prop('checked', true);
-    	  }
-    	  
-  		  $("input[type='checkbox']").on("click", function(){
-  			  if($('#ckbox').is(":checked")==true){
-  				checklist = true;  
-  			  }
-  			  else if($('#ckbox').is(":checked")==false){
-  				  checklist = false;
-  			  }
-  		  })
-      })
+
     
       
 	</script>

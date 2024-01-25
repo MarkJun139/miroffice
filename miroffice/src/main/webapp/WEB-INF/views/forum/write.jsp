@@ -71,12 +71,17 @@
 
 <form name="form" id="form" action="write" method="post">
 		<input type="hidden" id="empNo" name="empNo" value="${pageContext.request.userPrincipal.name}"/>
+		<input type="hidden" id="forumNotice" name="forumNotice" value="0"/>
 		
     	<tr> 
     	<h2>
 			<td class="orange">문서명</td>
 			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="font-size: 30"/></td>
 			</h2>
+			<sec:authentication property = "principal.users.empRole" var="role"/>
+	            <c:if test="${role == 'ROLE_TEAMLEADER'}">
+				<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
+			</c:if>
 		</tr>
 
     <!-- The toolbar will be rendered in this container. -->
@@ -113,7 +118,7 @@
 			alert('내용을 입력하세요');
 		}
 		else{
-			<!--e.preventDefault();-->
+			document.getElementById("forumNotice").value = checklist;
 			$("#form").submit();
 		}
 	});
@@ -122,7 +127,23 @@
 		location.href="../forum";
 	});
 	
-	
+    $(document).ready(function(){
+  	  var x = $('#forumNotice').val()
+  	  checklist = x
+  	  if(x == 'true'){
+  	  	$('#ckbox').prop('checked', true);
+  	  }
+  	  
+		  $("input[type='checkbox']").on("click", function(){
+			  if($('#ckbox').is(":checked")==true){
+				checklist = true;  
+			  }
+			  else if($('#ckbox').is(":checked")==false){
+				  checklist = false;
+			  }
+		  })
+    })
+    
 	</script>
 
 
