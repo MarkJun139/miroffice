@@ -112,7 +112,7 @@
 		    	
 		    	<button type="button" id="btnSave" onclick="javascript: form.action='approval/write'">추가</button>
 		    	<button type="button" id="btnEdit" onclick="javascript: form.action='approval/edit'" disabled>수정</button>
-	   			<button type="button" id="btnList">취소</button>
+	   			<button type="button" id="btnList">삭제</button>
 	    	</form>
     	</div>
     	</div>

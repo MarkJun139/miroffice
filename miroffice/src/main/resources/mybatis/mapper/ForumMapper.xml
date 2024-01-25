@@ -31,7 +31,7 @@
 	</delete>
 	
 	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
-		select * from forum where dept_no = #{deptno} order by forum_date desc 
+		select * from forum where dept_no = #{deptno} order by forum_notice desc, forum_date desc 
 	</select>
 	
 	

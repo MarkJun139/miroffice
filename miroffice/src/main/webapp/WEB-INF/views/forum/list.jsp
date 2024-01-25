@@ -84,7 +84,11 @@
         <tbody>
         <c:forEach items="${list }" var="f">
            <tr>
-              <td><a href="./forum/${f.forumNo }">${f.forumTitle} 
+              <td>
+              <c:if test="${f.forumNotice == true}">
+              <span class="badge badge-info" style="background-color: var(--bs-info)">중요</span>
+              </c:if>
+              <a href="./forum/${f.forumNo }">${f.forumTitle} 
               <c:if test="${f.commentCount > 0}">
               <p style="display: inline; color: skyblue;">(${f.commentCount })</p>
               </c:if>

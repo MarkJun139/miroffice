@@ -18,9 +18,17 @@ public class ApprovalService {
 	public int approvalApprove1(ApprovalDto dto) {
 		return dao.approvalApprove1(dto);
 	}
+	
+	public int approvalNo(ApprovalDto dto) {
+		return dao.approvalNo(dto);
+	}
 
 	public int approvalApprovef(ApprovalDto dto) {
 		return dao.approvalApprovef(dto);
+	}
+	
+	public int approvalApprovefail(ApprovalDto dto) {
+		return dao.approvalApprovefail(dto);
 	}
 	
 	public List<ApprovalDto> approvalList(int deptno) {

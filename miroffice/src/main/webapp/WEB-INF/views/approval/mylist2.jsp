@@ -103,6 +103,7 @@
          <div class="col-md-8" style = "padding: 5px; border: 1px; float:left;">
 	        <form name="form" id="form" method="post" action="./approval/approve">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
+	        	<input type="hidden" name="option" id="option" value="">
 	        	<input type="hidden" name="appNo" id="appNo" value="">
 	            <input type="text" name="appTitle" id="appTitle" placeholder="양식 이름" readonly style="font-size: 16pt; display: inline; float: left;">
 	            <table id="appro" style="padding-left: 50px; float: left; position: relative;">
@@ -146,7 +147,8 @@
 				</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 승인</button>
+		    	<button type="button" id="btnCan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 반려</button>
 	   			
 	   			
 
@@ -169,6 +171,17 @@
 				$('#modal1').modal("show");
 			}
 		});
+		
+		$(document).on('click', '#btnCan', function(e){
+			
+			e.preventDefault();
+			if(newEditor.getData() == ''){
+				alert('내용을 입력하세요');
+			}
+			else{
+				$('#modal2').modal("show");
+			}
+		});
 		$(document).on('click', '#btnSave', function(e){
 			e.preventDefault();
 			var array = new Array();
@@ -179,7 +192,25 @@
 			$("#appAdmin1").val(array[0])
 			$("#appAdmin2").val(array[1])
 			$("#appAdmin3").val(array[2])
+			$("#option").val("submit")
+
 			
+			
+			$("#form").submit();
+		});
+		
+		$(document).on('click', '#btnSave2', function(e){
+			e.preventDefault();
+			var array = new Array();
+			$('input:checkbox[name=ckbox]:checked').each(function(){
+				array.push(this.value);
+				
+			});
+			$("#appAdmin1").val(array[0])
+			$("#appAdmin2").val(array[1])
+			$("#appAdmin3").val(array[2])
+			$("#option").val("cancel")
+
 			
 			$("#form").submit();
 		});
@@ -201,7 +232,7 @@
 					console.log(result)
 					document.getElementById("appNo").value = result.appNo
 					document.getElementById("appTitle").value = result.appTitle
-					$("#btnSave").attr("disabled", false)
+					$("#btnCan").attr("disabled", false)
 					$("#btnEdit").attr("disabled", false)
 					newEditor.setData(result.appText)
 					
@@ -302,6 +333,23 @@
 				      <div class="modal-footer">
 				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 				        <button type="button" id ="btnSave" class="btn btn-primary">승인</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+	    	</form>
+	    	
+	    			    	<form id="modalf2" method="post">
+				<div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h1 class="modal-title fs-5" id="staticBackdropLabel">해당 결재를 반려하시겠습니까?</h1>
+				      </div>
+
+				      <div class="modal-footer">
+				        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+				        <button type="button" id ="btnSave2" class="btn btn-primary">반려</button>
 				      </div>
 				    </div>
 				  </div>

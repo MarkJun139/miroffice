@@ -28,14 +28,27 @@
 		where app_no = #{appNo}
 	</update>
 	
+	<update id="approvalNo" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval
+		<set>
+			<if test="appAdmin1 != null">app_approve1 = false,</if>
+			<if test="appAdmin2 != null">app_approve2 = false,</if>
+			<if test="appAdmin3 != null">app_approve3 = false,</if>
+		</set>
+		where app_no = #{appNo}
+	</update>
+	
 		
 	<update id="approvalApprovef" parameterType="com.group4.miroffice.approval.ApprovalDto">
-		update approval set app_approvefinal = true
-		<where>
-			<if test="appAdmin1 != null">app_approve1 is true</if>
+		update approval set app_approvefinal = true where app_no = #{appNo} 
+			<if test="appAdmin1 != null">and app_approve1 is true</if>
 			<if test="appAdmin2 != null">and app_approve2 is true</if>
 			<if test="appAdmin3 != null">and app_approve3 is true</if>
-		</where>
+
+	</update>
+	
+	<update id="approvalApprovefail" parameterType="com.group4.miroffice.approval.ApprovalDto">
+		update approval set app_approvefinal = false where app_no = #{appNo}
 	</update>
 	
 	

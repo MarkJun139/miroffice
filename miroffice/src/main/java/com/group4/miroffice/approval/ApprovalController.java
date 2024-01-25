@@ -244,9 +244,16 @@ public class ApprovalController {
 				dto.setAppAdmin3(dto2.getAppAdmin3());
 			}
 		}
-		service.approvalApprove1(dto);
-		System.out.println("파이널전 " + dto2);
-		System.out.println("파이널"+ service.approvalApprovef(dto2));
+		if(dto.getOption().equals("submit")) {
+			service.approvalApprove1(dto);
+			System.out.println("파이널전 " + dto2);
+			System.out.println("파이널"+ service.approvalApprovef(dto2));
+		}
+		else if (dto.getOption().equals("cancel")) {
+			service.approvalNo(dto);
+			System.out.println("반려"+ dto2);
+			System.out.println("파이널"+ service.approvalApprovefail(dto2));
+		}
 		return "redirect:/main/approval?status=7";
 	}
 	
