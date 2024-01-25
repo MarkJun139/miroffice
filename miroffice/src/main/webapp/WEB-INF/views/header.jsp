@@ -43,7 +43,7 @@
                 <li class="nav-item dropdown">
                   <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- <img src="/images/emp_photo/2401001.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover"> -->
-                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
+                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
                     <div class="caption ms-3 d-none d-md-block" style="width: 130px;">
                         <h5 class="mb-0 caption-title">
                         <sec:authentication property= "principal.users.empName"/>
