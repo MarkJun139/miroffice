@@ -53,49 +53,16 @@
 	margin-top: 50px;
 	width: 1000px;
 }
+
 .hidden {
-    display: none;
+	display: none;
 }
-
+.number {
+	margin: 20px;
+	text-align: center;
+	font-size: 20px;
+}
 </style>
-<script>
-        function showPage(pageNumber) {
-            var tables = document.getElementsByClassName('tablePage');
-            for (var i = 0; i < tables.length; i++) {
-                tables[i].classList.add('hidden');
-            }
-
-            var currentPage = document.getElementById('tablePage' + pageNumber);
-            if (currentPage) {
-                currentPage.classList.remove('hidden');
-            }
-        }
-
-        function createPages() {
-            var tables = document.getElementsByClassName('table');
-            var pageCount = Math.ceil(tables.length / 20);
-
-            for (var i = 0; i < pageCount; i++) {
-                var tablePage = document.createElement('table');
-                tablePage.classList.add('table', 'tablePage', 'hidden');
-                tablePage.id = 'tablePage' + (i + 1);
-
-                var thead = tables[0].getElementsByTagName('thead')[0].cloneNode(true);
-                tablePage.appendChild(thead);
-
-                var tbody = document.createElement('tbody');
-                for (var j = i * 20; j < Math.min((i + 1) * 20, tables.length); j++) {
-                    tbody.appendChild(tables[j].getElementsByTagName('tbody')[0].cloneNode(true));
-                }
-                tablePage.appendChild(tbody);
-
-                document.body.appendChild(tablePage);
-            }
-        }
-
-        window.onload = createPages;
-    </script>
-
 </head>
 
 <body class="  ">
@@ -130,6 +97,7 @@
 				<form method="post">
 					<select style="margin-left: 40px; margin-top: 20px; width: 100px"
 						name="deptName" id="deptName">
+						<option value="all">전체</option>
 						<c:forEach var="deptName" items="${deptName}">
 							<option value="${deptName}">${deptName}</option>
 						</c:forEach>
@@ -156,6 +124,17 @@
 					</c:forEach>
 				</table>
 
+				<div class="number">
+					<c:if test="${totalPages > 1}">
+						<c:forEach var="pageNumber" begin="1" end="${totalPages}">
+							<c:url value="/main/address" var="pageUrl">
+								<c:param name="page" value="${pageNumber}" />
+								<c:param name="pageSize" value="${pageSize}" />
+							</c:url>
+							<a href="${pageUrl}">${pageNumber}</a>
+						</c:forEach>
+					</c:if>
+				</div>
 				<!-- 메인 여기까지 -->
 			</div>
 		</div>

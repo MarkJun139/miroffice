@@ -15,33 +15,51 @@ import com.group4.miroffice.dto.Address;
 @Controller
 @RequestMapping("/main")
 public class AddressController {
-	
+
 	@Autowired
 	private AddressService service;
-	
+
 	@GetMapping("/address")
-	public String Address(Model m) {
-		
-		List<Address> usersInfo = service.usersInfo();
-		
+	public String Address(Model m, @RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
+
+		List<Address> addresses = service.getPaginatedAddresses(page, pageSize);
+		int totalPages = service.getTotalPages(pageSize);
+
 		List<String> deptName = service.deptName();
-		
-		m.addAttribute("usersInfo", usersInfo);
+
+		m.addAttribute("usersInfo", addresses);
+		m.addAttribute("totalPages", totalPages);
 		m.addAttribute("deptName", deptName);
-		
+
 		return "address/address";
 	}
-	
+
 	@PostMapping("/address")
-	public String SearchAddress(@RequestParam("deptName") String deptName, Model m) {
-		
-		List<Address> searchAddress = service.searchAddress(deptName);
-		
+	public String SearchAddress(@RequestParam("deptName") String deptName, Model m,
+			@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
+
+		if (deptName.equals("all")) {
+
+			List<Address> addresses = service.getPaginatedAddresses(page, pageSize);
+			int totalPages = service.getTotalPages(pageSize);
+
+			m.addAttribute("usersInfo", addresses);
+			m.addAttribute("totalPages", totalPages);
+			
+		} else {
+			List<Address> addresses = service.searchAddressesByDept(deptName, page, pageSize);
+			int serchInfo = service.SearchtTotalPages(deptName, pageSize);
+
+			m.addAttribute("usersInfo", addresses);
+			m.addAttribute("totalPages", serchInfo);
+			
+		}
 		List<String> deptN = service.deptName();
-		
-		m.addAttribute("usersInfo", searchAddress);
+
 		m.addAttribute("deptName", deptN);
-		
+
 		return "address/address";
 	}
 
