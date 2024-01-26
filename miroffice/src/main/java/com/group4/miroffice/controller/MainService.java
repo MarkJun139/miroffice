@@ -22,8 +22,8 @@ public class MainService {
 		return dao.getScheduleList(empNo);
 	}
 	
-	public List<ForumDto> getForumList() {
-		return dao.getForumList();
+	public List<ForumDto> getForumList(int deptNo) {
+		return dao.getForumList(deptNo);
 	}
 	
 	public Integer getDeptNo(int empNo) {
