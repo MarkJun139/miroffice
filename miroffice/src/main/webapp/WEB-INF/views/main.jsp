@@ -65,7 +65,7 @@
 								<div
 									class="flex-wrap card-header d-flex justify-content-between">
 									<div class="header-title">
-										<a href="/main/forum"><h1 class="card-title">우리부서 게시판</h1></a>
+										<a href="/main/forum"><h1 class="card-title">부서 게시판</h1></a>
 									</div>
 								</div>
 								<div class="p-0 card-body">
@@ -78,7 +78,7 @@
 													<th>작성일</th>
 													<th>작성자</th>
 													<th>조회수</th>
-													<th>첨부파일</th>
+													<th>파일</th>
 												</tr>
 											</thead>
 											<tbody>
