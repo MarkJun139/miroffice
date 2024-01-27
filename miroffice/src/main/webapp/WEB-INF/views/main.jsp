@@ -66,6 +66,7 @@
 									class="flex-wrap card-header d-flex justify-content-between">
 									<div class="header-title">
 										<a href="/main/forum"><h1 class="card-title">부서 게시판</h1></a>
+
 									</div>
 								</div>
 								<div class="p-0 card-body">
@@ -399,6 +400,8 @@
 				   </div>
 				</div>
 				</div>
+
+      
 <script>
 
 							window.onload = function() {
