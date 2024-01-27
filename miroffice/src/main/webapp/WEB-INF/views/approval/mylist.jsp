@@ -66,11 +66,14 @@
                            <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
-                              	 	<div class="col-3 text-start" id="coldoc">
+                              	 	<div class="col-2 text-start" id="coldoc">
                      		 <h1 class="card-title">${title	 }</h1>
                      	</div>
-                     	<div class="col-3 text-start">
-                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	<div class="col-6 text-start">
+               	        <button type="button" id="btnAll" class="btn btn-success" disabled>전체</button>
+                     	<button type="button" id="btnAll" class="btn btn-success">대기</button>
+                     	<button type="button" id="btnAll" class="btn btn-success">완료</button>
+                     	<button type="button" id="btnAll" class="btn btn-success">반려</button>
                      	</div>
                      	</div>
                      	</div>
@@ -100,7 +103,7 @@
                </table>
             </div>
          	</div>
-         <div class="col-md-8" style = "padding: 5px; border: 1px; float:left;">
+         <div class="col-md-6" style = "padding: 5px; border: 1px; float:left;">
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
@@ -142,11 +145,11 @@
 		            </table>
 	            <div id="toolbar-container"></div>
 		        <div>	
-				<textarea id="appText" name="appText" placeholder="좌측에 결재 신청할 양식을 클릭해주세요"></textarea>
+				<textarea id="appText" name="appText" placeholder="좌측에 승인을 확인할 문서를 클릭해주세요"></textarea>
 				</div>
 		    	<script src="/ckeditor/ckeditorapprove.js"></script>
 		    	
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
+		    	
 	   			
 	   			
 

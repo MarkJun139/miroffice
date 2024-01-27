@@ -68,8 +68,7 @@
                               	 	<div class="col-3 text-start">
                      		 <h1 class="card-title">문서 양식</h1>
                      	</div>
-                     	<div class="col-3 text-start">
-                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+                     	<div class="col-6 text-start">
                      	</div>
                      	</div>
                      	</div>

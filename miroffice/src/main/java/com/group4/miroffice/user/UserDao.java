@@ -22,7 +22,7 @@ public interface UserDao {
 	@Select("select * from employee where emp_no = #{empname}")
 	Users profile(String empname);
 	
-	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where dept_no = #{deptNo}")
+	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where dept_no = #{deptNo} and emp_role='ROLE_TEAMLEADER'")
 	List<Users> findMyDeptEmp(int deptNo);
 	
 	@Select("select emp_no, emp_name, emp_rank, emp_job from employee where emp_no = #{u1} or emp_no = #{u2} or emp_no = #{u3}")
