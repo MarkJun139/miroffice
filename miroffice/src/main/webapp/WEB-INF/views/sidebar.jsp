@@ -11,10 +11,10 @@
                 <!--Logo start-->
                 <div class="logo-main">
                     <div class="logo-normal">
-						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px; float: left;">
+						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px">
                     </div>
                     <div class="logo-mini">
-						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px;">
+						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px">
                     </div>
                 </div>
                 <!--logo End-->

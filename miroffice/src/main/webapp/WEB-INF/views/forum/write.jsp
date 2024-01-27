@@ -69,21 +69,35 @@
                      	</div>
 <!--  메인 여기부터!!! -->      
 
-<form name="form" id="form" action="write" method="post">
+<form name="form" id="form" action="write" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="empNo" name="empNo" value="${pageContext.request.userPrincipal.name}"/>
 		<input type="hidden" id="forumNotice" name="forumNotice" value="0"/>
 		
-    	<tr> 
+		<div class="container" style="height: 60px;">
+		<div style="display: inline; float: right;">
+					
+		<input type="file" id="files" name="files">
+		</div>
+		
+		
+		<div style="display: inline; float: left;">
     	<h2>
-			<td class="orange">문서명</td>
-			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="font-size: 30"/></td>
+			<input name="forumTitle" id="forumTitle" size="33" width="30" style="font-size: 30" value="${list.forumTitle }">
 			</h2>
 			<sec:authentication property = "principal.users.empRole" var="role"/>
 	            <c:if test="${role == 'ROLE_TEAMLEADER'}">
 				<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
 			</c:if>
-		</tr>
+		</div>
 
+	</div>
+		
+
+		
+		
+		
+		
+		
     <!-- The toolbar will be rendered in this container. -->
     <div id="toolbar-container"></div>
 

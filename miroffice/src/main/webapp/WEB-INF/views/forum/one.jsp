@@ -89,7 +89,7 @@
 							<p>
 							<h3>${list.forumTitle}</h3>
 							</p>
-							<div>
+							<div style="display: inline;">
 								<image src="/images${list.empPhoto }.jpg" alt="User-Profile"
 									class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
 									style="object-fit:cover"> <b
@@ -102,24 +102,27 @@
 									&nbsp &nbsp 조회수 ${list.forumCount }
 								</p>
 							</div>
-
-
-							<textarea id="forumText" name="forumText">${list.forumText }</textarea>
+								<c:if test="${list.forumOfiles != null}">
+								<div style="float: right;">
+								파일 다운로드
+									<a href="<c:url value='/main/file/download/${list.forumFiles}/${list.forumOfiles }'/>">${list.forumOfiles}</a><br><br>
+								</div>
+								</c:if>
+							<textarea id="forumText" name="forumText">${list.forumText}</textarea>
 							<script
 								src="${pageContext.request.contextPath }/ckeditor/ckeditorforumone.js"></script>
 
+							<div id="action" style="display: none">
 							<sec:authorize
 								access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
-								<div id="action" style="display: none">
 									<button type="submit" id="fedit" class="btn btn-light"
 										onclick="javascript: form.action='/main/forum/edit/${list.forumNo}'">수정</button>
 									<button type="submit" id="fdelete" class="btn btn-light"
 										onclick="javascript: form.action='/main/forum/delete/${list.forumNo}'">삭제</button>
-									<button type="button" id="flist" class="btn btn-light"
-										style="float: right;">목록</button>
-
-								</div>
 							</sec:authorize>
+
+									</div>
+							
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<button type="submit" id="fadmindelete" class="btn btn-light">삭제</button>
 							</sec:authorize>
@@ -214,6 +217,10 @@
 									placeholder="댓글을 입력하세요!" style="width: 1000px; height: 100px;"></textarea>
 								<button type="button" id="cwrite" class="btn btn-success"
 									onclick="return commentWrite()">댓글쓰기</button>
+							</div>
+							<div>
+							<button type="submit" id="flist" class="btn btn-light" style="display: inline; float: right;"
+									onclick="javascript: form.action='/main/forum'">목록</button>
 							</div>
 						</form>
 					</div>

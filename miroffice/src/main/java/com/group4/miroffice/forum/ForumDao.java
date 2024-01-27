@@ -1,13 +1,14 @@
 package com.group4.miroffice.forum;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ForumDao {
 	
-	List<ForumDto> forumList(int deptno);
+	List<ForumDto> forumList(Map<String, Object> map);
 	
 	ForumDto forumOne(int forumno);
 	
@@ -18,4 +19,6 @@ public interface ForumDao {
 	int forumDelete(int forumno);
 	
 	int forumCountup(int forumno);
+	
+	int fileUpload(Map<String, Object> map);
 }
