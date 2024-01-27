@@ -63,7 +63,7 @@ public class ForumController {
 		map.put("min", minPage);
 		map.put("max", maxPage);
 		map.put("deptno", dto.getDeptNo());
-		map.put("keyword", "%" + keyword + "%	");
+		map.put("keyword", "%" + keyword + "%");
 		map.put("type", type);
 		
 		List<ForumDto> fl = service.forumList(map);
