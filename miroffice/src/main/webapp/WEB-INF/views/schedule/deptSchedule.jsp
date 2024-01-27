@@ -352,7 +352,7 @@ const checkbox = document.getElementById('schedule_allDay');
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
-            	 
+            	 console.log(info.event._def.extendedProps)
                 let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
            	 	let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));
            	 	
