@@ -5,8 +5,8 @@
 <mapper namespace="com.group4.miroffice.forum.ForumDao"> 
 	
 	<insert id="forumWrite" parameterType="com.group4.miroffice.forum.ForumDto">
-		insert into forum (emp_no, dept_no, forum_title, forum_text, forum_date, forum_notice, forum_files)
-		values (#{empNo}, #{deptNo}, #{forumTitle}, #{forumText}, now(), #{forumNotice}, #{forumFiles})
+		insert into forum (emp_no, dept_no, forum_title, forum_text, forum_date, forum_notice, forum_files, forum_ofiles)
+		values (#{empNo}, #{deptNo}, #{forumTitle}, #{forumText}, now(), #{forumNotice}, #{forumFiles}, #{forumOfiles})
 	</insert>
 
 	<update id="forumEdit" parameterType="com.group4.miroffice.forum.ForumDto">
@@ -15,11 +15,16 @@
 			<if test="forumTitle != null">forum_title = #{forumTitle},</if>
 			<if test="forumText != null">forum_text = #{forumText},</if>
 			<if test="forumNotice != null">forum_notice = #{forumNotice},</if>
+			<if test="forumOfiles != null">forum_ofiles = #{forumOfiles},</if>
+			<if test="forumFiles != null">forum_files = #{forumFiles},</if>
 			</set>
 		where forum_no = #{forumNo}
 	</update>
 
-	
+	<update id="fileUpload" parameterType="Map">
+		update forum set forum_files = #{files}
+		where forum_no = #{forumNo}
+	</update>
 	
 	<update id="forumCountup" parameterType="Integer">
 		update forum set forum_count = forum_count+1
@@ -30,8 +35,12 @@
 		delete from forum where forum_no = #{forumno}
 	</delete>
 	
-	<select id="forumList" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
-		select * from forum where dept_no = #{deptno} order by forum_notice desc, forum_date desc 
+	<select id="forumList" parameterType="Map" resultType="com.group4.miroffice.forum.ForumDto">
+		select * from forum where dept_no = #{deptno} 
+		<if test="keyword neq '%%'">
+			and ${type} like #{keyword}
+		</if>
+		order by forum_notice desc, forum_date desc limit #{min}, #{max} 
 	</select>
 	
 	

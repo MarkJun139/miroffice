@@ -1,24 +1,24 @@
 package com.group4.miroffice.forum;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,7 +26,7 @@ import com.group4.miroffice.config.SecurityUser;
 import com.group4.miroffice.user.UserService;
 import com.group4.miroffice.user.Users;
 
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/main")
@@ -41,10 +41,32 @@ public class ForumController {
 	@Autowired
 	UserService us;
 	
+	@PostMapping("/forum")
+	public String formpost() {
+		return "redirect:/main/forum";
+	}
+	
 	@GetMapping("/forum")
-	public String forumList(Model m, @AuthenticationPrincipal SecurityUser userLog, @RequestParam(value="status", defaultValue="1") String status) {
+	public String forumList(Model m, @AuthenticationPrincipal SecurityUser userLog,
+			@RequestParam(value="page", defaultValue="1") String page,
+			@RequestParam(value="type", defaultValue="") String type,
+			@RequestParam(value="keyword", defaultValue="") String keyword) {
+		
+		int pg = Integer.parseInt(page);
+		
 		Users dto = userLog.getUsers();
-		List<ForumDto> fl = service.forumList(dto.getDeptNo());
+		
+		System.out.println("페이지"+page);
+		int minPage = (pg*10)-10;
+		int maxPage = 10;
+		Map<String, Object> map = new HashMap<>();
+		map.put("min", minPage);
+		map.put("max", maxPage);
+		map.put("deptno", dto.getDeptNo());
+		map.put("keyword", "%" + keyword + "%	");
+		map.put("type", type);
+		
+		List<ForumDto> fl = service.forumList(map);
 		
 		
 		for(ForumDto res: fl) {
@@ -100,15 +122,24 @@ public class ForumController {
 	}
 	
 	@PostMapping("/forum/write")
-	public String forumWrite(@ModelAttribute ForumDto dto, RedirectAttributes rttr) throws Exception {
+	public String forumWrite(@ModelAttribute ForumDto dto, RedirectAttributes rttr, @RequestParam(value="files", required=false) MultipartFile files) throws Exception {
 		Users user = us.findById(dto.getEmpNo());
-
+		
 		user.getDeptNo();
 		dto.setDeptNo(user.getDeptNo());
 		System.out.println(dto);
 
+		Map<String, Object> map = service.fileUpload(files);
+		if(map != null) {
+			String f1 = (map.get("forumFiles")).toString();
+			String f2 = (map.get("forumOfiles")).toString();
+			dto.setForumFiles(f1);
+			dto.setForumOfiles(f2);
+			System.out.println("드신날"+dto);
+		}
 		service.forumWrite(dto);
-		
+
+	
 		
 		return "redirect:/main/forum";
 	}
@@ -127,7 +158,7 @@ public class ForumController {
 	
 	
 	@PostMapping("/forum/edit")
-	public String forumEdit2(@ModelAttribute ForumDto dto, RedirectAttributes rttr) throws Exception {
+	public String forumEdit2(@ModelAttribute ForumDto dto, RedirectAttributes rttr, @RequestParam(value="files", required=false) MultipartFile files) throws Exception {
 		Users user = us.findById(dto.getEmpNo());
 
 		user.getDeptNo();
@@ -136,6 +167,17 @@ public class ForumController {
 		
 		System.out.println("시발"+ dto.getForumNotice());
 
+		
+		Map<String, Object> map = service.fileUpload(files);
+		if(map != null) {
+			String f1 = (map.get("forumFiles")).toString();
+			String f2 = (map.get("forumOfiles")).toString();
+			dto.setForumFiles(f1);
+			dto.setForumOfiles(f2);
+			System.out.println("드신날"+dto);
+		}
+		
+		
 		service.forumEdit(dto);
 		
 		
@@ -150,9 +192,34 @@ public class ForumController {
 		
 		m.addAttribute("list", al);
 		
+		
 		System.out.println("에이피"+al);
 		
 		return "forum/edit";
+		
+	}
+	
+	@RequestMapping("/file/download/{file}/{file2}")
+	public void fileDownload(@PathVariable(value="file") String file, @PathVariable(value="file2") String file2, HttpServletResponse response) throws IOException {
+		System.out.println(file);
+		String path = System.getProperty("user.dir")+"\\src\\main\\webapp\\upload\\file\\";
+		File f = new File(path, file);
+		// 파일명 인코딩
+		String encodedFileName = new String (file2.getBytes("UTF-8"), "ISO-8859-1");
+
+		// file 다운로드 설정
+		response.setContentType("application/download");
+		response.setContentLength((int)f.length());
+		response.setHeader("Content-Disposition", "attatchment;filename=\"" + encodedFileName + "\"");
+		
+		// 다운로드 시 저장되는 이름은 Response Header의 "Content-Disposition"에 명시
+		OutputStream os = response.getOutputStream();
+		
+		FileInputStream fis = new FileInputStream(f);
+		FileCopyUtils.copy(fis, os);
+		
+		// fis.close();
+		// os.close();
 		
 	}
 	

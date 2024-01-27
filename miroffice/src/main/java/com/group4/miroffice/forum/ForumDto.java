@@ -16,6 +16,7 @@ public class ForumDto {
 	private int forumCount;
 	private Boolean forumNotice;
 	private String forumFiles;
+	private String forumOfiles;
 	
 	private String empName;
 	private String empRank;

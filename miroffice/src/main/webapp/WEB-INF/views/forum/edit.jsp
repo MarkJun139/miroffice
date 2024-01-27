@@ -69,17 +69,39 @@
                      	</div>
 <!--  메인 여기부터!!! -->      
 
-<form name="form" id="form" action="../edit" method="post">
+<form name="form" id="form" action="../edit" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="empNo" name="empNo" value="${pageContext.request.userPrincipal.name}"/>
 		<input type="hidden" id="forumNo" name="forumNo" value="${list.forumNo }"/>
 		<input type="hidden" id="forumNotice" name="forumNotice" value="${list.forumNotice }"/>
-    	<tr> 
+		<input type="hidden" id="forumOfiles" name="forumOfiles" value="${list.forumOfiles }"/>
+		<input type="hidden" id="forumFiles" name="forumFiles" value="${list.forumFiles }"/>
+		
+		
+		<div class="container" style="height: 60px;">
+		<div style="display: inline; float: right;">
+					
+			<br>파일변경 : <input type="file" id="files" name="files">
+		<c:if test="${list.forumOfiles != null}">
+
+
+			<br>기존파일 : ${list.forumOfiles }
+					
+		</c:if>
+		</div>
+		
+		
+		<div style="display: inline; float: left;">
     	<h2>
-			<td class="orange">문서명</td>
-			<td><input name="forumTitle" id="forumTitle" size="40" width="60" style="display: inline; font-size: 30" value="${list.forumTitle }"></td>
+			<input name="forumTitle" id="forumTitle" size="33" width="30" style="font-size: 30" value="${list.forumTitle }">
 			</h2>
-			<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
-			</tr>
+			<sec:authentication property = "principal.users.empRole" var="role"/>
+	            <c:if test="${role == 'ROLE_TEAMLEADER'}">
+				<label><input class="form-check-input me-1" id="ckbox" type="checkbox" value="${list.forumNotice }">공지 올리기</label>
+			</c:if>
+		</div>
+
+	</div>
+
 
     <!-- The toolbar will be rendered in this container. -->
     <div id="toolbar-container"></div>
@@ -144,22 +166,7 @@
       })
       
 	
-    $(document).ready(function(){
-    	  var x = $('#forumNotice').val()
-    	  checklist = x
-    	  if(x == 'true'){
-    	  	$('#ckbox').prop('checked', true);
-    	  }
-    	  
-  		  $("input[type='checkbox']").on("click", function(){
-  			  if($('#ckbox').is(":checked")==true){
-  				checklist = true;  
-  			  }
-  			  else if($('#ckbox').is(":checked")==false){
-  				  checklist = false;
-  			  }
-  		  })
-      })
+
     
       
 	</script>
