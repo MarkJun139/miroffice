@@ -25,7 +25,6 @@ public class AdminService {
 	
 	public void addEmp(Admin admin) throws InterruptedException {
 		dao.addEmp(admin);
-		dao.addCheckOut(admin);
 		
 		Thread.sleep(5000);
 	}
