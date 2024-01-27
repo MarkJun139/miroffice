@@ -48,7 +48,7 @@ public class MainController {
 			Schedule.setScheTitle(HtmlUtils.htmlEscape(Schedule.getScheTitle()));
 		});
 		// 게시판 목록
-		List<ForumDto> forumList = mainService.getForumList();
+		List<ForumDto> forumList = mainService.getForumList(deptNo);
 		//
 		
 		
