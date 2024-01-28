@@ -116,7 +116,7 @@
 						    <input type="hidden" id="appAdmin2" name="appAdmin2">
 						    <input type="hidden" id="appAdmin3" name="appAdmin3">
 						    
-		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 승인</button>
+		    	<button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>결재 신청</button>
 	   			<!-- <button type="button" id="btnList" class="btn btn-pirmary">결재</button> -->
 	   			
 
