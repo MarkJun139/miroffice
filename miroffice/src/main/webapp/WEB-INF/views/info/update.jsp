@@ -144,7 +144,35 @@
 
 <script>
 	function success(){
+		var name = document.getElementById("name").value;
+		var phone = document.getElementById("phone").value;
+		var address = document.getElementById("address").value;
+		var address2 = document.getElementById("address2").value;
+		var email = document.getElementById("email").value;
+		
+		if(name.trim() === '') {
+			alert("이름을 입력해주세요")
+			return false;
+		}
+		if(phone.trim() === '') {
+			alert("전화번호를 입력해주세요")
+			return false;
+		}
+		if(address.trim() === '') {
+			alert("주소를 입력해주세요")
+			return false;
+		}
+		if(address2.trim() === '') {
+			alert("주소를 입력해주세요")
+			return false;
+		}
+		if(email.trim() === '') {
+			alert("이메일을 입력해주세요")
+			return false;
+		}
+		
 		alert("개인정보를 변경하였습니다.")
+		return true;
 	}
 </script>
 <script>
@@ -153,9 +181,10 @@
         var password2 = document.getElementById("pwd2").value;
         
         if(password1 == password2) {
-        	document.getElementById("passwordForm").submit();
+        	return true;
         } else {
-			alert("비밀번호가 일치하지 않습니다. 다시 시도해주세요.")        	
+			alert("비밀번호가 일치하지 않습니다. 다시 시도해주세요.")
+			return false;
         }
 	}
 </script>
@@ -197,19 +226,19 @@
 				<!--  메인 여기부터!!! -->
 
 				<div class="form-container">
-				<form method="post">
+				<form method="post" onsubmit="return success()">
 					<input type="hidden" value="${user.empNo}" name="empNo">
 					<img class="image" src="${image}" name="empPhoto">
 					<h3 style="margin-top: -350px; margin-left: 300px;">이름 :</h3>
-					<input class="name" value="${user.empName}" name="empName">
+					<input class="name" value="${user.empName}" name="empName" id="name">
 					<h3 style="margin-left: 850px; margin-top: -40px">전화번호 :</h3>
-					<input class="phone" value="${user.empPhone}" name="empPhone">
+					<input class="phone" value="${user.empPhone}" name="empPhone" id="phone">
 					<h3 style="margin-left: 300px; margin-top: 65px">주소 :</h3>
-					<input class="address" value="${user.empAddress}" name="empAddress">
-					<input class="address2" value="${user.empAddress2}" name="empAddress2">
+					<input class="address" value="${user.empAddress}" name="empAddress" id="address">
+					<input class="address2" value="${user.empAddress2}" name="empAddress2" id="address2">
 					<h3 style="margin-left: 272px; margin-top: 50px">이메일 :</h3>
-					<input class="email" value="${user.empEmail}" name="empEmail">
-					<button class="edit-button" onclick="success()">수정</button>
+					<input class="email" value="${user.empEmail}" name="empEmail" id="email">
+					<button class="edit-button">수정</button>
 				</form>
 				</div>
 				
@@ -218,11 +247,11 @@
 				<div class="form-container2">
 					<h3 style="margin-top: 50px; margin-left: 200px;">새 비밀번호 :</h3>
 					<input id="pwd1" class="pwd1" type="password" name="empPw">
-				<form id="passwordForm" method="post" action="pwdUpdate">
+				<form id="passwordForm" method="post" action="pwdUpdate" onsubmit="return pwdCheck()">
 					<input type="hidden" value="${user.empNo}" name="empNo">
 					<h3 style="margin-top: -50px; margin-left: 150px;">비밀번호 재입력:</h3>
-					<input id="pwd2" class="pwd1" name=empPw type="password" name="empPw">
-					<button class="edit-button2" onclick="pwdCheck()">수정</button>
+					<input id="pwd2" class="pwd1" type="password" name="empPw">
+					<button class="edit-button2">수정</button>
 				</form>
 				</div>
 
