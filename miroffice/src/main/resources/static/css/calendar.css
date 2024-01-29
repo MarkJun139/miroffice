@@ -51,3 +51,27 @@ body {
 	align-items: center;
 	/* 수직 가운데 정렬 */
 }
+
+.fc-day-sat a .fc-event-time {
+	color: black;
+}
+
+.fc-day-sat a .fc-event-title {
+	color: black;
+}
+
+.fc-day-sat a .fc-event-title.fc-sticky {
+	color: white;
+}
+
+.fc-day-sun a .fc-event-time {
+	color: black;
+}
+
+.fc-day-sun a .fc-event-title {
+	color: black;
+}
+
+.fc-day-sun a .fc-event-title.fc-sticky {
+	color: white;
+}

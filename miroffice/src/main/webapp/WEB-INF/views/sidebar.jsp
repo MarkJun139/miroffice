@@ -4,7 +4,7 @@
 
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a class="navbar-brand" style="z-index: -1;">               
+            <a class="navbar-brand" href="/main">               
                 <!--Logo start-->
                 <div class="logo-main">
                     <div class="logo-normal">
@@ -17,8 +17,7 @@
                 <!--logo End-->         
  	  <h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
            </a>
-            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true" style="z-index: 2;">
-                <i class="icon">
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -33,7 +32,6 @@
                     <li class="nav-item static-item">
                         <a class="nav-link static-item disabled" href="#" tabindex="-1">
                             <span class="default-icon">메뉴</span>
-                            <span class="mini-icon">-</span>
                         </a>
                     </li>
                     <li class="nav-item">

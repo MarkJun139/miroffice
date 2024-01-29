@@ -348,6 +348,12 @@
                  })
              },
              eventClick : function (info) { // 일정 클릭 시
+             	// url 이동 막기
+            	 if(info.event._def.extendedProps.description == "공휴일"){
+            		 info.jsEvent.cancelBubble = true; 
+        			info.jsEvent.preventDefault(); 
+            		 return false;
+            	 }
             	 
                  let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
             	 let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));

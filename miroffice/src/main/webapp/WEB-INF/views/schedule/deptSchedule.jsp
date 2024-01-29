@@ -171,11 +171,11 @@
 								checked>
 						</div>
 					</div>
-					<div class="modal-footer">
+<!-- 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
 						<button type="button" class="btn btn-primary" id="insertSchedule">추가</button>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -187,39 +187,40 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">일정 관리</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">일정 정보</h5>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="taskId" class="col-form-label">일정 제목</label> <input
 							type="text" class="form-control" id="update_schedule_title"
-							name="update_schedule_title"> <label for="taskId"
+							name="update_schedule_title" readonly> <label for="taskId"
 							class="col-form-label">부서원</label> <input type="text"
 							class="form-control" id="update_schedule_people"
 							name="update_schedule_title" readonly><label for="taskId"
 							class="col-form-label">시작 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_start"
-							name="update_schedule_start"> <label for="taskId"
+							name="update_schedule_start" readonly> <label for="taskId"
 							class="col-form-label">종료 날짜</label> <input type="datetime-local"
 							class="form-control" id="update_schedule_end"
-							name="update_schedule_end"> <label for="taskId"
+							name="update_schedule_end" readonly> <label for="taskId"
 							class="col-form-label">일정 종류</label> <select class="form-control"
-							id="update_schedule_type" name="update_schedule_type">
+							id="update_schedule_type" name="update_schedule_type" disabled>
 								<option value="#FFA500">출장</option>
 								<option value="#3CB371">휴가</option>
 								<option value="#B0E0E6">미팅</option>
 								<option value="#A0522D">기타</option>
 						</select> <label for="taskId" class="col-form-label">종일</label> <input
 							type="checkbox" id="update_schedule_allDay"
-							name="update_schedule_allDay">
+							name="update_schedule_allDay" disabled>
 					</div>
 				</div>
 				<div class="modal-footer d-flex bd-highlight mb-3">
-					<button type="button" class="btn btn-danger me-auto"
+					<p class="text-center fs-5">※ 일정 추가, 수정, 삭제는 <a class="btn btn-info" href="/main/schedule">개인 일정</a>에서 가능합니다.</p>
+<!-- 					<button type="button" class="btn btn-danger me-auto"
 						id="deleteSchedule">삭제</button>
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="updateSchedule">수정</button>
+					<button type="button" class="btn btn-primary" id="updateSchedule">수정</button> -->
 				</div>
 			</div>
 		</div>
@@ -278,7 +279,7 @@ const checkbox = document.getElementById('schedule_allDay');
 				center : 'prev title next',
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
-             select: function (info) { // 일정 추가
+           /*   select: function (info) { // 일정 추가
             	 $('#scheduleInsert').on('hidden.bs.modal', function (e) { // 값 저장하지 않고 모달 창 껐다 켰을 때 초기화
                      document.forms['modalf'].reset();
                  })
@@ -350,9 +351,15 @@ const checkbox = document.getElementById('schedule_allDay');
                	  })
                  	}
                  })
-             },
+             }, */
              eventClick : function (info) { // 일정 클릭 시
-            	 console.log(info.event._def.extendedProps)
+            	// url 이동 막기
+            	 if(info.event._def.extendedProps.description == "공휴일"){
+            		 info.jsEvent.cancelBubble = true; 
+        			info.jsEvent.preventDefault(); 
+            		 return false;
+            	 }
+ 	 
                 let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
            	 	let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));
            	 	
@@ -385,9 +392,11 @@ const checkbox = document.getElementById('schedule_allDay');
                 	   $('#update_schedule_allDay').prop("checked", false)
                    }
             	 })
+            	 
                  $("#updateAndDeleteModal").modal("show"); // modal 나타내기
-				
-                 $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
+
+                 
+                /*  $("#updateSchedule").on("click",function(){  // modal의 수정 버튼 클릭 시
                 	 up++;
                 	 if(up == 1){
                     	 if(confirm("일정을 변경하시겠습니까?")){
@@ -462,8 +471,8 @@ const checkbox = document.getElementById('schedule_allDay');
                          	})
                   	})
                      }
-                 })
-             },
+                 }) */
+             }, 
 			  events : ${deptschedule}, // DB에 저장되어 있는 일정 불러오기
 		});
 		calendar.render();
