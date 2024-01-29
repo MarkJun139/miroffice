@@ -40,7 +40,23 @@
 		<if test="keyword neq '%%'">
 			and ${type} like #{keyword}
 		</if>
-		order by forum_notice desc, forum_date desc limit #{min}, #{max} 
+		order by forum_date desc limit #{min}, #{max} 
+	</select>
+	
+		
+	<select id="forumListAdmin" parameterType="Map" resultType="com.group4.miroffice.forum.ForumDto">
+		select * from forum
+		<where>
+			<if test="keyword neq '%%'">
+				${type} like #{keyword}
+			</if>
+		</where>
+		order by forum_date desc limit #{min}, #{max} 
+	</select>
+	
+	
+	<select id="forumNotice" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
+		select * from forum where dept_no = #{deptno} order by forum_notice desc, forum_date desc limit 0, 3 
 	</select>
 	
 	

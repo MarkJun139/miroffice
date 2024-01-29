@@ -79,20 +79,24 @@
 		
 		<div class="container" style="height: 60px;">
 		<div style="display: inline; float: right;">
-					
-			<br>파일변경 : <input type="file" id="files" name="files">
-		<c:if test="${list.forumOfiles != null}">
+	
+	        <div class="mb-3">
+                <input type="file" class="form-control" id="files" name="files">
+                		<c:if test="${list.forumOfiles != null}">
 
 
 			<br>기존파일 : ${list.forumOfiles }
 					
 		</c:if>
+            </div>
+
 		</div>
 		
 		
 		<div style="display: inline; float: left;">
     	<h2>
 			<input name="forumTitle" id="forumTitle" size="33" width="30" style="font-size: 30" value="${list.forumTitle }">
+			
 			</h2>
 			<sec:authentication property = "principal.users.empRole" var="role"/>
 	            <c:if test="${role == 'ROLE_TEAMLEADER'}">

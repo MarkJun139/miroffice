@@ -10,6 +10,10 @@ public interface ForumDao {
 	
 	List<ForumDto> forumList(Map<String, Object> map);
 	
+	List<ForumDto> forumListAdmin(Map<String, Object> map);
+	
+	List<ForumDto> forumNotice(int forumno);
+	
 	ForumDto forumOne(int forumno);
 	
 	int forumWrite(ForumDto dto);

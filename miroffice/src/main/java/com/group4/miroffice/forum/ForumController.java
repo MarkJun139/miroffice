@@ -41,6 +41,10 @@ public class ForumController {
 	@Autowired
 	UserService us;
 	
+	@Autowired
+	DeptService ds;
+
+	
 	@PostMapping("/forum")
 	public String formpost() {
 		return "redirect:/main/forum";
@@ -52,8 +56,14 @@ public class ForumController {
 			@RequestParam(value="type", defaultValue="") String type,
 			@RequestParam(value="keyword", defaultValue="") String keyword) {
 		
-		int pg = Integer.parseInt(page);
 		
+		int pg;
+		if(page == "0") {
+			pg = 1;
+		}
+		else {
+			pg = Integer.parseInt(page);			
+		}
 		Users dto = userLog.getUsers();
 		
 		System.out.println("페이지"+page);
@@ -63,11 +73,15 @@ public class ForumController {
 		map.put("min", minPage);
 		map.put("max", maxPage);
 		map.put("deptno", dto.getDeptNo());
-		map.put("keyword", "%" + keyword + "%");
+	
+
 		map.put("type", type);
+		map.put("keyword", "%" + keyword + "%");
+
 		
 		List<ForumDto> fl = service.forumList(map);
 		
+		List<ForumDto> f2 = service.forumNotice(dto.getDeptNo());
 		
 		for(ForumDto res: fl) {
 			Users user = us.findById(res.getEmpNo()); 
@@ -78,12 +92,73 @@ public class ForumController {
 			int cs = cservice.commentCount(res.getForumNo());
 			res.setCommentCount(cs);
 		}
+		for(ForumDto res2: f2) {
+			Users user = us.findById(res2.getEmpNo());
+			String uName = user.getEmpName();
+			String uRank = user.getEmpRank();
+			res2.setEmpName(uName);
+			res2.setEmpRank(uRank);
+			int cs = cservice.commentCount(res2.getForumNo());
+			res2.setCommentCount(cs);
+			
+		}
 		
 		System.out.println(dto.getDeptNo());
 		System.out.println(fl);
 		m.addAttribute("list", fl);
+		m.addAttribute("nlist", f2);
+		m.addAttribute("page", pg);
 		
 		return "forum/list";
+	}
+	
+
+	@GetMapping("/forumadmin")
+	public String forumListAdmin(Model m,
+			@RequestParam(value="page", defaultValue="1") String page,
+			@RequestParam(value="type", defaultValue="") String type,
+			@RequestParam(value="keyword", defaultValue="") String keyword) {
+		
+		
+		int pg;
+		if(page == "0") {
+			pg = 1;
+		}
+		else {
+			pg = Integer.parseInt(page);			
+		}
+		
+		System.out.println("페이지"+page);
+		int minPage = (pg*10)-10;
+		int maxPage = 10;
+		Map<String, Object> map = new HashMap<>();
+		map.put("min", minPage);
+		map.put("max", maxPage);
+	
+
+		map.put("type", type);
+		map.put("keyword", "%" + keyword + "%");
+
+		
+		List<ForumDto> fl = service.forumListAdmin(map);
+				
+		for(ForumDto res: fl) {
+			Users user = us.findById(res.getEmpNo()); 
+			String uName = user.getEmpName();
+			String uRank = user.getEmpRank();
+			res.setDeptName(ds.deptName(res.getDeptNo()));
+			res.setEmpName(uName);
+			res.setEmpRank(uRank);
+			int cs = cservice.commentCount(res.getForumNo());
+			res.setCommentCount(cs);
+		}
+
+	
+		System.out.println(fl);
+		m.addAttribute("list", fl);
+		m.addAttribute("page", pg);
+		
+		return "forum/listadmin";
 	}
 	
 	@GetMapping("/forum/{no}")
@@ -156,6 +231,16 @@ public class ForumController {
 		
 	}
 	
+	@PostMapping("/forum/deleteadmin/{no}")
+	public String forumDelete2(@PathVariable(name="no") int no, Model m) {
+		
+		service.forumDelete(no);
+		
+		
+		return "redirect:/main/forumadmin";
+		
+	}
+	
 	
 	@PostMapping("/forum/edit")
 	public String forumEdit2(@ModelAttribute ForumDto dto, RedirectAttributes rttr, @RequestParam(value="files", required=false) MultipartFile files) throws Exception {
@@ -202,7 +287,7 @@ public class ForumController {
 	@RequestMapping("/file/download/{file}/{file2}")
 	public void fileDownload(@PathVariable(value="file") String file, @PathVariable(value="file2") String file2, HttpServletResponse response) throws IOException {
 		System.out.println(file);
-		String path = System.getProperty("user.dir")+"\\src\\main\\webapp\\upload\\file\\";
+		String path = System.getProperty("user.dir")+"/src/main/webapp/upload/file/";
 		File f = new File(path, file);
 		// 파일명 인코딩
 		String encodedFileName = new String (file2.getBytes("UTF-8"), "ISO-8859-1");

@@ -22,6 +22,14 @@ public class ForumService {
 		return dao.forumList(map);
 	}
 	
+	public List<ForumDto> forumListAdmin(Map<String, Object> map){
+		return dao.forumListAdmin(map);
+	}
+	
+	public List<ForumDto> forumNotice(int forumno){
+		return dao.forumNotice(forumno);
+	}
+	
 	public ForumDto forumOne(int forumno) {
 		return dao.forumOne(forumno);
 	}
@@ -44,7 +52,7 @@ public class ForumService {
 	
 	public Map<String, Object> fileUpload(MultipartFile files) throws IOException {
 		
-	    String fuploadPath = System.getProperty("user.dir")+"\\src\\main\\webapp\\upload\\file\\";
+	    String fuploadPath = System.getProperty("user.dir")+"/src/main/webapp/upload/file/";
 	    
 	    
 		

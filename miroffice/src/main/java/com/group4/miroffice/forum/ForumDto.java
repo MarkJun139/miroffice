@@ -22,4 +22,5 @@ public class ForumDto {
 	private String empRank;
 	private String empPhoto;
 	private int commentCount;
+	private String deptName;
 }
