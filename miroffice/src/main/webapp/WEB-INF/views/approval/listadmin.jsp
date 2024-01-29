@@ -99,7 +99,7 @@
                </table>
             </div>
          </div>
-         <div style = "max-width: 1000px; min-width: 500px; border: 1px; float:left;">
+         <div class="col-md-6" style = "padding: 5px; border: 1px; float:left;">
 	        <form name="form" id="form" method="post">
 	        	<!-- <input type="hidden" name="_method" value="PUT"> -->
 	        	<input type="hidden" name="appNo" id="appNo" value="">
@@ -112,7 +112,8 @@
 		    	
 		    	<button type="button" id="btnSave" onclick="javascript: form.action='approval/write'">추가</button>
 		    	<button type="button" id="btnEdit" onclick="javascript: form.action='approval/edit'" disabled>수정</button>
-	   			<button type="button" id="btnList">삭제</button>
+	   			<button type="button" id="btnList" disabled>삭제</button>
+	   			<button type="button" onclick="javascript: form.action='approval'">초기화면으로</button>
 	    	</form>
     	</div>
     	</div>
@@ -132,6 +133,7 @@
 				document.getElementById("appTitle").value = result.appTitle
 				$("#btnSave").attr("disabled", true)
 				$("#btnEdit").attr("disabled", false)
+				$("#btnList").attr("disabled", false)
 				newEditor.setData(result.appText)
 			})
 			.fail(function(jqXHR){
@@ -172,7 +174,7 @@
 		});
 		$(document).on('click', '#btnList', function(e){
 			e.preventDefault();	
-			location.href="../approval";
+			location.href="../admin/approval";
 		});
 </script>
 

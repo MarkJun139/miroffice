@@ -124,7 +124,8 @@
 									</div>
 							
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<button type="submit" id="fadmindelete" class="btn btn-light">삭제</button>
+								<button type="submit" id="fdelete" class="btn btn-light"
+									onclick="javascript: form.action='/main/forum/deleteadmin/${list.forumNo}'">삭제</button>
 							</sec:authorize>
 
 
@@ -142,6 +143,15 @@
 												style="object-fit:cover"> <b
 												style="padding-left: 5px; color: black;">${f.empName }
 												${f.empRank }</b>
+											<sec:authorize access="hasRole('ROLE_ADMIN')">
+											<div id="deletebt">
+												<input type="hidden" value=${f.commentNo }>
+													<button type="button" id="cdelete" class="btn btn-light"
+														style="float: right;"
+														onclick="return commentDelete(${f.commentNo})">삭제</button>
+											</div>
+											</sec:authorize>
+											<sec:authorize access="hasRole('ROLE_USER')">
 											<div id="deletebt">
 												<input type="hidden" value=${f.commentNo }>
 												<c:choose>
@@ -152,6 +162,7 @@
 													</c:when>
 												</c:choose>
 											</div>
+											</sec:authorize>
 											<div id="editbt">
 												<input type="hidden" value=${f.commentNo }>
 												<c:choose>
@@ -205,6 +216,7 @@
 
 
 						</form>
+						<sec:authorize access="hasRole('ROLE_USER')">
 						<form method="post" name="form2" id="form2">
 							<div>
 								<b style="padding-left: 5px; color: black;"><sec:authentication
@@ -213,6 +225,7 @@
 									id="empNo" name="empNo" value="${userName }"> <input
 									type="hidden" id="forumNo" name="forumNo"
 									value="${list.forumNo }">
+									
 								<textarea id="commentText" name="commentText"
 									placeholder="댓글을 입력하세요!" style="width: 1000px; height: 100px;"></textarea>
 								<button type="button" id="cwrite" class="btn btn-success"
@@ -223,6 +236,7 @@
 									onclick="javascript: form.action='/main/forum'">목록</button>
 							</div>
 						</form>
+						</sec:authorize>
 					</div>
 
 

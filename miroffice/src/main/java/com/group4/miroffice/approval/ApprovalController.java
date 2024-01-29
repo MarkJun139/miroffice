@@ -351,7 +351,7 @@ public class ApprovalController {
 	
 	@DeleteMapping("/admin/approval/delete")
 	public String adminApprovalDelete() {
-		return "admin/approval";
+		return "redirect:/main/admin/approval";
 	}
 
 	

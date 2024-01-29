@@ -76,7 +76,9 @@
 		<div class="container" style="height: 60px;">
 		<div style="display: inline; float: right;">
 					
-		<input type="file" id="files" name="files">
+		          <div class="mb-3">
+                <input type="file" class="form-control" id="files" name="files">
+            </div>
 		</div>
 		
 		
