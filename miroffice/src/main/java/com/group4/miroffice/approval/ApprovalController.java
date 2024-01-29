@@ -352,8 +352,9 @@ public class ApprovalController {
 	}
 	
 	@PostMapping("/admin/approval/delete")
-	public String adminApprovalDelete(@PathVariable(name="no") int appno) {
-		System.out.println(service.adminApprovalDelete(appno)); 
+	public String adminApprovalDelete(@ModelAttribute ApprovalDto dto) {
+		System.out.println("delete작동?");
+		System.out.println(service.adminApprovalDelete(dto.getAppNo())); 
 		return "redirect:/main/admin/approval";
 	}
 
