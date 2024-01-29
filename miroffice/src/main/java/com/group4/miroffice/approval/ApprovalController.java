@@ -2,6 +2,8 @@ package com.group4.miroffice.approval;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -369,18 +371,30 @@ public class ApprovalController {
 		String fileName = UUID.randomUUID() + ext;
 	    
 	    //upload 경로 설정(tomcat realpath)
-	    String fuploadPath = req.getServletContext().getRealPath("/upload/editor");
-	 
+		String fuploadPath = System.getProperty("user.dir")+"/src/main/webapp/upload/editor/";
+	    
 	    //폴더 경로 설정
 	    String newfilename = fileName;
 	    
 	    //업로드 수행	    
-	    File file = new File(fuploadPath + "/" + newfilename);
+	    File file = new File(fuploadPath + newfilename);
+	    InetAddress local = null;
+	    try {
+	    	local = InetAddress.getLocalHost();
+	    }
+	    catch (UnknownHostException e){ 
+	    	e.printStackTrace();
+	    }
+	    System.out.println(local.getHostAddress());
+	    
+	    String path = "http://" + local.getHostAddress() + ":8080/upload/editor/";
+	    
+	    System.out.println("{ \"uploaded\" : true, \"url\" : \"" + path + newfilename + "\" }");
 	    
 	    try {
 	        //실제 파일이 업로드 되는 부분
 	        FileUtils.writeByteArrayToFile(file, fileload.getBytes() );	        
-	        return "{ \"uploaded\" : true, \"url\" : \"http://localhost:8080/upload/editor/" + newfilename + "\" }";
+	        return "{ \"uploaded\" : true, \"url\" : \"" + path + newfilename + "\" }";
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	    	return "{ \"uploaded\" : false, \"error\": { \"message\": \"업로드 중 에러가 발생했습니다. 다시 시도해 주세요.\" } }";

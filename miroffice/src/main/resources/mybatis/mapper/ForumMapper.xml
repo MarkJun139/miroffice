@@ -56,7 +56,7 @@
 	
 	
 	<select id="forumNotice" parameterType="Integer" resultType="com.group4.miroffice.forum.ForumDto">
-		select * from forum where dept_no = #{deptno} order by forum_notice desc, forum_date desc limit 0, 3 
+		select * from forum where dept_no = #{deptno} and forum_notice is true order by forum_notice desc, forum_date desc limit 0, 3 
 	</select>
 	
 	
