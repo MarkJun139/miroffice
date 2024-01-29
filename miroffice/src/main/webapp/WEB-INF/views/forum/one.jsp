@@ -90,7 +90,7 @@
 							<h3>${list.forumTitle}</h3>
 							</p>
 							<div style="display: inline;">
-								<image src="/images${list.empPhoto }.jpg" alt="User-Profile"
+								<image src="/images${list.empPhoto }" alt="User-Profile"
 									class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
 									style="object-fit:cover"> <b
 									style="color: black; position: relative; bottom: 10px; display: inline;">
@@ -138,7 +138,7 @@
 										<div id="comment"
 											style="border-bottom-style: solid; border-bottom-color: lightgray; border-bottom-width: .1px">
 
-											<image src="/images${f.empPhoto }.jpg" alt="User-Profile"
+											<image src="/images${f.empPhoto }" alt="User-Profile"
 												class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
 												style="object-fit:cover"> <b
 												style="padding-left: 5px; color: black;">${f.empName }
@@ -151,7 +151,7 @@
 														onclick="return commentDelete(${f.commentNo})">삭제</button>
 											</div>
 											</sec:authorize>
-											<sec:authorize access="hasRole('ROLE_USER')">
+											<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
 											<div id="deletebt">
 												<input type="hidden" value=${f.commentNo }>
 												<c:choose>
@@ -216,7 +216,7 @@
 
 
 						</form>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
 						<form method="post" name="form2" id="form2">
 							<div>
 								<b style="padding-left: 5px; color: black;"><sec:authentication
