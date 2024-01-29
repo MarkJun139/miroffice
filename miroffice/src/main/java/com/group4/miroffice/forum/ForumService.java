@@ -51,34 +51,33 @@ public class ForumService {
 	}
 	
 	public Map<String, Object> fileUpload(MultipartFile files) throws IOException {
-		
+		//업로드 경로 설정
 	    String fuploadPath = System.getProperty("user.dir")+"/src/main/webapp/upload/file/";
 	    
-	    
-		
-		//서버에 파일을 저장할 때에는 파일명을 시간값으로 변경
-	    //DB에 저장할 때에는 원본 파일명과 시간값을 모두 저장
-	    //filename 취득
+		//원본 파일 이름 취득
 		String originalFileName = files.getOriginalFilename();
 		
+		//받아온 파일 이름이 존재할 때
 		if(originalFileName != "") {
+			//파일이름에 범용 고유 식별자인 UUID를 사옹하여 같은 이름의 파일을 업로드해도 다른 파일명으로 저장됨
 			String fileName = UUID.randomUUID() + "_" + originalFileName;
 			
+			//새 파일 형식을 만듦(경로+파일이름)
 			File newFile = new File(fuploadPath + fileName);
 			
+			//업로드 파일을 해당 경로에 해당 이름으로 생성
 			files.transferTo(newFile);
 			
+			//컨트롤러에 파일 원본 이름과 업로드된 파일 이름을 return 해주어 DB에 저장할 수 있게 함
 			Map<String, Object> map = new HashMap<>();
 			map.put("forumOfiles", originalFileName);
 			map.put("forumFiles", fileName);
-			System.out.println("여기서 오류가난독?");
 			return map;
 		}
 		else {
+			//파일을 업로드 하지 않았을 때
 			return null;
 		}
-		
-		
-		
 	}
+	
 }

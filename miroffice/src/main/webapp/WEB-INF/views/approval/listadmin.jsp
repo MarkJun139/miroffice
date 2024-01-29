@@ -112,7 +112,7 @@
 		    	
 		    	<button type="button" id="btnSave" onclick="javascript: form.action='approval/write'">추가</button>
 		    	<button type="button" id="btnEdit" onclick="javascript: form.action='approval/edit'" disabled>수정</button>
-	   			<button type="button" id="btnList" disabled>삭제</button>
+	   			<button type="button" id="btnList" onclick="javascript: form.action='admin/approval/delete/${appNo}'" disabled>삭제</button>
 	   			<button type="button" onclick="javascript: form.action='approval'">초기화면으로</button>
 	    	</form>
     	</div>

@@ -68,7 +68,9 @@ public class ApprovalService {
 		return dao.adminApprovalEdit(dto);
 	}
 
-
+	public int adminApprovalDelete(int appno) {
+		return dao.adminApprovalDelete(appno);
+	}
 	
 	
 }
