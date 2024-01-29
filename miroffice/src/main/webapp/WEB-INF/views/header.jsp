@@ -37,7 +37,7 @@
               </span>
               <input type="search" class="form-control" placeholder="Search...">
             </div>  -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
               <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
               
                 <li class="nav-item dropdown">

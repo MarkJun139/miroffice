@@ -220,7 +220,7 @@
 				
 				if(select.length === 0){
 					alert("삭제할 사원을 선택해주세요");
-					return;
+					return; 
 					e.preventDefault();
 				}
 				var conf = confirm("정말로" + select + "사원을 삭제하시겠습니까? 선택한 사원의 정보가 삭제됩니다.");

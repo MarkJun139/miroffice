@@ -5,7 +5,7 @@
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
             <a href='${pageContext.request.contextPath}/main' class="navbar-brand">               
-                <!--Logo start-->
+                <!--Logo start--> 
                 <div class="logo-main">
                     <div class="logo-normal">
 						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px">
