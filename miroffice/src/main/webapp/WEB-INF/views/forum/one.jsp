@@ -151,7 +151,7 @@
 														onclick="return commentDelete(${f.commentNo})">삭제</button>
 											</div>
 											</sec:authorize>
-											<sec:authorize access="hasRole('ROLE_USER')">
+											<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
 											<div id="deletebt">
 												<input type="hidden" value=${f.commentNo }>
 												<c:choose>
@@ -216,7 +216,7 @@
 
 
 						</form>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_TEAMLEADER')">
 						<form method="post" name="form2" id="form2">
 							<div>
 								<b style="padding-left: 5px; color: black;"><sec:authentication
