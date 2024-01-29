@@ -38,5 +38,7 @@ public interface ApprovalDao {
 	
 	int adminApprovalEdit(ApprovalDto dto);
 	
+	int adminApprovalDelete(int appno);
+	
 
 }

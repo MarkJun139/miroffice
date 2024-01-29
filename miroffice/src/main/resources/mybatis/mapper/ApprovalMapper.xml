@@ -73,6 +73,10 @@
 		where app_no = #{appNo}
 	</update>
 	
+	<delete id="adminApprovalDelete" parameterType="Integer">
+		delete from approval where app_no = #{appno}
+	</delete>
+	
 	<select id="approvalList" parameterType="Integer" resultType="com.group4.miroffice.approval.ApprovalDto">
 		select * from approval where dept_no = #{deptno}
 	</select>
