@@ -2,6 +2,7 @@ package com.group4.miroffice.approval;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -122,42 +123,39 @@ public class ApprovalController {
 			return "approval/mylist";
 			
 		}
-		if(st==6) {
+		if(st==6 || st==7 || st==8) {
 			Map<String, Object> map = new HashMap<>();
+			List<ApprovalDto> al = new ArrayList<>();
+			String title = "";
 			map.put("empno", dto.getEmpNo());
 			map.put("ad1", "app_admin1");
 			map.put("ad2", "app_admin2");
 			map.put("ad3", "app_admin3");
-			map.put("ap1", "app_approve1");
-			map.put("ap2", "app_approve2");
-			map.put("ap3", "app_approve3");
-			List<ApprovalDto> al = service.approvalList4(map);
+			if(st==6 || st==7) {
+				map.put("ap1", "app_approve1");
+				map.put("ap2", "app_approve2");
+				map.put("ap3", "app_approve3");
+				if(st==6) {
+					al = service.approvalList4(map);
+					title = "결제대기 문서";
+				}
+				if(st==7) {
+					al = service.approvalList5(map);
+					title = "승인된 문서";
+				}
+			}
+			if(st==8) {
+				map.put("apf", "app_approvefinal");
+				al = service.approvalList6(map);
+				title = "반려된 문서";
+			}
 			System.out.println("눈물을참다가" + al);
-			
-			String title = "내가 결재할 문서";
 			m.addAttribute("list", al);
 			m.addAttribute("title", title);
 			return "approval/mylist2";
 			
 		}
-		if(st==7) {
-			Map<String, Object> map = new HashMap<>();
-			map.put("empno", dto.getEmpNo());
-			map.put("ad1", "app_admin1");
-			map.put("ad2", "app_admin2");
-			map.put("ad3", "app_admin3");
-			map.put("ap1", "app_approve1");
-			map.put("ap2", "app_approve2");
-			map.put("ap3", "app_approve3");
-			List<ApprovalDto> al = service.approvalList5(map);
-			System.out.println("눈물을참다가" + al);
-			
-			String title = "내가 결재완료한 문서";
-			m.addAttribute("list", al);
-			m.addAttribute("title", title);
-			return "approval/mylist2";
-			
-		}
+
 		
 		return "";
 
