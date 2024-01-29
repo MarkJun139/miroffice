@@ -19,6 +19,8 @@ public interface ApprovalDao {
 	
 	List<ApprovalDto> approvalList5(Map<String, Object> map);
 	
+	List<ApprovalDto> approvalList6(Map<String, Object> map);
+	
 	ApprovalDto approvalListOne(int appno);
 	
 	int approvalSubmit(ApprovalDto dto);

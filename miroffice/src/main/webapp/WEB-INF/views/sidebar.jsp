@@ -4,8 +4,10 @@
 
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
+
             <a href='${pageContext.request.contextPath}/main' class="navbar-brand">               
                 <!--Logo start--> 
+
                 <div class="logo-main">
                     <div class="logo-normal">
 						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px">
@@ -17,8 +19,7 @@
                 <!--logo End-->         
  	  		<h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
            </a>
-            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true" style="z-index: 2;">
-                <i class="icon">
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -33,7 +34,6 @@
                     <li class="nav-item static-item">
                         <a class="nav-link static-item disabled" href="#" tabindex="-1">
                             <span class="default-icon">메뉴</span>
-                            <span class="mini-icon">-</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -307,45 +307,6 @@
                                     <span class="item-name">내 문서</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=3">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">결제대기 문서</span>
-                                </a>
-                            </li>
-                 				<li class="nav-item">
-                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=4">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">결재완료 문서</span>
-                                </a>
-                            </li>
-                           	<li class="nav-item">
-                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=5">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">반려된 문서</span>
-                                </a>
-                            </li>
                             <sec:authentication property = "principal.users.empRole" var="role"/>
                   			  <c:if test="${role == 'ROLE_TEAMLEADER'}">
                             <li class="nav-item">
@@ -358,20 +319,7 @@
                                         </svg>
                                     </i>
                                     <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">내가 결재할 문서</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="${pageContext.request.contextPath}/main/approval?status=7">
-                                    <i class="icon">
-                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">내가 결재완료한 문서</span>
+                                    <span class="item-name">결재대기 문서</span>
                                 </a>
                             </li>
                             </c:if>

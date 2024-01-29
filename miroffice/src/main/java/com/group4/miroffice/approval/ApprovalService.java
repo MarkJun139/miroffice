@@ -50,6 +50,10 @@ public class ApprovalService {
 	public List<ApprovalDto> approvalList5(Map<String, Object> map) {
 		return dao.approvalList5(map);
 	}
+	
+	public List<ApprovalDto> approvalList6(Map<String, Object> map) {
+		return dao.approvalList6(map);
+	}
 
 	
 	public ApprovalDto approvalListOne(int appno){

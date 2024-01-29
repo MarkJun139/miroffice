@@ -67,13 +67,14 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-2 text-start" id="coldoc">
-                     		 <h1 class="card-title">${title	 }</h1>
+                     		 <h1 class="card-title">${title	}</h1>
+                     		 <input type="hidden" id="title" value=${title }>
                      	</div>
                      	<div class="col-6 text-start">
-               	        <button type="button" id="btnAll" class="btn btn-success" disabled>전체</button>
-                     	<button type="button" id="btnAll" class="btn btn-success">대기</button>
-                     	<button type="button" id="btnAll" class="btn btn-success">완료</button>
-                     	<button type="button" id="btnAll" class="btn btn-success">반려</button>
+               	        <button type="button" id="btnAll1" class="btn btn-success"  onclick="location.href='./approval?status=2'">전체</button>
+                     	<button type="button" id="btnAll2" class="btn btn-success" onclick="location.href='./approval?status=3'">대기</button>
+                     	<button type="button" id="btnAll3" class="btn btn-success" onclick="location.href='./approval?status=4'">완료</button>
+                     	<button type="button" id="btnAll4" class="btn btn-success" onclick="location.href='./approval?status=5'">반려</button>
                      	</div>
                      	</div>
                      	</div>
@@ -161,6 +162,7 @@
    		</div>
 	</div>
     	<script>
+
 		function getApproval(no) {
 			new Promise( (succ, fail )=> {
 				$.ajax({
@@ -307,16 +309,30 @@
     
         
     <script>
-	var url= window.location.href;
 	$(".nav-item").find('a').each(function() {
-		var burl = $(this).prop('href')
-		var burl2 = burl+"#"
-		if(url == burl || url == burl2){
+		
+		var burl3 = $(this).prop('href')
+		var burl4 = 'http://localhost:8080/main/approval?status=2';
+		if(burl3 == burl4 || burl3 == burl4 + '#'){
     		console.log($(this).prop('pathname'))
 			console.log($(this).prop('href'))
     		$(this).toggleClass('active', $(this).attr('href'));
 		}
 
+	})
+	$(document).ready(function(){
+		if($("#title").val() == '내'){
+			$("#btnAll1").attr("disabled", true);
+		}
+		if($("#title").val() == '결재대기'){
+			$("#btnAll2").attr("disabled", true);
+		}
+		if($("#title").val() == '결재완료'){
+			$("#btnAll3").attr("disabled", true);
+		}
+		if($("#title").val() == '반려된'){
+			$("#btnAll4").attr("disabled", true);
+		}
 	})
 
 	</script>

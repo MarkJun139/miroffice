@@ -98,6 +98,9 @@
 		select * from approval where (${ad1} = #{empno} and ${ap1} is true) or (${ad2} = #{empno} and ${ap2} is true) or (${ad3} = #{empno} and ${ap3} is true);
 	</select>
 	
+	<select id="approvalList6" parameterType="Map" resultType="com.group4.miroffice.approval.ApprovalDto">
+		select * from approval where (${ad1} = #{empno} and ${apf} is true) or (${ad2} = #{empno} and ${apf} is true) or (${ad3} = #{empno} and ${apf} is true);
+	</select>
 		
 	
 	

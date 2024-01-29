@@ -66,11 +66,14 @@
                            <div class="flex-wrap card-header d-flex justify-content-between">
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
-                              	 	<div class="col-3 text-start" id="coldoc">
-                     		 <h1 class="card-title">${title	 }</h1>
+                              	 	<div class="col-2 text-start" id="coldoc">
+                     		 <h2 class="card-title">${title	 }</h2>
+                     		 <input type="hidden" id="title" value=${title }>
                      	</div>
                      	<div class="col-3 text-start">
-                     	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>
+						<button type="button" id="btnAll1" class="btn btn-success"  onclick="location.href='./approval?status=6'">대기</button>
+						<button type="button" id="btnAll2" class="btn btn-success" onclick="location.href='./approval?status=7'">승인</button>
+						<button type="button" id="btnAll3" class="btn btn-success" onclick="location.href='./approval?status=8'">반려</button>
                      	</div>
                      	</div>
                      	</div>
@@ -235,7 +238,6 @@
 					$("#btnCan").attr("disabled", false)
 					$("#btnEdit").attr("disabled", false)
 					newEditor.setData(result.appText)
-					
 					if(result.appApprove1 == null){
 						var appr1 = "대기";
 					}
@@ -402,17 +404,34 @@
     
         
     <script>
-	var url= window.location.href;
 	$(".nav-item").find('a').each(function() {
-		var burl = $(this).prop('href')
-		var burl2 = burl+"#"
-		if(url == burl || url == burl2){
+		
+		var burl3 = $(this).prop('href')
+		var burl4 = 'http://localhost:8080/main/approval?status=6';
+		if(burl3 == burl4 || burl3 == burl4 + '#'){
     		console.log($(this).prop('pathname'))
 			console.log($(this).prop('href'))
     		$(this).toggleClass('active', $(this).attr('href'));
 		}
 
 	})
+	$(document).ready(function(){
+		if($("#title").val() == '결제대기'){
+			$("#btnAll1").attr("disabled", true);
+		}
+		if($("#title").val() == '승인된'){
+			$("#btnAll2").attr("disabled", true);
+			$("#btnCan").hide();
+			$("#btnEdit").hide();
+			
+		}
+		if($("#title").val() == '반려된'){
+			$("#btnAll3").attr("disabled", true);
+			$("#btnCan").hide();
+			$("#btnEdit").hide();
+		}
+	})
+
 
 	</script>
 	
