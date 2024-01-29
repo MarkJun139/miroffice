@@ -59,9 +59,10 @@
         var password2 = document.getElementById("pwd2").value;
         
         if(password1 == password2) {
-        	document.getElementById("passwordForm").submit();
+        	return true;
         } else {
-			alert("비밀번호가 일치하지 않습니다. 다시 시도해주세요.")        	
+			alert("비밀번호가 일치하지 않습니다. 다시 시도해주세요.")
+			return false;
         }
 		
 	}
@@ -104,10 +105,10 @@
 				
 				<h3 style="margin-left: 500px; margin-top: 80px">비밀번호 :</h3>
 				<input id="pwd1" style="margin-left: 650px; margin-top: -32px; width: 400px" type="password">
-				<form id="passwordForm" action="check" method="post">
+				<form id="passwordForm" action="check" method="post" onsubmit="return passwordCheck()">
 					<h3 style="margin-left: 408px; margin-top: 50px; margin-bottom: 100px">비밀번호 재입력 :</h3>
 					<input name="password" id="pwd2" style="margin-left: 650px; margin-top: -131px; margin-bottom: 100px; width: 400px" type="password">
-					<button class="edit-button" onclick="passwordCheck()">제출</button>
+					<button class="edit-button">제출</button>
 				</form>
 				
 				<!-- 메인 여기까지 -->
