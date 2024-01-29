@@ -4,8 +4,10 @@
 
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a class="navbar-brand" href="/main">               
-                <!--Logo start-->
+
+            <a href='${pageContext.request.contextPath}/main' class="navbar-brand">               
+                <!--Logo start--> 
+
                 <div class="logo-main">
                     <div class="logo-normal">
 						<img src="${pageContext.request.contextPath }/images/icons/logo.png" style="width: 50px">
@@ -15,7 +17,7 @@
                     </div>
                 </div>
                 <!--logo End-->         
- 	  <h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
+ 	  		<h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
            </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
