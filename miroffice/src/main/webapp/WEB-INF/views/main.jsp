@@ -426,7 +426,7 @@
 									   hour.innerText = addZero(hours);
 									   minute.innerText = addZero(date.getMinutes());
 									   second.innerText = addZero(date.getSeconds());
-									   ampm.innerText = pm ? "오전" : "오후";
+									   ampm.innerText = pm ? "오후" : "오전";
 								   }
 				   
 								   function addZero(num) {
