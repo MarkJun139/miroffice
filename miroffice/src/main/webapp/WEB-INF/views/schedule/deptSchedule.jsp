@@ -215,7 +215,7 @@
 					</div>
 				</div>
 				<div class="modal-footer d-flex bd-highlight mb-3">
-				일정 추가, 수정, 삭제는 <a class="btn btn-info" href="/main/schedule">개인 일정</a>에서 가능합니다.
+					<p class="text-center fs-5">※ 일정 추가, 수정, 삭제는 <a class="btn btn-info" href="/main/schedule">개인 일정</a>에서 가능합니다.</p>
 <!-- 					<button type="button" class="btn btn-danger me-auto"
 						id="deleteSchedule">삭제</button>
 					<button type="button" class="btn btn-secondary"
@@ -353,7 +353,13 @@ const checkbox = document.getElementById('schedule_allDay');
                  })
              }, */
              eventClick : function (info) { // 일정 클릭 시
-            	 console.log(info.event._def.extendedProps)
+            	// url 이동 막기
+            	 if(info.event._def.extendedProps.description == "공휴일"){
+            		 info.jsEvent.cancelBubble = true; 
+        			info.jsEvent.preventDefault(); 
+            		 return false;
+            	 }
+ 	 
                 let updateDeleteStartDate = new Date(info.event.start - (info.event.start.getTimezoneOffset() * 60000));
            	 	let updateDeleteEndDate = new Date(info.event.end - (info.event.end.getTimezoneOffset() * 60000));
            	 	
