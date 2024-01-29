@@ -196,7 +196,7 @@
 						<td>${checkdate.checkVacation}</td>
 						<td>${checkdate.checkLate}</td>
 						<td>${checkdate.checkAbsenteeism}</td>
-						<td>${checkTime}</td>
+						<td>${checkTime2}</td>
 					</tr>
 				</table>
 

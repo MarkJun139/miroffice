@@ -28,7 +28,7 @@ public class InfoController {
 
 		Users users = service.Profile(empNo);
 		
-		String image = "/images" + users.getEmpPhoto() + ".jpg";
+		String image = "/images" + users.getEmpPhoto();
 
 		Dept dept = service.Dept(users.getDeptNo());
 
@@ -70,7 +70,7 @@ public class InfoController {
 
 		Users users = service.Profile(empname);
 		
-		String image = "/images" + users.getEmpPhoto() + ".jpg";
+		String image = "/images" + users.getEmpPhoto();
 		
 		m.addAttribute("image", image);
 

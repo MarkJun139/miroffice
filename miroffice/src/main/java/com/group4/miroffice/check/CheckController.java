@@ -56,17 +56,18 @@ public class CheckController {
 			if (y > 60) {
 				int H = (y / 60) / 60;
 				int M = (y - (H * 60 * 60)) / 60;
-				LocalTime checkTime = LocalTime.of(H, M, 00);
-				m.addAttribute("checkTime", checkTime);
+				
+				String checkTime = H + "시간" + M + "분"; 
+				m.addAttribute("checkTime2", checkTime);
 			} else {
-				LocalTime checkTime2 = LocalTime.of(0, 0, 0);
-				m.addAttribute("checkTime", checkTime2);
+				String checkTime2 = "0시간 0분";
+				m.addAttribute("checkTime2", checkTime2);
 			}
 		}
 
 		List<CheckDate> weekCheck = new ArrayList<>();
 
-		List<LocalTime> weekWorkTime = new ArrayList<>();
+		List<String> weekWorkTime = new ArrayList<>();
 
 		for (int i = 1; i < 5; i++) {
 
@@ -84,15 +85,15 @@ public class CheckController {
 				if (u > 60) {
 					int Hour = (u / 60) / 60;
 					int Minute = (u - (Hour * 60 * 60)) / 60;
-					LocalTime time = LocalTime.of(Hour, Minute, 00);
+					String time = Hour + "시간" + Minute + "분";
 					weekWorkTime.add(time);
 				} else {
-					LocalTime time3 = LocalTime.of(0, 0, 0);
+					String time3 = "0시간 0분";
 					m.addAttribute("checkTime", time3);
 					weekWorkTime.add(time3);
 				}
 			} else {
-				LocalTime time2 = LocalTime.of(0, 0, 0);
+				String time2 = "0시간 0분";
 				weekWorkTime.add(time2);
 			}
 
