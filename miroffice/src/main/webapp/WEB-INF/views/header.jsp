@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
-          <div class="container-fluid navbar-inner">
-            <a href="${pageContext.request.contextPath}/main" class="navbar-brand">
+          <div class="container-fluid navbar-inner" >
+            <a href="" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -13,12 +13,12 @@
                     <div class="logo-mini">
                         
                     </div>
-                </div>
+                
                 <!--logo End-->
                 
                 
                 
-                
+           
                 <h4 class="logo-title">미르오피스</h4>
             </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
@@ -43,7 +43,7 @@
                 <li class="nav-item dropdown">
                   <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- <img src="/images/emp_photo/2403002.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover"> -->
-                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>.jpg" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
+                    <img src="/images<sec:authentication property = "principal.users.empPhoto"/>" alt="User-Profile" class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" style="object-fit:cover">
                     <div class="caption ms-3 d-none d-md-block" style="width: 130px;">
                         <h5 class="mb-0 caption-title">
                         <sec:authentication property= "principal.users.empName"/>

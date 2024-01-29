@@ -223,22 +223,29 @@
 					return;
 					e.preventDefault();
 				}
-				$.ajax({
-					type:"DELETE",
-					url: "/main/admin/emp/deletecheck",
-					data : {empDelCheck : select},
-					traditional: true,
-					success : function(res) {
-						alert("사원번호 : " + select + "삭제 성공");
-						window.location.href = "/main/admin/emp/list";
-					},
-					error: function(a, b, c) {
-						alert("참조된 값 존재")
-			            console.error("ajax Error : ", a, b,c);
-			            console.log(select);
-			        }
-				})
-				e.preventDefault();
+				var conf = confirm("정말로" + select + "사원을 삭제하시겠습니까? 선택한 사원의 정보가 삭제됩니다.");
+				if(conf){
+					$.ajax({
+						type:"DELETE",
+						url: "/main/admin/emp/deletecheck",
+						data : {empDelCheck : select},
+						traditional: true,
+						success : function(res) {
+							alert("사원번호 : " + select + "삭제 성공");
+							window.location.href = "/main/admin/emp/list";
+						},
+						error: function(a, b, c) {
+							alert("참조된 값 존재")
+				            console.error("ajax Error : ", a, b,c);
+				            console.log(select);
+				        }
+					})
+					e.preventDefault();	
+				} else {
+					e.preventDefault();
+					return;
+				}
+				
 			})
 			
 			$(".searchInput").keyup(function(){

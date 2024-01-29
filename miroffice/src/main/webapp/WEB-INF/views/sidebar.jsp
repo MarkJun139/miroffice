@@ -4,7 +4,7 @@
 
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a class="navbar-brand" style="z-index: -1;">               
+            <a href='${pageContext.request.contextPath}/main' class="navbar-brand">               
                 <!--Logo start-->
                 <div class="logo-main">
                     <div class="logo-normal">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <!--logo End-->         
- 	  <h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
+ 	  		<h4 class="logo-title" style = "padding-right: 2em;">미르오피스</h4>
            </a>
             <div class="sidebar-toggle" data-toggle="sidebar" data-active="true" style="z-index: 2;">
                 <i class="icon">
