@@ -112,8 +112,8 @@
 		    	
 		    	<button type="button" id="btnSave" onclick="javascript: form.action='approval/write'">추가</button>
 		    	<button type="button" id="btnEdit" onclick="javascript: form.action='approval/edit'" disabled>수정</button>
-	   			<button type="button" id="btnList" onclick="javascript: form.action='admin/approval/delete/${appNo}'" disabled>삭제</button>
-	   			<button type="button" onclick="javascript: form.action='approval'">초기화면으로</button>
+	   			<button type="button" id="btnDel" onclick="javascript: form.action='approval/delete'" disabled>삭제</button>
+	   			<button type="button" onclick="window.location.reload()">초기화면으로</button>
 	    	</form>
     	</div>
     	</div>
@@ -133,7 +133,7 @@
 				document.getElementById("appTitle").value = result.appTitle
 				$("#btnSave").attr("disabled", true)
 				$("#btnEdit").attr("disabled", false)
-				$("#btnList").attr("disabled", false)
+				$("#btnDel").attr("disabled", false)
 				newEditor.setData(result.appText)
 			})
 			.fail(function(jqXHR){
@@ -158,6 +158,7 @@
 				$("#form").submit();
 			}
 		});
+
 		$(document).on('click', '#btnEdit', function(e){
 			e.preventDefault();
 			
@@ -172,10 +173,12 @@
 				$("#form").submit();
 			}
 		});
-		$(document).on('click', '#btnList', function(e){
-			e.preventDefault();	
-			location.href="../admin/approval";
+		$(document).on('click', '#btnDel', function(e){
+			e.preventDefault();
+			$("#form").submit();
+			
 		});
+
 </script>
 
 
