@@ -373,30 +373,18 @@ public class ApprovalController {
 		String fileName = UUID.randomUUID() + ext;
 	    
 	    //upload 경로 설정(tomcat realpath)
-		String fuploadPath = System.getProperty("user.dir")+"/src/main/webapp/upload/editor/";
-	    
+	    String fuploadPath = req.getServletContext().getRealPath("/upload/editor");
+	 
 	    //폴더 경로 설정
 	    String newfilename = fileName;
 	    
 	    //업로드 수행	    
-	    File file = new File(fuploadPath + newfilename);
-	    InetAddress local = null;
-	    try {
-	    	local = InetAddress.getLocalHost();
-	    }
-	    catch (UnknownHostException e){ 
-	    	e.printStackTrace();
-	    }
-	    System.out.println(local.getHostAddress());
-	    
-	    String path = "http://" + local.getHostAddress() + ":8081/upload/editor/";
-	    
-	    System.out.println("{ \"uploaded\" : true, \"url\" : \"" + path + newfilename + "\" }");
+	    File file = new File(fuploadPath + "/" + newfilename);
 	    
 	    try {
 	        //실제 파일이 업로드 되는 부분
 	        FileUtils.writeByteArrayToFile(file, fileload.getBytes() );	        
-	        return "{ \"uploaded\" : true, \"url\" : \"" + path + newfilename + "\" }";
+	        return "{ \"uploaded\" : true, \"url\" : \"http://localhost:8080/upload/editor/" + newfilename + "\" }";
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	    	return "{ \"uploaded\" : false, \"error\": { \"message\": \"업로드 중 에러가 발생했습니다. 다시 시도해 주세요.\" } }";
