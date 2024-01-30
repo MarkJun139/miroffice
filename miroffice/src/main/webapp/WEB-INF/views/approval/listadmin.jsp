@@ -67,7 +67,7 @@
                   <div class="header-title col-12">
                   <div class="col-12 row text-center align-items-center">
                               	 	<div class="col-3 text-start" id="coldoc">
-                     		 <h1 class="card-title">${title	 }</h1>
+                     		 <h1 class="card-title">문서 양식</h1>
                      	</div>
                      	<div class="col-3 text-start">
                      	<h2><span class="badge badge-secondary badge-pill" style="background-color:var(--bs-info)">${deptName}</span></h2>

@@ -237,6 +237,21 @@
 							</div>
 						</form>
 						</sec:authorize>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<form method="post" name="form2" id="form2">
+							<div>
+								<input type="hidden"
+									id="empNo" name="empNo" value="${userName }"> <input
+									type="hidden" id="forumNo" name="forumNo"
+									value="${list.forumNo }">
+
+							</div>
+							<div>
+							<button type="submit" id="flist" class="btn btn-light" style="display: inline; float: right;"
+									onclick="javascript: form.action='/main/forum'">목록</button>
+							</div>
+						</form>
+						</sec:authorize>
 					</div>
 
 
