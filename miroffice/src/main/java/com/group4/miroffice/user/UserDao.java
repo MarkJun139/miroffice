@@ -55,14 +55,14 @@ public interface UserDao {
 	@Select("select sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) as checkWorkTime from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteeism, sum(check_work_time) as checkWorkTime from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}")
 	CheckDate checkdate(DayCheck daycheck);
 	
 	@Select("select week(check_date) AS weekNumber, sum(check_on) as checkOn, sum(check_leave_early) as CheckLeaveEarly,"
 			+ " sum(check_halfoff) as checkHalfoff, sum(check_dayoff) as checkDayoff,"
 			+ " sum(check_vacation) as checkVacation, sum(check_late) as CheckLate,"
-			+ " sum(check_absenteeism) as checkAbsenteenism, sum(check_work_time) as checkWorkTime from checkout"
+			+ " sum(check_absenteeism) as checkAbsenteeism, sum(check_work_time) as checkWorkTime from checkout"
 			+ " where check_date between #{checkMonthStart} and #{checkDate} and emp_no = #{empNo}"
 			+ " and week(check_date) = #{week} group by weekNumber order by weekNumber")
 	CheckDate weekCheck(DayCheck daycheck);

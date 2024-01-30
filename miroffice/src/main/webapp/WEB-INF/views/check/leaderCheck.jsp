@@ -122,6 +122,19 @@
 		arrow.classList.toggle('expanded');
 	}
 </script>
+<script>
+	function check() {
+		var result = confirm(`${user.empName}님의 근태정보를 수정하시겠습니까?`)	
+		
+		if (result) {
+    		alert("수정을 완료했습니다.");
+    		return true;
+		} else {
+    		alert("수정을 취소했습니다.");
+    		return false;
+		}
+	}
+</script>
 
 </head>
 
@@ -324,7 +337,7 @@
 
 					<h2 style="margin-left: 63px; margin-top: 50px">근태 처리</h2>
 
-					<form>
+					<form onsubmit="return check()">
 						<input type="hidden" value="${user.empName}" name="empName">
 						<input style="width: 205px; margin-left: 30px; margin-top: 20px"
 							name="checkDate" type="date"><br>
